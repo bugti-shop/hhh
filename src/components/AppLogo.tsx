@@ -10,10 +10,10 @@ interface AppLogoProps {
 // Uses native img attributes to avoid React fetchPriority warnings
 const AppLogoInner = ({ className, size = 'md' }: AppLogoProps) => {
   const sizeClass = size === 'sm' 
-    ? 'h-8 w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10' 
+    ? 'h-6 w-6 sm:h-7 sm:w-7' 
     : size === 'lg' 
-      ? 'h-11 w-11 sm:h-12 sm:w-12'
-      : 'h-10 w-10 sm:h-11 sm:w-11';
+      ? 'h-8 w-8 sm:h-9 sm:w-9'
+      : 'h-7 w-7 sm:h-8 sm:w-8';
 
   return (
     <img
