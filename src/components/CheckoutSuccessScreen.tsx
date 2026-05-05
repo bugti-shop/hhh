@@ -48,7 +48,7 @@ export function CheckoutSuccessScreen({ isVerified, isFailed }: CheckoutSuccessS
         <motion.img
           src={appLogo}
           alt="Flowist"
-          className="h-16 w-16 rounded-2xl shadow-lg"
+          className="h-16 w-16"
           initial={{ rotate: -10 }}
           animate={{ rotate: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
