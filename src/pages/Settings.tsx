@@ -53,7 +53,7 @@ const Settings = () => {
       <header className="sticky top-0 bg-background z-10" style={{ paddingTop: 'var(--safe-top, 0px)' }}>
         <div className="container mx-auto px-2 xs:px-3 sm:px-4 py-2 xs:py-3 sm:py-4">
           <div className="flex items-center gap-1.5 xs:gap-2 min-w-0">
-            <AppLogo size="sm" />
+            <AppLogo />
             <h1 className="text-base xs:text-lg sm:text-xl font-bold truncate">{t('settings.title')}</h1>
           </div>
         </div>

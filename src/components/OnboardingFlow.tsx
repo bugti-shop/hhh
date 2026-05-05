@@ -1148,7 +1148,7 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <motion.img
               src="/favicon.webp?v=3"
               alt="Flowist"
-              className="w-7 h-7 rounded-xl"
+              className="w-8 h-8"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', bounce: 0.4, delay: 0.1 }}
@@ -1264,7 +1264,7 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             <motion.img
               src="/favicon.webp?v=3"
               alt="Flowist"
-              className="w-9 h-9 rounded-xl"
+              className="w-9 h-9"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', bounce: 0.4, delay: 0.1 }}
