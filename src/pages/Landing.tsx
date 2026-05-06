@@ -4,6 +4,10 @@ import { Menu, Check, Calendar, StickyNote, Sparkles, Shield, Zap, Star, Repeat,
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
+import socialX from '@/assets/social-x.png';
+import socialReddit from '@/assets/social-reddit.png';
+import socialYoutube from '@/assets/social-youtube.png';
+import socialInstagram from '@/assets/social-instagram.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -132,14 +136,14 @@ export default function Landing() {
   ];
 
   const suiteFeatures = [
-    { title: 'Constant Reminder', desc: 'Notifications keep ringing until you complete the task, so nothing slips by.', icon: BellRing },
-    { title: 'Repeat Reminder', desc: 'Set flexible recurring rules (weekly, monthly, yearly, or custom) and never miss a deadline.', icon: Repeat },
-    { title: 'NLP', desc: 'Automatically recognize dates and times as you type to set smart reminders.', icon: Brain },
-    { title: 'Filter', desc: 'Easily customize filters like “high-priority tasks for this week” to view what matters.', icon: FilterIcon },
-    { title: 'Progress', desc: 'Track focus duration, streaks and habit logs to get a clear view of your progress.', icon: BarChart3 },
-    { title: 'Lock', desc: 'Protect private notes and tasks with a passcode or biometric lock.', icon: Lock },
-    { title: 'Dark Mode', desc: 'A calm, eye-friendly dark theme that automatically follows your system.', icon: Moon },
-    { title: 'Time Tracking', desc: 'Log time on tasks and habits to understand exactly where your day goes.', icon: Clock },
+    { title: 'Reminder', desc: 'Notifications keep ringing until you complete the task — nothing slips by.', icon: BellRing },
+    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: Repeat },
+    { title: 'NLP', desc: 'Type naturally and Flowist auto-detects dates, times and reminder cues.', icon: Brain },
+    { title: 'Filter', desc: 'Build smart filters like “high-priority this week” to focus on what matters.', icon: FilterIcon },
+    { title: 'Progress', desc: 'Track focus time, streaks and habit logs to see your real momentum daily.', icon: BarChart3 },
+    { title: 'Lock', desc: 'Protect private notes and tasks behind a passcode or biometric lock.', icon: Lock },
+    { title: 'Dark Mode', desc: 'A calm, eye-friendly dark theme that follows your system preference.', icon: Moon },
+    { title: 'Time Track', desc: 'Log time on tasks and habits to see exactly where your day really goes.', icon: Clock },
   ];
 
   const faqs = [
@@ -455,13 +459,13 @@ export default function Landing() {
               {suiteFeatures.map(({ title, desc, icon: Icon }) => (
                 <div
                   key={title}
-                  className="rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-7"
+                  className="flex h-full flex-col rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
                 >
-                  <Icon className="mb-4 h-7 w-7 text-slate-900 sm:h-8 sm:w-8" strokeWidth={1.75} />
-                  <h3 className="mb-3 text-[17px] font-extrabold tracking-tight text-slate-900 sm:text-[20px]">
+                  <Icon className="mb-3 h-5 w-5 text-slate-900 sm:h-6 sm:w-6" strokeWidth={1.75} />
+                  <h3 className="mb-2 truncate whitespace-nowrap text-[15px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
                     {title}
                   </h3>
-                  <p className="text-[13px] leading-relaxed text-slate-600 sm:text-[15px]">
+                  <p className="line-clamp-4 text-[13px] leading-relaxed text-slate-600 sm:text-[14px]">
                     {desc}
                   </p>
                 </div>
@@ -503,10 +507,26 @@ export default function Landing() {
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16">
-          {/* Top: logo + copyright */}
-          <div className="mb-10 flex items-center gap-2">
-            <AppLogo size="sm" />
-            <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
+          {/* Top: logo + social icons */}
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2">
+              <AppLogo size="sm" />
+              <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="transition-transform hover:scale-105">
+                <img src={socialX} alt="X" className="h-7 w-7 rounded-md object-contain" loading="lazy" />
+              </a>
+              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="transition-transform hover:scale-105">
+                <img src={socialReddit} alt="Reddit" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="transition-transform hover:scale-105">
+                <img src={socialYoutube} alt="YouTube" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:scale-105">
+                <img src={socialInstagram} alt="Instagram" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+            </div>
           </div>
           <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} Flowist Inc.</p>
 
@@ -576,32 +596,6 @@ export default function Landing() {
                 <li><span>Creators</span></li>
               </ul>
             </div>
-          </div>
-
-          {/* Social */}
-          <div className="mt-14 flex items-center gap-4">
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="flex h-10 w-10 items-center justify-center rounded-full bg-black transition-transform hover:scale-105">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105" style={{ backgroundColor: '#FF4500' }}>
-              <svg viewBox="0 0 24 24" className="h-6 w-6 fill-white" aria-hidden="true">
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 6.628 5.373 12 12 12s12-5.372 12-12c0-6.627-5.373-12-12-12zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
-              </svg>
-            </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105" style={{ backgroundColor: '#FF0000' }}>
-              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white" aria-hidden="true">
-                <path d="M9.75 15.5l6-3.5-6-3.5v7z"/>
-              </svg>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-10 w-10 items-center justify-center rounded-[10px] transition-transform hover:scale-105" style={{ background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)' }}>
-              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-white" strokeWidth="2" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none"/>
-              </svg>
-            </a>
           </div>
         </div>
       </footer>
