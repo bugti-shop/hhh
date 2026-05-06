@@ -136,14 +136,14 @@ export default function Landing() {
   ];
 
   const suiteFeatures = [
-    { title: 'Constant Reminder', desc: 'Notifications keep ringing until you complete the task, so nothing slips by.', icon: BellRing },
-    { title: 'Repeat Reminder', desc: 'Set flexible recurring rules (weekly, monthly, yearly, or custom) and never miss a deadline.', icon: Repeat },
-    { title: 'NLP', desc: 'Automatically recognize dates and times as you type to set smart reminders.', icon: Brain },
-    { title: 'Filter', desc: 'Easily customize filters like “high-priority tasks for this week” to view what matters.', icon: FilterIcon },
-    { title: 'Progress', desc: 'Track focus duration, streaks and habit logs to get a clear view of your progress.', icon: BarChart3 },
-    { title: 'Lock', desc: 'Protect private notes and tasks with a passcode or biometric lock.', icon: Lock },
-    { title: 'Dark Mode', desc: 'A calm, eye-friendly dark theme that automatically follows your system.', icon: Moon },
-    { title: 'Time Tracking', desc: 'Log time on tasks and habits to understand exactly where your day goes.', icon: Clock },
+    { title: 'Reminder', desc: 'Notifications keep ringing until you complete the task — nothing slips by.', icon: BellRing },
+    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: Repeat },
+    { title: 'NLP', desc: 'Type naturally and Flowist auto-detects dates, times and reminder cues.', icon: Brain },
+    { title: 'Filter', desc: 'Build smart filters like “high-priority this week” to focus on what matters.', icon: FilterIcon },
+    { title: 'Progress', desc: 'Track focus time, streaks and habit logs to see your real momentum daily.', icon: BarChart3 },
+    { title: 'Lock', desc: 'Protect private notes and tasks behind a passcode or biometric lock.', icon: Lock },
+    { title: 'Dark Mode', desc: 'A calm, eye-friendly dark theme that follows your system preference.', icon: Moon },
+    { title: 'Time Track', desc: 'Log time on tasks and habits to see exactly where your day really goes.', icon: Clock },
   ];
 
   const faqs = [
