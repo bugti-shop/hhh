@@ -4,6 +4,10 @@ import { Menu, Check, Calendar, StickyNote, Sparkles, Shield, Zap, Star, Repeat,
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
+import socialX from '@/assets/social-x.png';
+import socialReddit from '@/assets/social-reddit.png';
+import socialYoutube from '@/assets/social-youtube.png';
+import socialInstagram from '@/assets/social-instagram.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
