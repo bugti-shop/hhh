@@ -507,10 +507,26 @@ export default function Landing() {
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16">
-          {/* Top: logo + copyright */}
-          <div className="mb-10 flex items-center gap-2">
-            <AppLogo size="sm" />
-            <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
+          {/* Top: logo + social icons */}
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2">
+              <AppLogo size="sm" />
+              <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="transition-transform hover:scale-105">
+                <img src={socialX} alt="X" className="h-7 w-7 rounded-md object-contain" loading="lazy" />
+              </a>
+              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="transition-transform hover:scale-105">
+                <img src={socialReddit} alt="Reddit" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="transition-transform hover:scale-105">
+                <img src={socialYoutube} alt="YouTube" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:scale-105">
+                <img src={socialInstagram} alt="Instagram" className="h-7 w-7 object-contain" loading="lazy" />
+              </a>
+            </div>
           </div>
           <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} Flowist Inc.</p>
 
