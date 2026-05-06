@@ -513,18 +513,18 @@ export default function Landing() {
               <AppLogo size="sm" />
               <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
             </div>
-            <div className="flex items-center gap-2.5">
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="transition-transform hover:scale-105">
-                <img src={socialX} alt="X" className="h-7 w-7 rounded-md object-contain" loading="lazy" />
+            <div className="ml-6 flex items-center gap-3 sm:ml-10">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="flex h-9 w-9 items-center justify-center rounded-full bg-black transition-transform hover:scale-105">
+                <img src={socialX} alt="X" className="h-4 w-4 object-contain" loading="lazy" />
               </a>
-              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="transition-transform hover:scale-105">
-                <img src={socialReddit} alt="Reddit" className="h-7 w-7 object-contain" loading="lazy" />
+              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FF4500] transition-transform hover:scale-105">
+                <img src={socialReddit} alt="Reddit" className="h-6 w-6 object-contain" loading="lazy" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="transition-transform hover:scale-105">
-                <img src={socialYoutube} alt="YouTube" className="h-7 w-7 object-contain" loading="lazy" />
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FF0000] transition-transform hover:scale-105">
+                <img src={socialYoutube} alt="YouTube" className="h-5 w-5 object-contain" loading="lazy" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:scale-105">
-                <img src={socialInstagram} alt="Instagram" className="h-7 w-7 object-contain" loading="lazy" />
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-[#FEDA75] via-[#FA7E1E] via-40% to-[#D62976] transition-transform hover:scale-105">
+                <img src={socialInstagram} alt="Instagram" className="h-5 w-5 object-contain" loading="lazy" />
               </a>
             </div>
           </div>
