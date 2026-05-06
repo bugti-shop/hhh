@@ -459,13 +459,13 @@ export default function Landing() {
               {suiteFeatures.map(({ title, desc, icon: Icon }) => (
                 <div
                   key={title}
-                  className="rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-7"
+                  className="flex h-full flex-col rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
                 >
-                  <Icon className="mb-4 h-7 w-7 text-slate-900 sm:h-8 sm:w-8" strokeWidth={1.75} />
-                  <h3 className="mb-3 text-[17px] font-extrabold tracking-tight text-slate-900 sm:text-[20px]">
+                  <Icon className="mb-3 h-5 w-5 text-slate-900 sm:h-6 sm:w-6" strokeWidth={1.75} />
+                  <h3 className="mb-2 truncate whitespace-nowrap text-[15px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
                     {title}
                   </h3>
-                  <p className="text-[13px] leading-relaxed text-slate-600 sm:text-[15px]">
+                  <p className="line-clamp-4 text-[13px] leading-relaxed text-slate-600 sm:text-[14px]">
                     {desc}
                   </p>
                 </div>
