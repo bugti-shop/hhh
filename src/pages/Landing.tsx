@@ -354,7 +354,7 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Product feature cards (TickTick-style) */}
-        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-16 sm:pt-2 sm:pb-24">
+        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-4 sm:pt-2 sm:pb-6">
           <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
             {productCards.map(({ label, title, desc, icon: Icon, gradient }) => (
               <article
@@ -383,7 +383,7 @@ export default function Landing() {
         </section>
 
         {/* Horizontally scrollable feature pills + active preview */}
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white pt-2 pb-8 sm:pt-4 sm:pb-12">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="mb-6 text-center sm:mb-8">
               <p className="mb-2 text-base font-bold tracking-tight sm:text-lg" style={{ color: BLUE }}>
@@ -444,7 +444,7 @@ export default function Landing() {
         </section>
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white pt-2 pb-12 sm:pt-4 sm:pb-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <div className="mb-10 text-center sm:mb-14">
               <h2 className="text-[28px] font-extrabold leading-tight tracking-tight sm:text-[40px]" style={{ color: BLUE }}>
