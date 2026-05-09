@@ -354,7 +354,7 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Product feature cards (TickTick-style) */}
-        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-4 pb-16 sm:pt-6 sm:pb-24">
+        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-16 sm:pt-2 sm:pb-24">
           <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
             {productCards.map(({ label, title, desc, icon: Icon, gradient }) => (
               <article
@@ -515,16 +515,16 @@ export default function Landing() {
             </div>
             <div className="ml-auto flex items-center gap-3">
               <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-block transition-transform hover:scale-105">
-                <img src={socialX} alt="X" className="h-9 w-9 object-contain" loading="lazy" />
+                <img src={socialX} alt="X" className="h-7 w-7 object-contain" loading="lazy" />
               </a>
               <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="inline-block transition-transform hover:scale-105">
-                <img src={socialReddit} alt="Reddit" className="h-9 w-9 object-contain" loading="lazy" />
+                <img src={socialReddit} alt="Reddit" className="h-7 w-7 object-contain" loading="lazy" />
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-block transition-transform hover:scale-105">
-                <img src={socialYoutube} alt="YouTube" className="h-9 w-9 object-contain" loading="lazy" />
+                <img src={socialYoutube} alt="YouTube" className="h-7 w-7 object-contain" loading="lazy" />
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-block transition-transform hover:scale-105">
-                <img src={socialInstagram} alt="Instagram" className="h-9 w-9 object-contain" loading="lazy" />
+                <img src={socialInstagram} alt="Instagram" className="h-7 w-7 object-contain" loading="lazy" />
               </a>
             </div>
           </div>
