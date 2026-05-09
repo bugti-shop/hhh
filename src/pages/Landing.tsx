@@ -508,12 +508,12 @@ export default function Landing() {
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16">
           {/* Top: logo + social icons */}
-          <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="mb-6 flex flex-nowrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <AppLogo size="sm" />
               <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
             </div>
-            <div className="ml-12 flex items-center gap-3 sm:ml-20">
+            <div className="ml-auto flex items-center gap-3">
               <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-block transition-transform hover:scale-105">
                 <img src={socialX} alt="X" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
