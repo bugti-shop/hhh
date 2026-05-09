@@ -354,7 +354,7 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Product feature cards (TickTick-style) */}
-        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-16 sm:pt-2 sm:pb-24">
+        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-4 sm:pt-2 sm:pb-6">
           <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
             {productCards.map(({ label, title, desc, icon: Icon, gradient }) => (
               <article
