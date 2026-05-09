@@ -383,7 +383,7 @@ export default function Landing() {
         </section>
 
         {/* Horizontally scrollable feature pills + active preview */}
-        <section className="bg-white py-14 sm:py-20">
+        <section className="bg-white pt-2 pb-8 sm:pt-4 sm:pb-12">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <div className="mb-6 text-center sm:mb-8">
               <p className="mb-2 text-base font-bold tracking-tight sm:text-lg" style={{ color: BLUE }}>
