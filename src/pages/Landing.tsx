@@ -515,16 +515,16 @@ export default function Landing() {
             </div>
             <div className="ml-auto flex items-center gap-3">
               <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-block transition-transform hover:scale-105">
-                <img src={socialX} alt="X" className="h-7 w-7 object-contain" loading="lazy" />
+                <img src={socialX} alt="X" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
               <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="inline-block transition-transform hover:scale-105">
-                <img src={socialReddit} alt="Reddit" className="h-7 w-7 object-contain" loading="lazy" />
+                <img src={socialReddit} alt="Reddit" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-block transition-transform hover:scale-105">
-                <img src={socialYoutube} alt="YouTube" className="h-7 w-7 object-contain" loading="lazy" />
+                <img src={socialYoutube} alt="YouTube" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-block transition-transform hover:scale-105">
-                <img src={socialInstagram} alt="Instagram" className="h-7 w-7 object-contain" loading="lazy" />
+                <img src={socialInstagram} alt="Instagram" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
             </div>
           </div>
