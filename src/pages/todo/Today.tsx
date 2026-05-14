@@ -476,6 +476,7 @@ const Today = () => {
     <TodoLayout title="Flowist" searchValue={viewModeSearch} onSearchChange={(val) => startTransition(() => setViewModeSearch(val))}>
       
       <main className="container mx-auto px-4 py-3 pb-32">
+        <h1 className="sr-only">Flowist — Today's Tasks &amp; Daily Planner</h1>
         <div className="max-w-2xl mx-auto">
           {/* Folders */}
           <div className="mb-4" data-tour="todo-folders-section">

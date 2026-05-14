@@ -18,7 +18,7 @@ const AppLogoInner = ({ className, size = 'md' }: AppLogoProps) => {
   return (
     <img
       src={appLogo}
-      alt="Flowist"
+      alt="Flowist app logo"
       className={className || `${sizeClass} flex-shrink-0`}
       loading="eager"
       decoding="async"

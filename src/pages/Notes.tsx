@@ -341,7 +341,7 @@ const Notes = () => {
           <div className="flex items-center justify-between gap-1 xs:gap-2">
             <div className="flex items-center gap-1.5 xs:gap-2 min-w-0 flex-shrink-0">
               <AppLogo />
-              <h1 className="text-base xs:text-lg sm:text-xl font-bold">{t('notes.title')}</h1>
+              <h1 className="text-base xs:text-lg sm:text-xl font-bold" aria-label="Flowist — Your Personal Notes">{t('notes.title')}</h1>
               
             </div>
             <div className="flex items-center gap-0.5 xs:gap-1 sm:gap-2 flex-shrink-0">
@@ -631,9 +631,9 @@ const Notes = () => {
                     )}
                   </div>
                   {note.title && (
-                    <h3 className="font-bold text-base mb-2 text-foreground pr-10">
+                    <h2 className="font-bold text-base mb-2 text-foreground pr-10">
                       {note.title}
-                    </h3>
+                    </h2>
                   )}
                   {/* Show metaDescription if available, otherwise show content preview */}
                   {(note.metaDescription || note.content) && (
