@@ -364,9 +364,9 @@ export default function Landing() {
                 <p className="mb-3 text-sm font-bold tracking-tight sm:text-base" style={{ color: BLUE }}>
                   {label}
                 </p>
-                <h3 className="mb-4 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
+                <h2 className="mb-4 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
                   {title}
-                </h3>
+                </h2>
                 <p className="mb-7 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                   {desc}
                 </p>
@@ -514,17 +514,17 @@ export default function Landing() {
               <span className="text-base font-extrabold" style={{ color: BLUE }}>Flowist</span>
             </div>
             <div className="ml-auto flex items-center gap-3">
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="inline-block transition-transform hover:scale-105">
-                <img src={socialX} alt="X" className="h-9 w-9 object-contain" loading="lazy" />
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Flowist on X (Twitter)" className="inline-block transition-transform hover:scale-105">
+                <img src={socialX} alt="X social icon" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
-              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="inline-block transition-transform hover:scale-105">
-                <img src={socialReddit} alt="Reddit" className="h-9 w-9 object-contain" loading="lazy" />
+              <a href="https://reddit.com" target="_blank" rel="noopener noreferrer" aria-label="Flowist on Reddit" className="inline-block transition-transform hover:scale-105">
+                <img src={socialReddit} alt="Reddit social icon" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-block transition-transform hover:scale-105">
-                <img src={socialYoutube} alt="YouTube" className="h-9 w-9 object-contain" loading="lazy" />
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="Flowist on YouTube" className="inline-block transition-transform hover:scale-105">
+                <img src={socialYoutube} alt="YouTube social icon" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-block transition-transform hover:scale-105">
-                <img src={socialInstagram} alt="Instagram" className="h-9 w-9 object-contain" loading="lazy" />
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Flowist on Instagram" className="inline-block transition-transform hover:scale-105">
+                <img src={socialInstagram} alt="Instagram social icon" className="h-9 w-9 object-contain" loading="lazy" />
               </a>
             </div>
           </div>
