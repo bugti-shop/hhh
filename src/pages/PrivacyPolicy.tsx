@@ -1,8 +1,15 @@
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
+
+  usePageMeta({
+    title: 'Privacy Policy | Flowist',
+    description: 'Read the Flowist Privacy Policy to learn how we collect, use, and protect your data when you use our notes, to-do, and planner app.',
+    path: '/privacy-policy',
+  });
 
   return (
     <div className="min-h-screen bg-background text-foreground">
