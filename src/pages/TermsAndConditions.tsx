@@ -1,8 +1,15 @@
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 const TermsAndConditions = () => {
   const navigate = useNavigate();
+
+  usePageMeta({
+    title: 'Terms & Conditions | Flowist',
+    description: 'Review the Flowist Terms of Service governing your use of our notes, to-do list, habit tracking, and daily planner app.',
+    path: '/terms-and-conditions',
+  });
 
   return (
     <div className="min-h-screen bg-background text-foreground">
