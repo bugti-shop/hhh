@@ -33,7 +33,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 
     <script>
-      requestIdleCallback ? requestIdleCallback(loadExtraFonts, {timeout:4000}) : setTimeout(loadExtraFonts, 2000);
+      if (typeof requestIdleCallback !== 'undefined') {
+        requestIdleCallback(loadExtraFonts, {timeout:4000});
+      } else {
+        setTimeout(loadExtraFonts, 2000);
+      }
       function loadExtraFonts(){
         var l=document.createElement('link');l.rel='stylesheet';
         l.href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Crimson+Text:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Indie+Flower&family=Shadows+Into+Light&family=Permanent+Marker&family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&family=Fira+Code:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&family=Noto+Serif:wght@400;700&family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&display=swap';
