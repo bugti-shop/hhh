@@ -544,21 +544,24 @@ const AppContent = () => {
       )}
 
       
-      <PremiumPaywall />
+      <Suspense fallback={null}>
+        <PremiumPaywall />
+      </Suspense>
       
 
       {/* Only render app content after subscription access is fully verified */}
       {canRenderProtectedApp && (
         <>
-          <StreakMilestoneCelebration />
-          <StreakTierCelebration />
-          <SmartReviewPrompt />
-          
-          <ComboOverlay />
-          <EncouragementOverlay />
-          <UrgentReminderOverlay />
-          <SyncConflictSheet />
-          <SyncProgressSheet />
+          <Suspense fallback={null}>
+            <StreakMilestoneCelebration />
+            <StreakTierCelebration />
+            <SmartReviewPrompt />
+            <ComboOverlay />
+            <EncouragementOverlay />
+            <UrgentReminderOverlay />
+            <SyncConflictSheet />
+            <SyncProgressSheet />
+          </Suspense>
           <DeferredSyncInit />
           <AppRoutes />
         </>
