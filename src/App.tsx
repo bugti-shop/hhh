@@ -508,9 +508,9 @@ const AppContent = () => {
     );
   }
 
-  // Render the app for: verified Pro, previously-Pro this session (avoid flash), OR new free users (soft paywall mode).
-  // Soft-paywall users see the app with limits — paywall is opened on gated actions, dismissable.
-  const canRenderProtectedApp = showOnboarding === false && !isVerifyingCheckout && (isPro || (wasEverPro.current && subLoading) || isNewFreeUser);
+  // Render the dashboard as soon as onboarding is complete. Free users stay in-app with
+  // soft limits; don't unmount the app during subscription rechecks (causes white screen).
+  const canRenderProtectedApp = showOnboarding === false && !isVerifyingCheckout;
 
   // Web-only: show landing page first for guests who haven't engaged yet.
   // HARD GUARD: never on native — even if state somehow became true, the platform check wins.
