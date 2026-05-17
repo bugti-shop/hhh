@@ -372,7 +372,7 @@ export default function Landing() {
         {/* Product feature cards (TickTick-style) */}
         <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-4 sm:pt-2 sm:pb-6">
           <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
-            {productCards.map(({ label, title, desc, icon: Icon, gradient }) => (
+            {productCards.map(({ label, title, desc, icon: Icon, gradient, image, imageAlt }) => (
               <article
                 key={label}
                 className="overflow-hidden rounded-[28px] border border-slate-200/70 bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:p-9"
@@ -389,8 +389,14 @@ export default function Landing() {
                 <div
                   className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient}`}
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm">
-                    <Icon className="h-8 w-8" style={{ color: BLUE }} />
+                  <img
+                    src={image}
+                    alt={imageAlt}
+                    className="h-full w-full object-contain p-2 sm:p-3"
+                    loading="lazy"
+                  />
+                  <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 shadow-sm backdrop-blur-sm">
+                    <Icon className="h-5 w-5" style={{ color: BLUE }} />
                   </div>
                 </div>
               </article>
@@ -443,14 +449,15 @@ export default function Landing() {
                   <div
                     className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)]`}
                   >
-                    <div className="flex flex-col items-center gap-3 text-slate-500">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm">
-                        <Icon className="h-8 w-8" style={{ color: BLUE }} />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-600">{f.label}</p>
-                      <p className="flex items-center gap-1.5 text-xs text-slate-400">
-                        <ImageIcon className="h-3.5 w-3.5" /> Image placeholder
-                      </p>
+                    <img
+                      src={f.image}
+                      alt={f.imageAlt}
+                      className="h-full w-full object-contain p-2 sm:p-4"
+                      loading="lazy"
+                    />
+                    <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
+                      <Icon className="h-4 w-4" style={{ color: BLUE }} />
+                      <span>{f.label}</span>
                     </div>
                   </div>
                 );
