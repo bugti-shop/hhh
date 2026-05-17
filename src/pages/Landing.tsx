@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Check, Calendar, StickyNote, Sparkles, Shield, Zap, Star, Repeat, ArrowRight, ChevronDown, X, Pencil, FileText, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, Image as ImageIcon, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
+import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
@@ -8,6 +8,13 @@ import socialX from '@/assets/social-x.png';
 import socialReddit from '@/assets/social-reddit.png';
 import socialYoutube from '@/assets/social-youtube.png';
 import socialInstagram from '@/assets/social-instagram.png';
+import todoDashboardImage from '@/assets/flowist-todo-dashboard.png';
+import sketchEditorImage from '@/assets/flowist-sketch-editor.png';
+import linedNoteImage from '@/assets/flowist-lined-note.png';
+import regularNoteImage from '@/assets/flowist-regular-note.png';
+import stickyNoteImage from '@/assets/flowist-sticky-note.png';
+import codeEditorImage from '@/assets/flowist-code-editor.png';
+import taskNlpImage from '@/assets/flowist-task-nlp.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -99,6 +106,8 @@ export default function Landing() {
       desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
       icon: Check,
       gradient: 'from-[#eaf1ff] to-[#f5f9ff]',
+      image: todoDashboardImage,
+      imageAlt: 'Flowist to-do dashboard with task folders and priority tasks',
     },
     {
       label: 'Sketch Editor',
@@ -106,6 +115,8 @@ export default function Landing() {
       desc: 'A powerful infinite canvas with shapes, layers and templates — capture thoughts visually, the way your mind actually works.',
       icon: Sparkles,
       gradient: 'from-[#fff4ea] to-[#fffaf3]',
+      image: sketchEditorImage,
+      imageAlt: 'Flowist sketch editor with ruler, protractor and geometric shapes',
     },
     {
       label: 'Regular Notes',
@@ -113,6 +124,8 @@ export default function Landing() {
       desc: 'A distraction-free notes editor with rich formatting, tags and folders — perfect for journaling, ideas and quick captures.',
       icon: StickyNote,
       gradient: 'from-[#eafff1] to-[#f4fff8]',
+      image: regularNoteImage,
+      imageAlt: 'Flowist regular note editor with formatted text',
     },
     {
       label: 'Lined Notes',
@@ -120,19 +133,22 @@ export default function Landing() {
       desc: 'Classic ruled paper with a modern feel — handwrite or type with perfect alignment for a calm, focused writing experience.',
       icon: Calendar,
       gradient: 'from-[#fdeaff] to-[#fbf3ff]',
+      image: linedNoteImage,
+      imageAlt: 'Flowist lined note editor with ruled paper style',
     },
   ];
 
   const features = [
-    { label: 'Sketch Editor', icon: Pencil, gradient: 'from-[#fff4ea] to-[#fffaf3]' },
-    { label: 'Regular Note', icon: StickyNote, gradient: 'from-[#eafff1] to-[#f4fff8]' },
-    { label: 'Lined Note', icon: AlignLeft, gradient: 'from-[#fdeaff] to-[#fbf3ff]' },
-    { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]' },
-    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]' },
-    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]' },
-    { label: 'Kanban', icon: LayoutGrid, gradient: 'from-[#fff8ea] to-[#fffcf3]' },
-    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]' },
-    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]' },
+    { label: 'Sketch Editor', icon: Pencil, gradient: 'from-[#fff4ea] to-[#fffaf3]', image: sketchEditorImage, imageAlt: 'Flowist sketch editor with drawing tools and geometry helpers' },
+    { label: 'Regular Note', icon: StickyNote, gradient: 'from-[#eafff1] to-[#f4fff8]', image: regularNoteImage, imageAlt: 'Flowist regular note editor' },
+    { label: 'Lined Note', icon: AlignLeft, gradient: 'from-[#fdeaff] to-[#fbf3ff]', image: linedNoteImage, imageAlt: 'Flowist lined note editor' },
+    { label: 'Sticky Note', icon: StickyNote, gradient: 'from-[#ffeaf5] to-[#fff5fb]', image: stickyNoteImage, imageAlt: 'Flowist sticky note editor with color options' },
+    { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: codeEditorImage, imageAlt: 'Flowist code note editor with HTML syntax highlighting' },
+    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]', image: taskNlpImage, imageAlt: 'Flowist natural language task input detecting date and repeat details' },
+    { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: todoDashboardImage, imageAlt: 'Flowist task dashboard with priority tasks and bottom navigation' },
+    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: todoDashboardImage, imageAlt: 'Flowist dashboard navigation with calendar access' },
+    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: todoDashboardImage, imageAlt: 'Flowist high priority tasks section' },
+    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: todoDashboardImage, imageAlt: 'Flowist clean flat task layout' },
   ];
 
   const suiteFeatures = [
@@ -356,7 +372,7 @@ export default function Landing() {
         {/* Product feature cards (TickTick-style) */}
         <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-4 sm:pt-2 sm:pb-6">
           <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
-            {productCards.map(({ label, title, desc, icon: Icon, gradient }) => (
+            {productCards.map(({ label, title, desc, icon: Icon, gradient, image, imageAlt }) => (
               <article
                 key={label}
                 className="overflow-hidden rounded-[28px] border border-slate-200/70 bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:p-9"
@@ -373,8 +389,14 @@ export default function Landing() {
                 <div
                   className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient}`}
                 >
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm">
-                    <Icon className="h-8 w-8" style={{ color: BLUE }} />
+                  <img
+                    src={image}
+                    alt={imageAlt}
+                    className="h-full w-full object-contain p-2 sm:p-3"
+                    loading="lazy"
+                  />
+                  <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 shadow-sm backdrop-blur-sm">
+                    <Icon className="h-5 w-5" style={{ color: BLUE }} />
                   </div>
                 </div>
               </article>
@@ -427,14 +449,15 @@ export default function Landing() {
                   <div
                     className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)]`}
                   >
-                    <div className="flex flex-col items-center gap-3 text-slate-500">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/80 shadow-sm backdrop-blur-sm">
-                        <Icon className="h-8 w-8" style={{ color: BLUE }} />
-                      </div>
-                      <p className="text-sm font-semibold text-slate-600">{f.label}</p>
-                      <p className="flex items-center gap-1.5 text-xs text-slate-400">
-                        <ImageIcon className="h-3.5 w-3.5" /> Image placeholder
-                      </p>
+                    <img
+                      src={f.image}
+                      alt={f.imageAlt}
+                      className="h-full w-full object-contain p-2 sm:p-4"
+                      loading="lazy"
+                    />
+                    <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
+                      <Icon className="h-4 w-4" style={{ color: BLUE }} />
+                      <span>{f.label}</span>
                     </div>
                   </div>
                 );
