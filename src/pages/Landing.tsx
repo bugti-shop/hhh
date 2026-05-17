@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Check, Calendar, StickyNote, Sparkles, Shield, Zap, Star, Repeat, ArrowRight, ChevronDown, X, Pencil, FileText, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, Image as ImageIcon, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
+import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
@@ -8,6 +8,13 @@ import socialX from '@/assets/social-x.png';
 import socialReddit from '@/assets/social-reddit.png';
 import socialYoutube from '@/assets/social-youtube.png';
 import socialInstagram from '@/assets/social-instagram.png';
+import todoDashboardImage from '@/assets/flowist-todo-dashboard.png';
+import sketchEditorImage from '@/assets/flowist-sketch-editor.png';
+import linedNoteImage from '@/assets/flowist-lined-note.png';
+import regularNoteImage from '@/assets/flowist-regular-note.png';
+import stickyNoteImage from '@/assets/flowist-sticky-note.png';
+import codeEditorImage from '@/assets/flowist-code-editor.png';
+import taskNlpImage from '@/assets/flowist-task-nlp.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
