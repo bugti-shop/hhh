@@ -106,6 +106,8 @@ export default function Landing() {
       desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
       icon: Check,
       gradient: 'from-[#eaf1ff] to-[#f5f9ff]',
+      image: todoDashboardImage,
+      imageAlt: 'Flowist to-do dashboard with task folders and priority tasks',
     },
     {
       label: 'Sketch Editor',
@@ -113,6 +115,8 @@ export default function Landing() {
       desc: 'A powerful infinite canvas with shapes, layers and templates — capture thoughts visually, the way your mind actually works.',
       icon: Sparkles,
       gradient: 'from-[#fff4ea] to-[#fffaf3]',
+      image: sketchEditorImage,
+      imageAlt: 'Flowist sketch editor with ruler, protractor and geometric shapes',
     },
     {
       label: 'Regular Notes',
@@ -120,6 +124,8 @@ export default function Landing() {
       desc: 'A distraction-free notes editor with rich formatting, tags and folders — perfect for journaling, ideas and quick captures.',
       icon: StickyNote,
       gradient: 'from-[#eafff1] to-[#f4fff8]',
+      image: regularNoteImage,
+      imageAlt: 'Flowist regular note editor with formatted text',
     },
     {
       label: 'Lined Notes',
@@ -127,19 +133,22 @@ export default function Landing() {
       desc: 'Classic ruled paper with a modern feel — handwrite or type with perfect alignment for a calm, focused writing experience.',
       icon: Calendar,
       gradient: 'from-[#fdeaff] to-[#fbf3ff]',
+      image: linedNoteImage,
+      imageAlt: 'Flowist lined note editor with ruled paper style',
     },
   ];
 
   const features = [
-    { label: 'Sketch Editor', icon: Pencil, gradient: 'from-[#fff4ea] to-[#fffaf3]' },
-    { label: 'Regular Note', icon: StickyNote, gradient: 'from-[#eafff1] to-[#f4fff8]' },
-    { label: 'Lined Note', icon: AlignLeft, gradient: 'from-[#fdeaff] to-[#fbf3ff]' },
-    { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]' },
-    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]' },
-    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]' },
-    { label: 'Kanban', icon: LayoutGrid, gradient: 'from-[#fff8ea] to-[#fffcf3]' },
-    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]' },
-    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]' },
+    { label: 'Sketch Editor', icon: Pencil, gradient: 'from-[#fff4ea] to-[#fffaf3]', image: sketchEditorImage, imageAlt: 'Flowist sketch editor with drawing tools and geometry helpers' },
+    { label: 'Regular Note', icon: StickyNote, gradient: 'from-[#eafff1] to-[#f4fff8]', image: regularNoteImage, imageAlt: 'Flowist regular note editor' },
+    { label: 'Lined Note', icon: AlignLeft, gradient: 'from-[#fdeaff] to-[#fbf3ff]', image: linedNoteImage, imageAlt: 'Flowist lined note editor' },
+    { label: 'Sticky Note', icon: StickyNote, gradient: 'from-[#ffeaf5] to-[#fff5fb]', image: stickyNoteImage, imageAlt: 'Flowist sticky note editor with color options' },
+    { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: codeEditorImage, imageAlt: 'Flowist code note editor with HTML syntax highlighting' },
+    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]', image: taskNlpImage, imageAlt: 'Flowist natural language task input detecting date and repeat details' },
+    { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: todoDashboardImage, imageAlt: 'Flowist task dashboard with priority tasks and bottom navigation' },
+    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: todoDashboardImage, imageAlt: 'Flowist dashboard navigation with calendar access' },
+    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: todoDashboardImage, imageAlt: 'Flowist high priority tasks section' },
+    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: todoDashboardImage, imageAlt: 'Flowist clean flat task layout' },
   ];
 
   const suiteFeatures = [
