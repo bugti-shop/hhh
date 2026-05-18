@@ -112,8 +112,8 @@ export default function Landing() {
       desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
       icon: Check,
       gradient: 'from-[#eaf1ff] to-[#f5f9ff]',
-      image: todoDashboardImage,
-      imageAlt: 'Flowist to-do dashboard with task folders and priority tasks',
+      image: foldersTasksImage,
+      imageAlt: 'Flowist to-do dashboard with folders, search and grouped tasks',
     },
     {
       label: 'Sketch Editor',
