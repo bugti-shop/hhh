@@ -207,7 +207,7 @@ const AppRoutes = () => {
         <NavigationLoader />
         <DashboardTracker />
         <TourNavigationListener />
-        <Suspense fallback={<BrandedFallback />}>
+          <Suspense fallback={<BrandedFallback />}>
           <Routes>
             <Route path="/" element={<RootRedirect />} />
             <Route path="/notesdashboard" element={<Index />} />
@@ -556,6 +556,8 @@ const AppContent = () => {
       
 
       {/* Only render app content after subscription access is fully verified */}
+      {showOnboarding === null && !showLanding && <BrandedFallback />}
+
       {canRenderProtectedApp && (
         <>
           <Suspense fallback={null}>
