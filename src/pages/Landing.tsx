@@ -78,15 +78,15 @@ export default function Landing() {
     navigate('/');
   };
 
-  const menuGroups: { label: string; items: { label: string; href?: string }[] }[] = [
+  const menuGroups: { label: string; items: { label: string; href: string }[] }[] = [
     {
       label: 'Made For',
       items: [
-        { label: 'Task Management', href: '#cards' },
-        { label: 'Note Taking', href: '#cards' },
-        { label: 'Sketching', href: '#cards' },
-        { label: 'Habit Forming', href: '#cards' },
-        { label: 'Daily Planning', href: '#cards' },
+        { label: 'Task Management', href: '#features' },
+        { label: 'Note Taking', href: '#features' },
+        { label: 'Sketching', href: '#features' },
+        { label: 'Habit Forming', href: '#features' },
+        { label: 'Daily Planning', href: '#features' },
       ],
     },
     {
@@ -249,7 +249,7 @@ export default function Landing() {
                             {group.items.map((item) => (
                               <a
                                 key={item.label}
-                                href={item.href || '#'}
+                                href={item.href}
                                 onClick={() => setMenuOpen(false)}
                                 className="px-9 py-3 text-base text-slate-700 transition-colors active:bg-slate-50"
                               >
@@ -321,21 +321,20 @@ export default function Landing() {
                   Get Flowist Free <ArrowRight className="h-5 w-5" />
                 </button>
                 <div className="grid w-full grid-cols-2 gap-2">
-                  <a
-                    href="https://apps.apple.com/app/flowist"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-md bg-black px-3 text-white transition-transform active:translate-y-0.5"
-                    aria-label="Download on the App Store"
+                  <button
+                    type="button"
+                    disabled
+                    className="inline-flex h-[52px] w-full cursor-default items-center justify-center gap-2 rounded-md bg-black px-3 text-white opacity-90"
+                    aria-label="App Store coming soon"
                   >
                     <svg viewBox="0 0 384 512" className="h-7 w-7 fill-current shrink-0" aria-hidden="true">
                       <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zM256.5 105.7c30.1-35.7 27.4-68.2 26.5-79.9-26.6 1.5-57.4 18.1-74.9 38.5-19.3 21.9-30.6 49-28.2 78.8 28.7 2.2 54.9-12.5 76.6-37.4z"/>
                     </svg>
                     <div className="flex flex-col items-start leading-tight">
-                      <span className="text-[10px] font-medium opacity-90">Download on the</span>
+                      <span className="text-[10px] font-medium opacity-90">Coming soon on</span>
                       <span className="text-[17px] font-semibold tracking-tight">App Store</span>
                     </div>
-                  </a>
+                  </button>
                   <a
                     href="https://play.google.com/store/apps/details?id=nota.npd.com"
                     target="_blank"
@@ -387,12 +386,12 @@ export default function Landing() {
                   {desc}
                 </p>
                 <div
-                  className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient}`}
+                  className={`relative flex min-h-[520px] w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} sm:min-h-[640px]`}
                 >
                   <img
                     src={image}
                     alt={imageAlt}
-                    className="h-full w-full object-contain p-2 sm:p-3"
+                    className="h-[500px] w-auto max-w-full object-contain p-1 sm:h-[620px] sm:p-2"
                     loading="lazy"
                   />
                   <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 shadow-sm backdrop-blur-sm">
@@ -447,12 +446,12 @@ export default function Landing() {
                 const Icon = f.icon;
                 return (
                   <div
-                    className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)]`}
+                    className={`relative flex min-h-[560px] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:min-h-[720px] lg:min-h-[820px]`}
                   >
                     <img
                       src={f.image}
                       alt={f.imageAlt}
-                      className="h-full w-full object-contain p-2 sm:p-4"
+                      className="h-[540px] w-auto max-w-full object-contain p-1 sm:h-[700px] sm:p-2 lg:h-[800px]"
                       loading="lazy"
                     />
                     <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
@@ -574,7 +573,7 @@ export default function Landing() {
             <div>
               <h4 className="mb-4 text-base font-bold text-slate-900">Download</h4>
               <ul className="space-y-3 text-sm text-slate-600">
-                <li><a href="https://apps.apple.com/app/flowist" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">iOS</a></li>
+                <li><span className="text-slate-500">iOS — Coming soon</span></li>
                 <li><a href="https://play.google.com/store/apps/details?id=nota.npd.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Android</a></li>
                 <li><button onClick={handleGetStarted} className="hover:text-slate-900">Web App</button></li>
               </ul>
