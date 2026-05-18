@@ -150,7 +150,7 @@ export default function Landing() {
     { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: todoDashboardImage, imageAlt: 'Flowist task dashboard with priority tasks and bottom navigation' },
     { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: calendarViewImage, imageAlt: 'Flowist monthly calendar view with highlighted task dates' },
     { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: todoDashboardImage, imageAlt: 'Flowist high priority tasks section' },
-    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: todoDashboardImage, imageAlt: 'Flowist clean flat task layout' },
+    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: flatLayoutImage, imageAlt: 'Flowist clean flat task layout' },
   ];
 
   const suiteFeatures = [
