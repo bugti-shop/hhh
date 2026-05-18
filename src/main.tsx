@@ -87,8 +87,8 @@ if (!hasCacheBeenCleared) {
   });
 }
 
-// No loading screen - render nothing during suspense for instant feel
-const EmptyFallback = () => null;
+// No spinner, but keep the root painted so mobile/web never looks like a crashed white page.
+const EmptyFallback = () => <div className="min-h-screen bg-background" aria-hidden="true" />;
 
 // Catch uncaught synchronous errors that escape React's error boundary
 window.addEventListener('error', (event) => {

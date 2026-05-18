@@ -50,8 +50,6 @@ export class ErrorBoundary extends Component<Props, State> {
       'network', 'timeout', 'Failed to fetch', // network
       'AbortError', 'The operation was aborted', // cancelled requests
       'QuotaExceededError', // storage
-      'Cannot read properties of null', // race conditions in unmounted components
-      'Cannot read properties of undefined', // stale data
     ];
     if (suppressPatterns.some(p => msg.includes(p))) {
       console.warn('Suppressed error:', msg.slice(0, 120));
