@@ -1966,11 +1966,14 @@ export const NoteEditor = ({ note, isOpen, onClose, onSave, defaultType = 'regul
       )}
 
       {/* AI page scan → formatted HTML into note */}
-      <ScanNoteSheet
-        isOpen={showScanNote}
-        onClose={() => setShowScanNote(false)}
-        onInsertHtml={handleAiInsertHtml}
-      />
+      <SafeComponent fallback={null}>
+        <ScanNoteSheet
+          isOpen={showScanNote}
+          onClose={() => setShowScanNote(false)}
+          onInsertHtml={handleAiInsertHtml}
+        />
+      </SafeComponent>
+
 
 
       {/* New Folder Dialog */}
