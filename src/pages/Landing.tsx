@@ -446,12 +446,12 @@ export default function Landing() {
                 const Icon = f.icon;
                 return (
                   <div
-                    className={`relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)]`}
+                    className={`relative flex min-h-[560px] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:min-h-[720px] lg:min-h-[820px]`}
                   >
                     <img
                       src={f.image}
                       alt={f.imageAlt}
-                      className="h-full w-full object-contain p-2 sm:p-4"
+                      className="h-full max-h-[660px] w-auto max-w-full object-contain p-1 sm:max-h-[840px] sm:p-2"
                       loading="lazy"
                     />
                     <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
@@ -573,7 +573,7 @@ export default function Landing() {
             <div>
               <h4 className="mb-4 text-base font-bold text-slate-900">Download</h4>
               <ul className="space-y-3 text-sm text-slate-600">
-                <li><a href="https://apps.apple.com/app/flowist" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">iOS</a></li>
+                <li><span className="text-slate-500">iOS — Coming soon</span></li>
                 <li><a href="https://play.google.com/store/apps/details?id=nota.npd.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Android</a></li>
                 <li><button onClick={handleGetStarted} className="hover:text-slate-900">Web App</button></li>
               </ul>
