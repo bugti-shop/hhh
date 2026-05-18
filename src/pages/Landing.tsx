@@ -150,11 +150,11 @@ export default function Landing() {
     { label: 'Lined Note', icon: AlignLeft, gradient: 'from-[#fdeaff] to-[#fbf3ff]', image: linedNoteImage, imageAlt: 'Flowist lined note editor' },
     { label: 'Sticky Note', icon: StickyNote, gradient: 'from-[#ffeaf5] to-[#fff5fb]', image: stickyNoteImage, imageAlt: 'Flowist sticky note editor with color options' },
     { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: codeEditorImage, imageAlt: 'Flowist code note editor with HTML syntax highlighting' },
-    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]', image: taskNlpImage, imageAlt: 'Flowist natural language task input detecting date and repeat details' },
-    { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: todoDashboardImage, imageAlt: 'Flowist task dashboard with priority tasks and bottom navigation' },
-    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: todoDashboardImage, imageAlt: 'Flowist dashboard navigation with calendar access' },
-    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: todoDashboardImage, imageAlt: 'Flowist high priority tasks section' },
-    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: todoDashboardImage, imageAlt: 'Flowist clean flat task layout' },
+    { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]', image: nlpDetectionImage, imageAlt: 'Flowist natural language task input detecting date, time and repeat details' },
+    { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: foldersTasksImage, imageAlt: 'Flowist task dashboard with folders and grouped tasks' },
+    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: calendarViewImage, imageAlt: 'Flowist monthly calendar view with task indicators and bottom navigation' },
+    { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: priorityHighImage, imageAlt: 'Flowist high priority tasks section grouped by urgency' },
+    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: flatLayoutImage, imageAlt: 'Flowist clean flat task list with no nesting' },
   ];
 
   const suiteFeatures = [
