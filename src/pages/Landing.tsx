@@ -15,6 +15,8 @@ import regularNoteImage from '@/assets/flowist-regular-note.png';
 import stickyNoteImage from '@/assets/flowist-sticky-note.png';
 import codeEditorImage from '@/assets/flowist-code-editor.png';
 import taskNlpImage from '@/assets/flowist-task-nlp.png';
+import calendarViewImage from '@/assets/flowist-calendar-view.png';
+import flatLayoutImage from '@/assets/flowist-flat-layout.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -146,9 +148,9 @@ export default function Landing() {
     { label: 'Code Editor', icon: Code2, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: codeEditorImage, imageAlt: 'Flowist code note editor with HTML syntax highlighting' },
     { label: 'NLP', icon: Brain, gradient: 'from-[#fff0f0] to-[#fff7f7]', image: taskNlpImage, imageAlt: 'Flowist natural language task input detecting date and repeat details' },
     { label: 'Task Dashboard', icon: Check, gradient: 'from-[#eaf1ff] to-[#f5f9ff]', image: todoDashboardImage, imageAlt: 'Flowist task dashboard with priority tasks and bottom navigation' },
-    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: todoDashboardImage, imageAlt: 'Flowist dashboard navigation with calendar access' },
+    { label: 'Calendar', icon: Calendar, gradient: 'from-[#eaf6ff] to-[#f4fbff]', image: calendarViewImage, imageAlt: 'Flowist monthly calendar view with highlighted task dates' },
     { label: 'Priority', icon: Flag, gradient: 'from-[#ffeaea] to-[#fff5f5]', image: todoDashboardImage, imageAlt: 'Flowist high priority tasks section' },
-    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: todoDashboardImage, imageAlt: 'Flowist clean flat task layout' },
+    { label: 'Flat Layout', icon: Layers, gradient: 'from-[#eafff7] to-[#f4fffb]', image: flatLayoutImage, imageAlt: 'Flowist clean flat task layout' },
   ];
 
   const suiteFeatures = [
