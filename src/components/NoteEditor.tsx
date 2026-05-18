@@ -34,6 +34,7 @@ import { injectHeadingIds } from './NoteTableOfContents';
 import { InputSheetPage } from './InputSheetPage';
 import { VoiceRecordingSheet } from './VoiceRecordingSheet';
 import { ScanNoteSheet } from './ScanNoteSheet';
+import { SafeComponent } from './ErrorBoundary';
 
 import { NoteVoicePlayer } from './NoteVoicePlayer';
 import { AudioPlayer } from './AudioPlayer';
