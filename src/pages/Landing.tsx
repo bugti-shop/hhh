@@ -15,6 +15,12 @@ import regularNoteImage from '@/assets/flowist-regular-note.png';
 import stickyNoteImage from '@/assets/flowist-sticky-note.png';
 import codeEditorImage from '@/assets/flowist-code-editor.png';
 import taskNlpImage from '@/assets/flowist-task-nlp.png';
+import calendarViewImage from '@/assets/flowist-calendar-view.png';
+import foldersTasksImage from '@/assets/flowist-folders-tasks.png';
+import flatLayoutImage from '@/assets/flowist-flat-layout.png';
+import nlpDetectionImage from '@/assets/flowist-nlp-detection.png';
+import priorityLowImage from '@/assets/flowist-priority-low.png';
+import priorityHighImage from '@/assets/flowist-priority-high.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
