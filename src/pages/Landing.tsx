@@ -391,7 +391,7 @@ export default function Landing() {
                   <img
                     src={image}
                     alt={imageAlt}
-                    className="h-full max-h-[620px] w-auto max-w-full object-contain p-1 sm:max-h-[760px] sm:p-2"
+                    className="h-[500px] w-auto max-w-full object-contain p-1 sm:h-[620px] sm:p-2"
                     loading="lazy"
                   />
                   <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 shadow-sm backdrop-blur-sm">
@@ -451,7 +451,7 @@ export default function Landing() {
                     <img
                       src={f.image}
                       alt={f.imageAlt}
-                      className="h-full max-h-[660px] w-auto max-w-full object-contain p-1 sm:max-h-[840px] sm:p-2"
+                      className="h-[540px] w-auto max-w-full object-contain p-1 sm:h-[700px] sm:p-2 lg:h-[800px]"
                       loading="lazy"
                     />
                     <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
