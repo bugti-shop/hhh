@@ -1673,15 +1673,17 @@ export const TaskInputSheet = ({ isOpen, onClose, onAddTask, folders, selectedFo
       />
 
       {/* AI vision: Scan tasks from a paper / sticky-note image */}
-      <ImageTaskExtractorSheet
-        isOpen={showImageExtractor}
-        onClose={() => setShowImageExtractor(false)}
-        onAddTasks={handleExtractedTasksAdd}
-        folders={folders}
-        sections={sections}
-        currentFolderId={folderId ?? selectedFolderId ?? null}
-        currentSectionId={sectionId ?? selectedSectionId ?? null}
-      />
+      <SafeComponent fallback={null}>
+        <ImageTaskExtractorSheet
+          isOpen={showImageExtractor}
+          onClose={() => setShowImageExtractor(false)}
+          onAddTasks={handleExtractedTasksAdd}
+          folders={folders}
+          sections={sections}
+          currentFolderId={folderId ?? selectedFolderId ?? null}
+          currentSectionId={sectionId ?? selectedSectionId ?? null}
+        />
+      </SafeComponent>
     </>
   );
 };
