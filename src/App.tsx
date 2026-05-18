@@ -75,8 +75,8 @@ let hasResolvedInitialDashboard = false;
 // Minimal fallback — keeps layout stable during chunk load
 const EmptyFallback = () => null;
 
-// Branded fallback — silent (no spinner) per user request to remove the loader.
-const BrandedFallback = () => null;
+// Branded fallback — silent (no spinner), but never leaves a blank white root.
+const BrandedFallback = () => <div className="min-h-screen bg-background" aria-hidden="true" />;
 // Detect stale chunk errors and auto-reload once
 const isChunkError = (error: any): boolean => {
   const msg = String(error?.message || error || '');
@@ -248,7 +248,13 @@ const DriveSyncBootstrap = () => (
 
 const AppContent = () => {
   const [isAppLocked, setIsAppLocked] = useState<boolean | null>(null);
-  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(() => {
+    try {
+      return localStorage.getItem('onboarding_completed_flag') === 'true' ? false : null;
+    } catch {
+      return null;
+    }
+  });
   
   // Web-only landing page gate. Native apps NEVER show landing.
   // Multi-signal native detection (Capacitor.isNativePlatform can be false during very early boot
@@ -510,7 +516,7 @@ const AppContent = () => {
 
   // Render the dashboard as soon as onboarding is complete. Free users stay in-app with
   // soft limits; don't unmount the app during subscription rechecks (causes white screen).
-  const canRenderProtectedApp = showOnboarding === false && !isVerifyingCheckout;
+  const canRenderProtectedApp = showOnboarding === false;
 
   // Web-only: show landing page first for guests who haven't engaged yet.
   // HARD GUARD: never on native — even if state somehow became true, the platform check wins.
