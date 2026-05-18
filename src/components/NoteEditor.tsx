@@ -34,6 +34,7 @@ import { injectHeadingIds } from './NoteTableOfContents';
 import { InputSheetPage } from './InputSheetPage';
 import { VoiceRecordingSheet } from './VoiceRecordingSheet';
 import { ScanNoteSheet } from './ScanNoteSheet';
+import { SafeComponent } from './ErrorBoundary';
 
 import { NoteVoicePlayer } from './NoteVoicePlayer';
 import { AudioPlayer } from './AudioPlayer';
@@ -1965,11 +1966,14 @@ export const NoteEditor = ({ note, isOpen, onClose, onSave, defaultType = 'regul
       )}
 
       {/* AI page scan → formatted HTML into note */}
-      <ScanNoteSheet
-        isOpen={showScanNote}
-        onClose={() => setShowScanNote(false)}
-        onInsertHtml={handleAiInsertHtml}
-      />
+      <SafeComponent fallback={null}>
+        <ScanNoteSheet
+          isOpen={showScanNote}
+          onClose={() => setShowScanNote(false)}
+          onInsertHtml={handleAiInsertHtml}
+        />
+      </SafeComponent>
+
 
 
       {/* New Folder Dialog */}
