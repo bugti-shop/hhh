@@ -78,7 +78,7 @@ export default function Landing() {
     navigate('/');
   };
 
-  const menuGroups: { label: string; items: { label: string; href?: string }[] }[] = [
+  const menuGroups: { label: string; items: { label: string; href: string }[] }[] = [
     {
       label: 'Made For',
       items: [
@@ -249,7 +249,7 @@ export default function Landing() {
                             {group.items.map((item) => (
                               <a
                                 key={item.label}
-                                href={item.href || '#'}
+                                href={item.href}
                                 onClick={() => setMenuOpen(false)}
                                 className="px-9 py-3 text-base text-slate-700 transition-colors active:bg-slate-50"
                               >
@@ -321,9 +321,9 @@ export default function Landing() {
                   Get Flowist Free <ArrowRight className="h-5 w-5" />
                 </button>
                 <div className="grid w-full grid-cols-2 gap-2">
-                  <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                  <button
+                    type="button"
+                    disabled
                     className="inline-flex h-[52px] w-full cursor-default items-center justify-center gap-2 rounded-md bg-black px-3 text-white opacity-90"
                     aria-label="App Store coming soon"
                   >
@@ -334,7 +334,7 @@ export default function Landing() {
                       <span className="text-[10px] font-medium opacity-90">Coming soon on</span>
                       <span className="text-[17px] font-semibold tracking-tight">App Store</span>
                     </div>
-                  </a>
+                  </button>
                   <a
                     href="https://play.google.com/store/apps/details?id=nota.npd.com"
                     target="_blank"
