@@ -51,6 +51,29 @@ Deno.serve(async (req) => {
     const userId = String(userData.user.id || "");
     const userEmail = String(userData.user.email || "").toLowerCase();
 
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) {
+      return new Response(JSON.stringify({ error: "AI not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const body = (await req.json()) as ExtractRequest;
+    const rawImage = (body.imageBase64 || "").trim();
+    if (!rawImage) {
+      return new Response(JSON.stringify({ error: "Missing image" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (rawImage.length > MAX_IMAGE_BASE64_BYTES) {
+      return new Response(JSON.stringify({ error: "Image too large" }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const admin = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
@@ -119,29 +142,6 @@ Deno.serve(async (req) => {
         console.error("usage refund failed", refundErr);
       }
     };
-
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: "AI not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const body = (await req.json()) as ExtractRequest;
-    const rawImage = (body.imageBase64 || "").trim();
-    if (!rawImage) {
-      return new Response(JSON.stringify({ error: "Missing image" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    if (rawImage.length > MAX_IMAGE_BASE64_BYTES) {
-      return new Response(JSON.stringify({ error: "Image too large" }), {
-        status: 413,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
 
     const imageUrl = rawImage.startsWith("data:")
       ? rawImage
