@@ -99,10 +99,10 @@ serve(async (req) => {
       } catch {}
     }
 
-    // If no auth, try getting email from request body
-    if (!userEmail) {
-      userEmail = normalizeEmail(requestBody.email);
-    }
+    // SECURITY: Do NOT fall back to a bare email from the request body.
+    // Direct subscription lookups require a verified JWT. The session_id
+    // path below is the only unauthenticated lookup we allow because it
+    // requires possession of a Stripe checkout session ID.
 
     if (checkoutSessionId) {
       logStep("Checking subscription via checkout session", { sessionId: checkoutSessionId });
