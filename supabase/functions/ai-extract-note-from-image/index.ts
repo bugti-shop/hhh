@@ -257,6 +257,35 @@ Return strictly via the tool call.`;
       });
     }
 
+    if (!isPro) {
+      try {
+        const { data: existing } = await admin
+          .from("user_daily_ai_usage")
+          .select("id, count")
+          .eq("identifier", idValue)
+          .eq("identifier_type", idType)
+          .eq("feature", FEATURE)
+          .eq("usage_date", today)
+          .maybeSingle();
+        if (existing?.id) {
+          await admin
+            .from("user_daily_ai_usage")
+            .update({ count: (existing.count ?? 0) + 1, updated_at: new Date().toISOString() })
+            .eq("id", existing.id);
+        } else {
+          await admin.from("user_daily_ai_usage").insert({
+            identifier: idValue,
+            identifier_type: idType,
+            feature: FEATURE,
+            usage_date: today,
+            count: 1,
+          });
+        }
+      } catch (incErr) {
+        console.error("usage increment failed", incErr);
+      }
+    }
+
     return new Response(
       JSON.stringify({
         title: typeof parsed.title === "string" ? parsed.title : "",
