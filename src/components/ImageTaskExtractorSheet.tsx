@@ -30,12 +30,18 @@ interface TaskSection { id: string; name: string }
 
 interface ExtractedTask {
   title: string;
+  description?: string | null;
   dueDateIso: string | null;
+  reminderIso?: string | null;
   deadlineIso: string | null;
   priority: Priority;
+  isUrgent?: boolean;
   folderId: string | null;
   sectionId: string | null;
   repeatType: RepeatType;
+  repeatDays?: number[];
+  tags?: string[];
+  location?: string | null;
 }
 
 interface ReviewItem extends ExtractedTask {
