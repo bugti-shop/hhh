@@ -10,9 +10,10 @@ import { compressImage } from '@/utils/imageCompression';
 export type CaptureSource = 'camera' | 'gallery';
 
 const COMPRESS_OPTS = {
-  maxWidth: 1024,
-  maxHeight: 1024,
-  quality: 0.8 as const,
+  // Keep AI uploads small enough for Android WebView memory limits.
+  maxWidth: 768,
+  maxHeight: 768,
+  quality: 0.72 as const,
   mimeType: 'image/jpeg' as const,
 };
 
@@ -66,12 +67,12 @@ export async function captureImageForAI(
         '@capacitor/camera'
       );
       const photo = await Camera.getPhoto({
-        quality: 80,
+        quality: 72,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
         source: source === 'camera' ? CameraSource.Camera : CameraSource.Photos,
-        width: 1024,
-        height: 1024,
+        width: 768,
+        height: 768,
       });
       const dataUrl = photo.dataUrl;
       if (!dataUrl) return null;
