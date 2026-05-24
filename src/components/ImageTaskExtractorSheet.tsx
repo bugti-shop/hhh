@@ -158,12 +158,18 @@ export const ImageTaskExtractorSheet = ({
         .map((tk, i) => ({
           uid: `extracted-${Date.now()}-${i}`,
           title: tk.title.trim(),
+          description: tk.description || null,
           dueDateIso: tk.dueDateIso || null,
+          reminderIso: tk.reminderIso || null,
           deadlineIso: tk.deadlineIso || null,
           priority: (tk.priority || 'none') as Priority,
+          isUrgent: Boolean(tk.isUrgent),
           folderId: tk.folderId || null,
           sectionId: tk.sectionId || null,
           repeatType: (tk.repeatType || 'none') as RepeatType,
+          repeatDays: Array.isArray(tk.repeatDays) ? tk.repeatDays : undefined,
+          tags: Array.isArray(tk.tags) ? tk.tags : undefined,
+          location: tk.location || null,
           selected: true,
         }));
 
