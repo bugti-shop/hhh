@@ -148,7 +148,7 @@ Deno.serve(async (req) => {
     });
   } catch (err) {
     console.error("[RC Webhook] Error:", err);
-    return new Response(JSON.stringify({ error: String(err) }), {
+    return new Response(JSON.stringify({ error: "Internal error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
