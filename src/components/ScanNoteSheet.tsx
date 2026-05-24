@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image as ImageIcon, Loader2, Sparkles, X, RotateCcw, Check } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { captureImageForAI } from '@/utils/imageCaptureForAI';
@@ -16,6 +16,9 @@ import { sanitizeForDisplay } from '@/lib/sanitize';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { canUseAiFeature, recordAiUsage, getLimitReachedMessage } from '@/utils/aiUsageLimits';
 import { acquireAiLock, getAiBusyMessage, releaseAllAiLocks } from '@/utils/aiConcurrencyLock';
+
+const AI_SCAN_TIMEOUT_MS = 45_000;
+const yieldToPaint = () => new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
 
 interface Props {
   isOpen: boolean;
@@ -84,6 +87,7 @@ export const ScanNoteSheet = ({ isOpen, onClose, onInsertHtml }: Props) => {
     setHtml('');
     setSuggestedTitle('');
     try {
+      await yieldToPaint();
       const { data, error } = await supabase.functions.invoke(
         'ai-extract-note-from-image',
         {
@@ -92,6 +96,7 @@ export const ScanNoteSheet = ({ isOpen, onClose, onInsertHtml }: Props) => {
             languageCode: (i18n.language || 'en').split('-')[0],
             languageName: 'auto',
           },
+          timeout: AI_SCAN_TIMEOUT_MS,
         },
       );
       if (error) throw error;
@@ -114,6 +119,8 @@ export const ScanNoteSheet = ({ isOpen, onClose, onInsertHtml }: Props) => {
         toast.error(t('tasks.aiRateLimit', 'AI is busy, try again shortly'));
       } else if (msg.includes('402')) {
         toast.error(t('tasks.aiCredits', 'AI credits exhausted'));
+      } else if (msg.includes('AbortError') || msg.includes('aborted') || msg.includes('timeout')) {
+        toast.error(t('scanNote.timeout', 'This scan took too long. Try a clearer or smaller photo.'));
       } else {
         toast.error(t('scanNote.failed', 'Could not read this page'));
       }
@@ -144,6 +151,9 @@ export const ScanNoteSheet = ({ isOpen, onClose, onInsertHtml }: Props) => {
             <Sparkles className="h-5 w-5 text-primary" />
             {t('scanNote.title', 'Scan page to note')}
           </SheetTitle>
+          <SheetDescription className="sr-only">
+            {t('scanNote.description', 'Choose a page photo and convert it into a formatted note with AI.')}
+          </SheetDescription>
         </SheetHeader>
 
         <div className="px-4 pb-6 space-y-4">

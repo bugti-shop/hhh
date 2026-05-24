@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image as ImageIcon, Loader2, Sparkles, X, Check, Trash2, RotateCcw, Minus, Plus, Maximize2 } from 'lucide-react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
-import { Sheet, SheetHeader, SheetTitle, SheetPortal } from '@/components/ui/sheet';
+import { Sheet, SheetDescription, SheetHeader, SheetTitle, SheetPortal } from '@/components/ui/sheet';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,9 @@ import { cn } from '@/lib/utils';
 import { useSubscription } from '@/contexts/SubscriptionContext';
 import { canUseAiFeature, recordAiUsage, getLimitReachedMessage } from '@/utils/aiUsageLimits';
 import { acquireAiLock, getAiBusyMessage, releaseAllAiLocks } from '@/utils/aiConcurrencyLock';
+
+const AI_SCAN_TIMEOUT_MS = 45_000;
+const yieldToPaint = () => new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
 
 interface TaskSection { id: string; name: string }
 
@@ -121,6 +124,7 @@ export const ImageTaskExtractorSheet = ({
     setHasRun(false);
     setItems([]);
     try {
+      await yieldToPaint();
       const { data, error } = await supabase.functions.invoke(
         'ai-extract-tasks-from-image',
         {
@@ -133,6 +137,7 @@ export const ImageTaskExtractorSheet = ({
             languageCode: (i18n.language || 'en').split('-')[0],
             languageName: 'auto',
           },
+          timeout: AI_SCAN_TIMEOUT_MS,
         },
       );
       if (error) throw error;
@@ -170,6 +175,8 @@ export const ImageTaskExtractorSheet = ({
         toast.error(t('tasks.aiRateLimit', 'AI is busy, try again shortly'));
       } else if (msg.includes('402')) {
         toast.error(t('tasks.aiCredits', 'AI credits exhausted'));
+      } else if (msg.includes('AbortError') || msg.includes('aborted') || msg.includes('timeout')) {
+        toast.error(t('imageExtract.timeout', 'This scan took too long. Try a clearer or smaller photo.'));
       } else {
         toast.error(
           t('imageExtract.failed', 'Could not read tasks from this image'),
@@ -262,6 +269,9 @@ export const ImageTaskExtractorSheet = ({
             <Sparkles className="h-5 w-5 text-primary" />
             {t('imageExtract.title', 'Scan tasks from paper')}
           </SheetTitle>
+          <SheetDescription className="sr-only">
+            {t('imageExtract.description', 'Choose a photo and extract tasks with AI.')}
+          </SheetDescription>
         </SheetHeader>
 
         <div className="px-4 pb-6 space-y-4">
