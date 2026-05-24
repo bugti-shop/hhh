@@ -181,9 +181,9 @@ Deno.serve(async (req) => {
     const langCode = body.languageCode || "en";
     const langName = body.languageName || "English";
 
-    const systemPrompt = `You are a multilingual vision-based task extractor. The user has photographed handwritten or printed notes (paper, sticky-notes on a board, whiteboard, planner page, etc.).
+    const systemPrompt = `You are an expert multilingual vision-based task extractor specialized in HANDWRITTEN notes (cursive, print, messy handwriting on paper, sticky-notes, whiteboards, planners, bullet journals).
 
-Read every distinct task / to-do item visible in the image and return them as a list.
+Carefully read EVERY distinct task in the image and extract ALL metadata cues — explicit or implicit — that the writer marked down. Be thorough: people scribble dates, times, priorities, folders, tags and repeats in many shorthand ways and you must catch them.
 
 Current datetime (ISO): ${now}
 User timezone: ${tz}
@@ -195,17 +195,43 @@ ${folders.length ? folders.map((f) => `- ${f.name} (id: ${f.id})`).join("\n") : 
 Available sections:
 ${sections.length ? sections.map((s) => `- ${s.name} (id: ${s.id})`).join("\n") : "(none)"}
 
-Rules:
-- One entry per distinct task. Skip headers, labels, doodles, and decorative text.
-- "title": short and action-oriented. Keep in the original language as written. Strip dates/times/priority/folder words from the title.
-- Recognize date/time words across languages (e.g. "tomorrow", "kal", "mañana", "demain", "غداً", "明天").
-- "dueDateIso": ISO 8601 with timezone offset, resolved relative to current datetime in user timezone. Null if none.
-- "deadlineIso": only if the note explicitly says deadline / due by / must finish by. Null otherwise.
-- "priority": "high" | "medium" | "low" | "none". Map urgent / asap / important / "!!!" / underlined / starred -> high.
-- "folderId" / "sectionId": id from the available list if a name matches (case-insensitive, fuzzy). Null otherwise.
-- "repeatType": "none" | "daily" | "weekly" | "monthly" | "yearly".
+Detection rules — apply ALL of them:
+- One entry per distinct task. Skip pure headers, decorative doodles, page numbers.
+- "title": short, action-oriented, in the ORIGINAL language. Strip out dates, times, priority markers, folder/section labels, tags, repeat words, location prefixes.
+- "description": extra context written under the task (notes, sub-detail, parenthetical clarifications). Null if none.
+
+DATE & TIME — handwritten cues across languages:
+- Relative words: today/tonight, tomorrow, day after tomorrow, yesterday, next Mon/Tue/…, this weekend, next week, next month, in 3 days, EOD, EOW, kal, parso, mañana, demain, غداً, 明天, 今天, 来週, etc.
+- Explicit dates in any format: 12/05, 12-05-2026, 5 Dec, Dec 5, 05.12, 12月5日, etc. Resolve year from current datetime.
+- Times: "3pm", "15:00", "morning", "noon", "midnight", "evening", "afternoon", "before lunch", "subah", "shaam", "صباحاً", "下午3点".
+- Combine date+time into "dueDateIso" (ISO 8601 with the user timezone offset). Date only -> 09:00 local. Time only & clearly for today -> use today.
+- "reminderIso": if writer wrote a separate reminder/alarm (e.g. "remind 1h before", "alarm 7am", "🔔 8pm"). Null otherwise.
+- "deadlineIso": only if note explicitly says deadline / due by / must finish by / "DL" / "by EOD".
+
+PRIORITY — map ANY of these:
+- high: "!!!", "!!", URGENT, ASAP, IMP, ★, ⭐, 🔥, heavily underlined, circled, red ink, ALL-CAPS, "P1", "critical", "अति आवश्यक", "مهم جداً".
+- medium: single "!", "P2", "medium", "should do".
+- low: "P3", "low", "later", "someday", "if time", "→".
+- none: nothing indicating urgency.
+- "isUrgent": true ONLY for strongest cues (URGENT / ASAP / multiple !!! / 🔥 / starred & circled).
+
+REPEAT:
+- "repeatType": none | hourly | daily | weekly | weekdays | weekends | monthly | yearly.
+- Recognize "every day", "daily", "every Monday", "weekly", "M-F", "weekdays", "Sat & Sun", "every month", "monthly bill", "yearly", "annual", "हर रोज़", "tous les jours", "毎日".
+- "repeatDays": for weekly/weekdays/weekends, return array of 0-6 (Sun=0..Sat=6) when specific days are written.
+
+FOLDER / SECTION:
+- Detect a folder/section label written near the task (heading at top of page, "[Work]", "Personal:", "#Home", a circled category). Map fuzzy to the available lists.
+- "folderId" / "sectionId": id from the available lists. Null otherwise.
+
+TAGS:
+- "tags": any hashtags or @-tags ("#work", "#errand", "@home", "@call"). Return as plain strings WITHOUT the # or @.
+
+LOCATION:
+- "location": any place mentioned ("at gym", "@office", "Walmart", "home"). Null otherwise.
+
 - If the image has no readable tasks, return an empty array.
-- Return strictly via the tool call.`;
+- Return strictly via the tool call. Be aggressive about catching metadata — better to fill a field from a clear handwritten cue than leave it null.`;
 
     const aiResponse = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",
@@ -217,7 +243,7 @@ Rules:
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash",
+          model: "google/gemini-2.5-pro",
           messages: [
             { role: "system", content: systemPrompt },
             {
@@ -226,7 +252,7 @@ Rules:
                 {
                   type: "text",
                   text:
-                    "Extract every task visible in this image as a structured list.",
+                    "Extract every handwritten task visible in this image. Read carefully and capture every date, time, priority, folder/section, repeat, tag, and location cue the writer marked.",
                 },
                 { type: "image_url", image_url: { url: imageUrl } },
               ],
@@ -238,7 +264,7 @@ Rules:
               function: {
                 name: "extract_tasks",
                 description:
-                  "Return all tasks detected in the image as a structured list.",
+                  "Return all tasks detected in the image as a structured list with full metadata.",
                 parameters: {
                   type: "object",
                   properties: {
@@ -248,24 +274,39 @@ Rules:
                         type: "object",
                         properties: {
                           title: { type: "string" },
+                          description: { type: ["string", "null"] },
                           dueDateIso: { type: ["string", "null"] },
+                          reminderIso: { type: ["string", "null"] },
                           deadlineIso: { type: ["string", "null"] },
                           priority: {
                             type: "string",
                             enum: ["high", "medium", "low", "none"],
                           },
+                          isUrgent: { type: "boolean" },
                           folderId: { type: ["string", "null"] },
                           sectionId: { type: ["string", "null"] },
                           repeatType: {
                             type: "string",
                             enum: [
                               "none",
+                              "hourly",
                               "daily",
                               "weekly",
+                              "weekdays",
+                              "weekends",
                               "monthly",
                               "yearly",
                             ],
                           },
+                          repeatDays: {
+                            type: "array",
+                            items: { type: "integer", minimum: 0, maximum: 6 },
+                          },
+                          tags: {
+                            type: "array",
+                            items: { type: "string" },
+                          },
+                          location: { type: ["string", "null"] },
                         },
                         required: ["title", "priority", "repeatType"],
                         additionalProperties: false,
