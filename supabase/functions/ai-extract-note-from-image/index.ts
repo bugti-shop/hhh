@@ -15,6 +15,8 @@ interface ExtractRequest {
   languageName?: string;
 }
 
+const AI_GATEWAY_TIMEOUT_MS = 40_000;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -74,12 +76,13 @@ Return strictly via the tool call.`;
       "https://ai.gateway.lovable.dev/v1/chat/completions",
       {
         method: "POST",
+        signal: AbortSignal.timeout(AI_GATEWAY_TIMEOUT_MS),
         headers: {
           Authorization: `Bearer ${LOVABLE_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
+          model: "google/gemini-2.5-flash",
           messages: [
             { role: "system", content: systemPrompt },
             {
@@ -179,10 +182,11 @@ Return strictly via the tool call.`;
     );
   } catch (e) {
     console.error("ai-extract-note-from-image error", e);
+    const timedOut = e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError");
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: timedOut ? "AI scan timed out" : e instanceof Error ? e.message : "Unknown error" }),
       {
-        status: 500,
+        status: timedOut ? 504 : 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       },
     );
