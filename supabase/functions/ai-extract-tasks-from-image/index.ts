@@ -268,13 +268,11 @@ Rules:
     );
 
     if (!aiResponse.ok) {
+      await refundUsage();
       if (aiResponse.status === 429) {
         return new Response(
           JSON.stringify({ error: "Rate limit exceeded. Try again shortly." }),
-          {
-            status: 429,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          },
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
       if (aiResponse.status === 402) {
@@ -304,6 +302,7 @@ Rules:
       parsed = JSON.parse(toolCall.function.arguments);
     } catch (e) {
       console.error("Failed to parse tool args", e);
+      await refundUsage();
       return new Response(JSON.stringify({ error: "Bad AI response" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -312,36 +311,6 @@ Rules:
 
     const tasks = Array.isArray(parsed.tasks) ? parsed.tasks : [];
 
-    // Atomically increment daily usage (best-effort)
-    if (!isPro) {
-      try {
-        const { data: existing } = await admin
-          .from("user_daily_ai_usage")
-          .select("id, count")
-          .eq("identifier", idValue)
-          .eq("identifier_type", idType)
-          .eq("feature", FEATURE)
-          .eq("usage_date", today)
-          .maybeSingle();
-        if (existing?.id) {
-          await admin
-            .from("user_daily_ai_usage")
-            .update({ count: (existing.count ?? 0) + 1, updated_at: new Date().toISOString() })
-            .eq("id", existing.id);
-        } else {
-          await admin.from("user_daily_ai_usage").insert({
-            identifier: idValue,
-            identifier_type: idType,
-            feature: FEATURE,
-            usage_date: today,
-            count: 1,
-          });
-        }
-      } catch (incErr) {
-        console.error("usage increment failed", incErr);
-      }
-    }
-
     return new Response(JSON.stringify({ tasks }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -349,7 +318,7 @@ Rules:
     console.error("ai-extract-tasks-from-image error", e);
     const timedOut = e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError");
     return new Response(
-      JSON.stringify({ error: timedOut ? "AI scan timed out" : e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: timedOut ? "AI scan timed out" : "An unexpected error occurred" }),
       {
         status: timedOut ? 504 : 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -357,3 +326,4 @@ Rules:
     );
   }
 });
+
