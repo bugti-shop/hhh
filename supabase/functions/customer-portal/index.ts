@@ -32,12 +32,13 @@ serve(async (req) => {
       console.error("customer-portal auth error", userError);
       throw new Error("Authentication failed");
     }
-    if (!user?.email) throw new Error("User not authenticated or email not available");
+    const user = userData.user;
+    if (!user?.email) throw new Error("Not authenticated");
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     if (customers.data.length === 0) {
-      throw new Error("No Stripe customer found for this user");
+      throw new Error("No billing account found");
     }
 
     const customerId = customers.data[0].id;
@@ -53,10 +54,16 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    return new Response(JSON.stringify({ error: message }), {
+    console.error("customer-portal error", error);
+    const message = error instanceof Error ? error.message : "Unexpected error";
+    // Only surface short, pre-defined messages to the client
+    const safe = ["Not authenticated", "No billing account found", "STRIPE_SECRET_KEY is not set", "No authorization header provided"].includes(message)
+      ? message
+      : "An unexpected error occurred";
+    return new Response(JSON.stringify({ error: safe }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });
   }
 });
+
