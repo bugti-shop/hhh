@@ -41,18 +41,17 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_ANON_KEY")!,
       { global: { headers: { Authorization: authHeader } } },
     );
-    const { data: claimsData, error: claimsError } = await sb.auth.getClaims(
-      authHeader.replace("Bearer ", ""),
-    );
-    if (claimsError || !claimsData?.claims) {
+    const accessToken = authHeader.replace("Bearer ", "");
+    const { data: userData, error: userError } = await sb.auth.getUser(accessToken);
+    if (userError || !userData?.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userId = String(claimsData.claims.sub || "");
-    const userEmail = String(claimsData.claims.email || "").toLowerCase();
+    const userId = String(userData.user.id || "");
+    const userEmail = String(userData.user.email || "").toLowerCase();
 
     // Service-role client for entitlement + usage enforcement
     const admin = createClient(
