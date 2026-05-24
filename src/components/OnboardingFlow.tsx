@@ -1342,6 +1342,42 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.475 }}
+            onClick={async () => {
+              await triggerHaptic();
+              try {
+                const { lovable } = await import('@/integrations/lovable/index');
+                const result = await lovable.auth.signInWithOAuth('apple', {
+                  redirect_uri: window.location.origin,
+                });
+                if (result.error) {
+                  console.error('Apple sign-in failed:', result.error);
+                  setStep(0);
+                  return;
+                }
+                if (result.redirected) return;
+                setStep(0);
+              } catch (err) {
+                console.error('Apple sign-in failed:', err);
+                setStep(0);
+              }
+            }}
+            className="w-full max-w-[340px] mt-3 py-3.5 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-3 cursor-pointer"
+            style={{
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              boxShadow: '0 6px 0 0 #1a1a1a',
+            }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+            </svg>
+            {t('onboarding.signInWithApple', 'Sign in with Apple')}
+
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55 }}
             onClick={async () => {
               await triggerHaptic();
