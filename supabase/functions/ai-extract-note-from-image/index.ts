@@ -19,38 +19,80 @@ const AI_GATEWAY_TIMEOUT_MS = 40_000;
 
 const MAX_IMAGE_BASE64_BYTES = 8 * 1024 * 1024;
 
+const hashIdentifier = async (value: string) => {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("")
+    .slice(0, 32);
+};
+
+const getAnonymousIdentifier = async (req: Request) => {
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("cf-connecting-ip") ||
+    req.headers.get("x-real-ip") ||
+    "unknown-ip";
+  const userAgent = req.headers.get("user-agent") || "unknown-agent";
+  return `anon_${await hashIdentifier(`${ip}|${userAgent}`)}`;
+};
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Require an authenticated Supabase user
+    // Prefer authenticated users; allow legacy anonymous scans through a
+    // server-derived anonymous identifier so clients cannot write counters directly.
     const authHeader = req.headers.get("Authorization") || "";
-    if (!authHeader.startsWith("Bearer ")) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
     const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.45.0");
-    const sb = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_ANON_KEY")!,
-      { global: { headers: { Authorization: authHeader } } },
-    );
-    const { data: claimsData, error: claimsError } = await sb.auth.getClaims(
-      authHeader.replace("Bearer ", ""),
-    );
-    if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+    let userId = "";
+    let userEmail = "";
+    if (authHeader.startsWith("Bearer ")) {
+      const accessToken = authHeader.replace("Bearer ", "");
+      if (accessToken && accessToken !== anonKey) {
+        const sb = createClient(
+          Deno.env.get("SUPABASE_URL")!,
+          anonKey,
+          { global: { headers: { Authorization: authHeader } } },
+        );
+        const { data: userData, error: userError } = await sb.auth.getUser(accessToken);
+        if (userError || !userData?.user) {
+          return new Response(JSON.stringify({ error: "Unauthorized" }), {
+            status: 401,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        userId = String(userData.user.id || "");
+        userEmail = String(userData.user.email || "").toLowerCase();
+      }
+    }
+
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) {
+      return new Response(JSON.stringify({ error: "AI not configured" }), {
+        status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userId = String(claimsData.claims.sub || "");
-    const userEmail = String(claimsData.claims.email || "").toLowerCase();
+    const body = (await req.json()) as ExtractRequest;
+    const rawImage = (body.imageBase64 || "").trim();
+    if (!rawImage) {
+      return new Response(JSON.stringify({ error: "Missing image" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (rawImage.length > MAX_IMAGE_BASE64_BYTES) {
+      return new Response(JSON.stringify({ error: "Image too large" }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const admin = createClient(
       Deno.env.get("SUPABASE_URL")!,
@@ -78,8 +120,8 @@ Deno.serve(async (req) => {
     const FEATURE = "scan";
     const DAILY_LIMIT = 3;
     const today = new Date().toISOString().slice(0, 10);
-    const idType = userEmail ? "email" : "user";
-    const idValue = userEmail || userId;
+    const idType = userEmail ? "email" : userId ? "user" : "anonymous";
+    const idValue = userEmail || userId || (await getAnonymousIdentifier(req));
 
     // Atomic increment-first quota check for non-Pro users (prevents TOCTOU bypass).
     if (!isPro) {
@@ -120,29 +162,6 @@ Deno.serve(async (req) => {
         console.error("usage refund failed", refundErr);
       }
     };
-
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) {
-      return new Response(JSON.stringify({ error: "AI not configured" }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const body = (await req.json()) as ExtractRequest;
-    const rawImage = (body.imageBase64 || "").trim();
-    if (!rawImage) {
-      return new Response(JSON.stringify({ error: "Missing image" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    if (rawImage.length > MAX_IMAGE_BASE64_BYTES) {
-      return new Response(JSON.stringify({ error: "Image too large" }), {
-        status: 413,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
 
     const imageUrl = rawImage.startsWith("data:")
       ? rawImage
