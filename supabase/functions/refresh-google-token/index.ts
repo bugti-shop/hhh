@@ -109,6 +109,6 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("[refresh-google-token] unexpected error", error);
-    return json({ error: error instanceof Error ? error.message : String(error) }, 500);
+    return json({ error: "An unexpected error occurred" }, 500);
   }
 });
