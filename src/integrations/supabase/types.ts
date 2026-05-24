@@ -280,7 +280,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      decrement_ai_usage: {
+        Args: {
+          p_feature: string
+          p_identifier: string
+          p_identifier_type: string
+          p_usage_date: string
+        }
+        Returns: undefined
+      }
+      increment_ai_usage_if_under_limit: {
+        Args: {
+          p_feature: string
+          p_identifier: string
+          p_identifier_type: string
+          p_limit: number
+          p_usage_date: string
+        }
+        Returns: {
+          allowed: boolean
+          new_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

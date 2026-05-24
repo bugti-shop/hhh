@@ -314,6 +314,6 @@ serve(async (req) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     logStep("ERROR", { message });
-    return jsonResponse({ error: message }, 500);
+    return jsonResponse({ error: "An unexpected error occurred" }, 500);
   }
 });

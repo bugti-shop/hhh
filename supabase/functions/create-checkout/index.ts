@@ -100,7 +100,8 @@ serve(async (req) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error("create-checkout error:", message);
-    return new Response(JSON.stringify({ error: message }), {
+    const safe = message.startsWith("Invalid plan type") ? message : "An unexpected error occurred";
+    return new Response(JSON.stringify({ error: safe }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });

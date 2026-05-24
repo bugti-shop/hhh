@@ -85,16 +85,22 @@ Deno.serve(async (req) => {
     const idType = userEmail ? "email" : "user";
     const idValue = userEmail || userId;
 
+    // Atomic increment-first quota check for non-Pro users (prevents TOCTOU bypass).
+    // We increment BEFORE calling the AI gateway; on any downstream failure we
+    // decrement so users aren't penalized for server errors.
     if (!isPro) {
-      const { data: usageRow } = await admin
-        .from("user_daily_ai_usage")
-        .select("count")
-        .eq("identifier", idValue)
-        .eq("identifier_type", idType)
-        .eq("feature", FEATURE)
-        .eq("usage_date", today)
-        .maybeSingle();
-      if ((usageRow?.count ?? 0) >= DAILY_LIMIT) {
+      const { data: gate, error: gateErr } = await admin.rpc(
+        "increment_ai_usage_if_under_limit",
+        {
+          p_identifier: idValue,
+          p_identifier_type: idType,
+          p_feature: FEATURE,
+          p_usage_date: today,
+          p_limit: DAILY_LIMIT,
+        },
+      );
+      const row = Array.isArray(gate) ? gate[0] : gate;
+      if (gateErr || !row?.allowed) {
         return new Response(
           JSON.stringify({
             error: "Daily AI scan limit reached. Upgrade to Pro for unlimited use.",
@@ -106,6 +112,20 @@ Deno.serve(async (req) => {
         );
       }
     }
+
+    const refundUsage = async () => {
+      if (isPro) return;
+      try {
+        await admin.rpc("decrement_ai_usage", {
+          p_identifier: idValue,
+          p_identifier_type: idType,
+          p_feature: FEATURE,
+          p_usage_date: today,
+        });
+      } catch (refundErr) {
+        console.error("usage refund failed", refundErr);
+      }
+    };
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -248,13 +268,11 @@ Rules:
     );
 
     if (!aiResponse.ok) {
+      await refundUsage();
       if (aiResponse.status === 429) {
         return new Response(
           JSON.stringify({ error: "Rate limit exceeded. Try again shortly." }),
-          {
-            status: 429,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          },
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
         );
       }
       if (aiResponse.status === 402) {
@@ -284,6 +302,7 @@ Rules:
       parsed = JSON.parse(toolCall.function.arguments);
     } catch (e) {
       console.error("Failed to parse tool args", e);
+      await refundUsage();
       return new Response(JSON.stringify({ error: "Bad AI response" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -292,36 +311,6 @@ Rules:
 
     const tasks = Array.isArray(parsed.tasks) ? parsed.tasks : [];
 
-    // Atomically increment daily usage (best-effort)
-    if (!isPro) {
-      try {
-        const { data: existing } = await admin
-          .from("user_daily_ai_usage")
-          .select("id, count")
-          .eq("identifier", idValue)
-          .eq("identifier_type", idType)
-          .eq("feature", FEATURE)
-          .eq("usage_date", today)
-          .maybeSingle();
-        if (existing?.id) {
-          await admin
-            .from("user_daily_ai_usage")
-            .update({ count: (existing.count ?? 0) + 1, updated_at: new Date().toISOString() })
-            .eq("id", existing.id);
-        } else {
-          await admin.from("user_daily_ai_usage").insert({
-            identifier: idValue,
-            identifier_type: idType,
-            feature: FEATURE,
-            usage_date: today,
-            count: 1,
-          });
-        }
-      } catch (incErr) {
-        console.error("usage increment failed", incErr);
-      }
-    }
-
     return new Response(JSON.stringify({ tasks }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
@@ -329,7 +318,7 @@ Rules:
     console.error("ai-extract-tasks-from-image error", e);
     const timedOut = e instanceof Error && (e.name === "TimeoutError" || e.name === "AbortError");
     return new Response(
-      JSON.stringify({ error: timedOut ? "AI scan timed out" : e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: timedOut ? "AI scan timed out" : "An unexpected error occurred" }),
       {
         status: timedOut ? 504 : 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -337,3 +326,4 @@ Rules:
     );
   }
 });
+
