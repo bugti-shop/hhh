@@ -131,6 +131,7 @@ export default function AdminOnboarding() {
       if (fnError) throw fnError;
       if (data?.valid) {
         sessionStorage.setItem("admin_auth", "true");
+        sessionStorage.setItem("admin_password", password);
         setAuthenticated(true);
       } else {
         setError("Incorrect password");
