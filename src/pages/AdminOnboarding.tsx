@@ -115,40 +115,22 @@ const ChartCard = ({ title, icon: Icon, data, type = "bar" }: {
 export default function AdminOnboarding() {
   const navigate = useNavigate();
   const [rows, setRows] = useState<OnboardingRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(() => sessionStorage.getItem("admin_auth") === "true");
+  const [loading, setLoading] = useState(false);
+  // SECURITY: keep the admin password only in component state (memory).
+  // Never persist it to localStorage/sessionStorage — that would expose it
+  // to XSS or malicious browser extensions. The trade-off is the admin must
+  // re-enter the password on page reload.
+  const [adminPassword, setAdminPassword] = useState<string>("");
+  const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [verifying, setVerifying] = useState(false);
 
-  const handleLogin = async () => {
-    setVerifying(true);
-    setError("");
-    try {
-      const { data, error: fnError } = await supabase.functions.invoke("verify-admin", {
-        body: { password },
-      });
-      if (fnError) throw fnError;
-      if (data?.valid) {
-        sessionStorage.setItem("admin_auth", "true");
-        sessionStorage.setItem("admin_password", password);
-        setAuthenticated(true);
-      } else {
-        setError("Incorrect password");
-      }
-    } catch {
-      setError("Verification failed. Try again.");
-    } finally {
-      setVerifying(false);
-    }
-  };
-
-  const fetchData = async () => {
+  const fetchData = async (pw: string) => {
     setLoading(true);
     try {
-      const password = sessionStorage.getItem("admin_password") || "";
       const { data, error } = await supabase.functions.invoke("admin-fetch-onboarding", {
-        body: { password },
+        body: { password: pw },
       });
       if (error) throw error;
       setRows(((data as any)?.rows as OnboardingRow[] | null) || []);
@@ -159,7 +141,29 @@ export default function AdminOnboarding() {
     }
   };
 
-  useEffect(() => { if (authenticated) fetchData(); }, [authenticated]);
+  const handleLogin = async () => {
+    setVerifying(true);
+    setError("");
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("verify-admin", {
+        body: { password },
+      });
+      if (fnError) throw fnError;
+      if (data?.valid) {
+        setAdminPassword(password);
+        setAuthenticated(true);
+        setPassword("");
+        await fetchData(password);
+      } else {
+        setError("Incorrect password");
+      }
+    } catch {
+      setError("Verification failed. Try again.");
+    } finally {
+      setVerifying(false);
+    }
+  };
+
 
   const stats = useMemo(() => {
     let notesCreated = 0, sketchesCreated = 0, totalTasks = 0, totalNotesFolders = 0, totalTasksFolders = 0;
@@ -228,7 +232,7 @@ export default function AdminOnboarding() {
           <ArrowLeft className="w-5 h-5" />
         </Button>
         <h1 className="text-lg font-semibold flex-1">Onboarding Analytics</h1>
-        <Button variant="ghost" size="icon" onClick={fetchData} disabled={loading}>
+        <Button variant="ghost" size="icon" onClick={() => fetchData(adminPassword)} disabled={loading || !adminPassword}>
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
         </Button>
       </div>
