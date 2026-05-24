@@ -46,17 +46,21 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Optional: validate shared secret in Authorization header
-    if (RC_WEBHOOK_AUTH) {
-      const authHeader = req.headers.get("authorization") || "";
-      const expected = `Bearer ${RC_WEBHOOK_AUTH}`;
-      if (authHeader !== expected) {
-        console.warn("[RC Webhook] Unauthorized request");
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
+    // REQUIRED: validate shared secret in Authorization header — no silent fallback
+    if (!RC_WEBHOOK_AUTH) {
+      console.error("[RC Webhook] RC_WEBHOOK_AUTH not configured — refusing all requests");
+      return new Response(JSON.stringify({ error: "Server misconfigured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const authHeader = req.headers.get("authorization") || "";
+    if (authHeader !== `Bearer ${RC_WEBHOOK_AUTH}`) {
+      console.warn("[RC Webhook] Unauthorized request");
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const body = await req.json();

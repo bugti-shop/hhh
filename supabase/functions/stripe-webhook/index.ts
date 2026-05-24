@@ -40,6 +40,14 @@ serve(async (req) => {
     });
   }
 
+  if (!webhookSecret) {
+    logStep("ERROR: STRIPE_WEBHOOK_SECRET not set — refusing to process unsigned events");
+    return new Response(JSON.stringify({ error: "Server misconfigured" }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
 
   // Supabase client with service role for DB writes
@@ -53,19 +61,12 @@ serve(async (req) => {
 
   try {
     const body = await req.text();
-
-    if (webhookSecret) {
-      const signature = req.headers.get("stripe-signature");
-      if (!signature) {
-        logStep("ERROR: Missing stripe-signature header");
-        return new Response("Missing signature", { status: 400 });
-      }
-      event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret);
-    } else {
-      // No webhook secret configured — parse raw (less secure, for initial setup)
-      logStep("WARNING: No STRIPE_WEBHOOK_SECRET set, parsing event without verification");
-      event = JSON.parse(body);
+    const signature = req.headers.get("stripe-signature");
+    if (!signature) {
+      logStep("ERROR: Missing stripe-signature header");
+      return new Response("Missing signature", { status: 400 });
     }
+    event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret);
 
     logStep("Event received", { type: event.type, id: event.id });
   } catch (err) {
