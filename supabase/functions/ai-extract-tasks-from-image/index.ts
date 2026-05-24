@@ -124,8 +124,8 @@ Deno.serve(async (req) => {
     const FEATURE = "scan";
     const DAILY_LIMIT = 3;
     const today = new Date().toISOString().slice(0, 10);
-    const idType = userEmail ? "email" : "user";
-    const idValue = userEmail || userId;
+    const idType = userEmail ? "email" : userId ? "user" : "anonymous";
+    const idValue = userEmail || userId || (await getAnonymousIdentifier(req));
 
     // Atomic increment-first quota check for non-Pro users (prevents TOCTOU bypass).
     // We increment BEFORE calling the AI gateway; on any downstream failure we
