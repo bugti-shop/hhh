@@ -144,13 +144,18 @@ export default function AdminOnboarding() {
 
   const fetchData = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("onboarding_responses")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(1000);
-    setRows((data as OnboardingRow[] | null) || []);
-    setLoading(false);
+    try {
+      const password = sessionStorage.getItem("admin_password") || "";
+      const { data, error } = await supabase.functions.invoke("admin-fetch-onboarding", {
+        body: { password },
+      });
+      if (error) throw error;
+      setRows(((data as any)?.rows as OnboardingRow[] | null) || []);
+    } catch {
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => { if (authenticated) fetchData(); }, [authenticated]);
