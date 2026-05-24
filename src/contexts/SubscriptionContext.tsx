@@ -168,12 +168,15 @@ const SIGNOUT_GRACE_MS = 24 * 60 * 60 * 1000; // 1 day after sign-out
 
 export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   // Local state
-  const [localProAccess, setLocalProAccess] = useState(false);
+  const [localProAccess, setLocalProAccess] = useState(() => {
+    try { return localStorage.getItem('flowist_admin_bypass') === 'true'; } catch { return false; }
+  });
   // If cached as subscribed, skip local loading entirely — instant access
   const [localLoading, setLocalLoading] = useState(() => {
     try {
       if (!Capacitor.isNativePlatform() && localStorage.getItem('flowist_stripe_subscribed') === 'true') return false;
       if (Capacitor.isNativePlatform() && localStorage.getItem('flowist_rc_entitled') === 'true') return false;
+      if (localStorage.getItem('flowist_admin_bypass') === 'true') return false;
     } catch {}
     return true;
   });
@@ -184,6 +187,7 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
     try {
       // If previously verified as subscribed, don't show paywall on mount
       if (localStorage.getItem('flowist_stripe_subscribed') === 'true') return false;
+      if (localStorage.getItem('flowist_admin_bypass') === 'true') return false;
     } catch {}
     return true;
   });
@@ -232,13 +236,16 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   const [offerings, setOfferings] = useState<PurchasesOfferings | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [listenerHandle, setListenerHandle] = useState<PurchasesCallbackId | null>(null);
-  const [isAdminBypass, setIsAdminBypass] = useState(false);
+  const [isAdminBypass, setIsAdminBypass] = useState(() => {
+    try { return localStorage.getItem('flowist_admin_bypass') === 'true'; } catch { return false; }
+  });
   // If locally cached as subscribed AND cache is fresh, mark as resolved to avoid loading state
   const [isWebSubscriptionResolved, setIsWebSubscriptionResolved] = useState(() => {
     if (Capacitor.isNativePlatform()) return true;
     try {
       if (localStorage.getItem('flowist_stripe_subscribed') === 'true'
         && isCacheFresh('flowist_sub_verified_at', STRIPE_CACHE_MAX_AGE_MS)) return true;
+      if (localStorage.getItem('flowist_admin_bypass') === 'true') return true;
     } catch {}
     return false;
   });
