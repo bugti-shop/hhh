@@ -1318,10 +1318,16 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
 
   const unlockPro = useCallback(async () => {
     await setSetting('flowist_admin_bypass', true);
+    try {
+      localStorage.setItem('flowist_admin_bypass', 'true');
+      localStorage.setItem('flowist_user_engaged', 'true');
+      localStorage.setItem('onboarding_completed_flag', 'true');
+    } catch {}
     setLocalProAccess(true);
     setIsAdminBypass(true);
     setShowPaywall(false);
     setPaywallFeature(null);
+    window.dispatchEvent(new Event('adminBypassActivated'));
   }, []);
 
   // ── Soft Paywall Helpers ──
