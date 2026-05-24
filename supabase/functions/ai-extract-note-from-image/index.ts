@@ -49,6 +49,60 @@ Deno.serve(async (req) => {
       });
     }
 
+    const userId = String(claimsData.claims.sub || "");
+    const userEmail = String(claimsData.claims.email || "").toLowerCase();
+
+    const admin = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+
+    const { data: ents } = await admin
+      .from("user_entitlements")
+      .select("is_active, expires_at, grace_period_expires_at, in_billing_retry")
+      .or(
+        userEmail
+          ? `app_user_id.eq.${userId},app_user_id.eq.${userEmail}`
+          : `app_user_id.eq.${userId}`,
+      );
+    const nowMs = Date.now();
+    const isPro = (ents || []).some((e: any) => {
+      if (!e?.is_active) return false;
+      const exp = e.expires_at ? new Date(e.expires_at).getTime() : Infinity;
+      const grace = e.grace_period_expires_at
+        ? new Date(e.grace_period_expires_at).getTime()
+        : 0;
+      return exp > nowMs || grace > nowMs || e.in_billing_retry;
+    });
+
+    const FEATURE = "scan";
+    const DAILY_LIMIT = 3;
+    const today = new Date().toISOString().slice(0, 10);
+    const idType = userEmail ? "email" : "user";
+    const idValue = userEmail || userId;
+
+    if (!isPro) {
+      const { data: usageRow } = await admin
+        .from("user_daily_ai_usage")
+        .select("count")
+        .eq("identifier", idValue)
+        .eq("identifier_type", idType)
+        .eq("feature", FEATURE)
+        .eq("usage_date", today)
+        .maybeSingle();
+      if ((usageRow?.count ?? 0) >= DAILY_LIMIT) {
+        return new Response(
+          JSON.stringify({
+            error: "Daily AI scan limit reached. Upgrade to Pro for unlimited use.",
+          }),
+          {
+            status: 429,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
+      }
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       return new Response(JSON.stringify({ error: "AI not configured" }), {
@@ -201,6 +255,35 @@ Return strictly via the tool call.`;
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    if (!isPro) {
+      try {
+        const { data: existing } = await admin
+          .from("user_daily_ai_usage")
+          .select("id, count")
+          .eq("identifier", idValue)
+          .eq("identifier_type", idType)
+          .eq("feature", FEATURE)
+          .eq("usage_date", today)
+          .maybeSingle();
+        if (existing?.id) {
+          await admin
+            .from("user_daily_ai_usage")
+            .update({ count: (existing.count ?? 0) + 1, updated_at: new Date().toISOString() })
+            .eq("id", existing.id);
+        } else {
+          await admin.from("user_daily_ai_usage").insert({
+            identifier: idValue,
+            identifier_type: idType,
+            feature: FEATURE,
+            usage_date: today,
+            count: 1,
+          });
+        }
+      } catch (incErr) {
+        console.error("usage increment failed", incErr);
+      }
     }
 
     return new Response(
