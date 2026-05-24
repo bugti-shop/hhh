@@ -30,12 +30,18 @@ interface TaskSection { id: string; name: string }
 
 interface ExtractedTask {
   title: string;
+  description?: string | null;
   dueDateIso: string | null;
+  reminderIso?: string | null;
   deadlineIso: string | null;
   priority: Priority;
+  isUrgent?: boolean;
   folderId: string | null;
   sectionId: string | null;
   repeatType: RepeatType;
+  repeatDays?: number[];
+  tags?: string[];
+  location?: string | null;
 }
 
 interface ReviewItem extends ExtractedTask {
@@ -152,12 +158,18 @@ export const ImageTaskExtractorSheet = ({
         .map((tk, i) => ({
           uid: `extracted-${Date.now()}-${i}`,
           title: tk.title.trim(),
+          description: tk.description || null,
           dueDateIso: tk.dueDateIso || null,
+          reminderIso: tk.reminderIso || null,
           deadlineIso: tk.deadlineIso || null,
           priority: (tk.priority || 'none') as Priority,
+          isUrgent: Boolean(tk.isUrgent),
           folderId: tk.folderId || null,
           sectionId: tk.sectionId || null,
           repeatType: (tk.repeatType || 'none') as RepeatType,
+          repeatDays: Array.isArray(tk.repeatDays) ? tk.repeatDays : undefined,
+          tags: Array.isArray(tk.tags) ? tk.tags : undefined,
+          location: tk.location || null,
           selected: true,
         }));
 
@@ -233,9 +245,15 @@ export const ImageTaskExtractorSheet = ({
     const newTasks: Array<Omit<TodoItem, 'id' | 'completed'>> = selected.map(
       (it) => ({
         text: it.title.trim(),
+        description: it.description || undefined,
         priority: it.priority,
         dueDate: it.dueDateIso ? new Date(it.dueDateIso) : undefined,
+        reminderTime: it.reminderIso ? new Date(it.reminderIso) : undefined,
         repeatType: it.repeatType,
+        repeatDays: it.repeatDays && it.repeatDays.length ? it.repeatDays : undefined,
+        tags: it.tags && it.tags.length ? it.tags : undefined,
+        location: it.location || undefined,
+        isUrgent: it.isUrgent || undefined,
         folderId: it.folderId || currentFolderId || undefined,
         sectionId: it.sectionId || currentSectionId || undefined,
       }),
