@@ -1135,7 +1135,7 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
         if (existing) applyEntitlement(existing);
 
         channel = supabase
-          .channel(`entitlement-${appUserID}`)
+          .channel(`entitlement-${appUserID}`, { config: { private: true } })
           .on(
             'postgres_changes',
             {
