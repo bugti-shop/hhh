@@ -18,10 +18,13 @@ import taskNlpImage from '@/assets/flowist-task-nlp.png';
 import calendarViewImage from '@/assets/flowist-calendar-view.png';
 import flatLayoutImage from '@/assets/flowist-flat-layout.png';
 import landingTodoImg from '@/assets/landing-todo.jpg';
+import landingTodoImg2 from '@/assets/landing-todo-2.jpg';
 import landingCalendarImg from '@/assets/landing-calendar.jpg';
 import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
 import landingHabitsImg from '@/assets/landing-habits.jpg';
+import landingHabitsImg2 from '@/assets/landing-habits-2.jpg';
 import landingCountdownImg from '@/assets/landing-countdown.jpg';
+import landingSyncDevicesImg from '@/assets/landing-sync-devices.jpg';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
