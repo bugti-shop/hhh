@@ -465,7 +465,7 @@ export default function Landing() {
 
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
-        <section className="bg-white pt-2 pb-12 sm:pt-4 sm:pb-16">
+        <section className="bg-gradient-to-b from-slate-100 to-white pt-0 pb-12 sm:pb-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <div className="mb-10 text-center sm:mb-14">
               <h2 className="text-[28px] font-extrabold leading-tight tracking-tight sm:text-[40px]" style={{ color: BLUE }}>
