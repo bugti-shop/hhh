@@ -24,7 +24,7 @@ import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
 import landingHabitsImg from '@/assets/landing-habits.jpg';
 import landingHabitsImg2 from '@/assets/landing-habits-2.jpg';
 import landingCountdownImg from '@/assets/landing-countdown.jpg';
-import landingSyncDevicesImg from '@/assets/landing-sync-devices.jpg';
+import landingSyncDevicesImg from '@/assets/landing-sync-devices.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
