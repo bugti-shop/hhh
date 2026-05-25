@@ -550,7 +550,7 @@ export default function Landing() {
                 loading="lazy"
                 width={1536}
                 height={1024}
-                className="mx-auto h-auto w-full max-w-4xl object-contain"
+                className="mx-auto h-auto w-full max-w-none object-contain sm:max-w-6xl"
               />
             </div>
           </div>
