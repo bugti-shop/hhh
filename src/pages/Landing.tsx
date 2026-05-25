@@ -17,6 +17,11 @@ import codeEditorImage from '@/assets/flowist-code-editor.png';
 import taskNlpImage from '@/assets/flowist-task-nlp.png';
 import calendarViewImage from '@/assets/flowist-calendar-view.png';
 import flatLayoutImage from '@/assets/flowist-flat-layout.png';
+import landingTodoImg from '@/assets/landing-todo.jpg';
+import landingCalendarImg from '@/assets/landing-calendar.jpg';
+import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
+import landingHabitsImg from '@/assets/landing-habits.jpg';
+import landingCountdownImg from '@/assets/landing-countdown.jpg';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -370,8 +375,8 @@ export default function Landing() {
 
         {/* Trust bar removed per request */}
 
-        {/* Luxurious philosophy section — light, matches landing nature */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-white py-24 sm:py-32">
+        {/* Feature cards — TickTick-style: label, big title, description, image */}
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] py-16 sm:py-24">
           {/* Soft ambient accents */}
           <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
           <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
@@ -386,75 +391,74 @@ export default function Landing() {
             }}
           />
 
-          <div className="relative mx-auto max-w-5xl px-5 sm:px-6">
-            <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-20">
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em]" style={{ color: BLUE }}>
-                The Flowist Philosophy
-              </p>
-              <h2 className="text-[30px] font-extralight leading-[1.1] tracking-tight text-slate-900 sm:text-[52px]">
-                Built for the people who refuse{' '}
-                <span className="italic font-light bg-gradient-to-r from-[#3c78f0] via-slate-900 to-[#3c78f0] bg-clip-text text-transparent">
-                  to settle.
-                </span>
-              </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-slate-600 sm:text-base">
-                A quiet workspace, engineered with the precision of a Swiss timepiece — every interaction
-                weighted, every pixel intentional. Productivity, finally, with taste.
-              </p>
-            </div>
-
-            {/* Stat row */}
-            <div className="mb-16 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-[0_20px_60px_-30px_rgba(60,120,240,0.25)] sm:mb-24">
+          <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
+            <div className="flex flex-col gap-6 sm:gap-8">
               {[
-                { k: '0ms', v: 'Offline launch' },
-                { k: '100k+', v: 'Tasks per device' },
-                { k: '24/7', v: 'Yours, forever' },
-              ].map((s) => (
-                <div key={s.v} className="bg-white px-3 py-7 text-center sm:py-10">
-                  <p className="bg-gradient-to-b from-slate-900 to-[#3c78f0] bg-clip-text text-[26px] font-light tracking-tight text-transparent sm:text-[44px]">
-                    {s.k}
-                  </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-[11px]">
-                    {s.v}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Three pillars */}
-            <div className="grid gap-5 sm:grid-cols-3 sm:gap-6">
-              {[
-                { n: '01', t: 'Crafted', d: 'Hand-tuned typography, restrained motion, surfaces that breathe. Nothing shouts.' },
-                { n: '02', t: 'Calm', d: 'No streaks pushing guilt, no banners screaming for clicks. Only what matters today.' },
-                { n: '03', t: 'Capable', d: 'Notes, tasks, habits, sketches — woven into one quiet, dependable workflow.' },
-              ].map((p) => (
-                <div
-                  key={p.n}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#3c78f0]/40 hover:shadow-[0_20px_50px_-25px_rgba(60,120,240,0.35)] sm:p-8"
+                {
+                  label: 'To-Do List',
+                  title: 'Organize everything in your life',
+                  desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
+                  img: landingTodoImg,
+                  alt: 'Floating to-do list illustration',
+                },
+                {
+                  label: 'Calendar Views',
+                  title: 'Easily plan your schedule',
+                  desc: 'Different calendar views like yearly, monthly, weekly, daily, and agenda help you plan your time more efficiently.',
+                  img: landingCalendarImg,
+                  alt: 'Calendar with colorful event blocks',
+                },
+                {
+                  label: 'Pomodoro',
+                  title: 'Track time and stay focused',
+                  desc: 'Adopt the popular "Pomodoro Technique" — break tasks into 25-minute intervals to stay focused and achieve a productive flow.',
+                  img: landingPomodoroImg,
+                  alt: 'Tomato pomodoro timer illustration',
+                },
+                {
+                  label: 'Habit Tracker',
+                  title: 'Develop and maintain good habits',
+                  desc: 'A rich habit library, flexible tracking options, and insightful statistics help you build good habits effortlessly and lead a fulfilling life.',
+                  img: landingHabitsImg,
+                  alt: 'Habit streak chart with flame icons',
+                },
+                {
+                  label: 'Countdown',
+                  title: 'Capture every important moment',
+                  desc: 'Easily record important dates like birthdays, anniversaries, exams, and project deadlines with Flowist, so you never miss the moments that matter.',
+                  img: landingCountdownImg,
+                  alt: 'Countdown cards for memorable dates',
+                },
+              ].map((c) => (
+                <article
+                  key={c.label}
+                  className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.08)] sm:p-10"
                 >
-                  <div className="absolute right-5 top-5 text-[11px] font-medium tracking-[0.2em] text-slate-300">
-                    {p.n}
+                  <p className="text-[15px] font-semibold sm:text-base" style={{ color: BLUE }}>
+                    {c.label}
+                  </p>
+                  <h3 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
+                    {c.title}
+                  </h3>
+                  <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+                    {c.desc}
+                  </p>
+                  <div className="mt-6 overflow-hidden rounded-2xl sm:mt-8">
+                    <img
+                      src={c.img}
+                      alt={c.alt}
+                      loading="lazy"
+                      width={1024}
+                      height={768}
+                      className="h-auto w-full object-cover"
+                    />
                   </div>
-                  <h3 className="mb-3 text-xl font-light tracking-tight text-slate-900 sm:text-2xl">{p.t}</h3>
-                  <div className="mb-4 h-px w-10 bg-gradient-to-r from-[#3c78f0] to-transparent" />
-                  <p className="text-[14px] leading-relaxed text-slate-600">{p.d}</p>
-                </div>
+                </article>
               ))}
             </div>
-
-            {/* Closing pull-quote */}
-            <figure className="mx-auto mt-20 max-w-3xl text-center sm:mt-28">
-              <div className="mx-auto mb-6 h-px w-16 bg-slate-300" />
-              <blockquote className="text-[20px] font-extralight italic leading-snug text-slate-800 sm:text-[28px]">
-                “The best tool is the one you forget is there —{' '}
-                <span style={{ color: BLUE }}>until you need it.</span>”
-              </blockquote>
-              <figcaption className="mt-5 text-[11px] uppercase tracking-[0.28em] text-slate-400">
-                — The Flowist principle
-              </figcaption>
-            </figure>
           </div>
         </section>
+
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
         <section className="bg-white pt-2 pb-12 sm:pt-4 sm:pb-16">
