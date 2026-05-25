@@ -370,100 +370,79 @@ export default function Landing() {
 
         {/* Trust bar removed per request */}
 
-        {/* Product feature cards (TickTick-style) */}
-        <section id="features" className="scroll-mt-20 bg-gradient-to-b from-white via-[#f5f9ff] to-white pt-1 pb-4 sm:pt-2 sm:pb-6">
-          <div className="mx-auto max-w-3xl space-y-6 px-4 sm:space-y-8 sm:px-6">
-            {productCards.map(({ label, title, desc, icon: Icon, gradient, image, imageAlt }) => (
-              <article
-                key={label}
-                className="overflow-hidden rounded-[28px] border border-slate-200/70 bg-white p-6 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:p-9"
-              >
-                <p className="mb-3 text-sm font-bold tracking-tight sm:text-base" style={{ color: BLUE }}>
-                  {label}
-                </p>
-                <h2 className="mb-4 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
-                  {title}
-                </h2>
-                <p className="mb-7 text-[15px] leading-relaxed text-slate-600 sm:text-base">
-                  {desc}
-                </p>
-                <div
-                  className={`relative flex min-h-[520px] w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} sm:min-h-[640px]`}
-                >
-                  <img
-                    src={image}
-                    alt={imageAlt}
-                    className="h-[500px] w-auto max-w-full object-contain p-1 sm:h-[620px] sm:p-2"
-                    loading="lazy"
-                  />
-                  <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/90 shadow-sm backdrop-blur-sm">
-                    <Icon className="h-5 w-5" style={{ color: BLUE }} />
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* Luxurious philosophy section (replaces phone-screenshot sections) */}
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-[#0b1020] py-24 sm:py-32">
+          {/* Ambient glow */}
+          <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/25 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/15 blur-[100px]" />
 
-        {/* Horizontally scrollable feature pills + active preview */}
-        <section className="bg-white pt-2 pb-8 sm:pt-4 sm:pb-12">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="mb-6 text-center sm:mb-8">
-              <p className="mb-2 text-base font-bold tracking-tight sm:text-lg" style={{ color: BLUE }}>
-                Everything you need
+          <div className="relative mx-auto max-w-5xl px-5 sm:px-6">
+            <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-20">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-[#8ab4ff]">
+                The Flowist Philosophy
               </p>
-              <h2 className="text-[26px] font-extrabold tracking-tight text-slate-900 sm:text-[34px]">
-                Powerful features, one calm app
+              <h2 className="text-[30px] font-extralight leading-[1.1] tracking-tight text-white sm:text-[52px]">
+                Built for the people who refuse{' '}
+                <span className="italic font-light bg-gradient-to-r from-[#8ab4ff] via-white to-[#8ab4ff] bg-clip-text text-transparent">
+                  to settle.
+                </span>
               </h2>
+              <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60 sm:text-base">
+                A quiet workspace, engineered with the precision of a Swiss timepiece — every interaction
+                weighted, every pixel intentional. Productivity, finally, with taste.
+              </p>
             </div>
 
-            {/* Scrollable pills */}
-            <div className="-mx-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex w-max gap-2">
-                {features.map(({ label, icon: Icon }) => {
-                  const active = activeFeature === label;
-                  return (
-                    <button
-                      key={label}
-                      onClick={() => setActiveFeature(label)}
-                      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all active:scale-[0.97] sm:px-4 sm:py-2 sm:text-sm ${
-                        active
-                          ? 'border-transparent text-white shadow-md'
-                          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                      }`}
-                      style={active ? { backgroundColor: BLUE } : undefined}
-                    >
-                      <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Stat row */}
+            <div className="mb-16 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-sm sm:mb-24">
+              {[
+                { k: '0ms', v: 'Offline launch' },
+                { k: '100k+', v: 'Tasks per device' },
+                { k: '24/7', v: 'Yours, forever' },
+              ].map((s) => (
+                <div key={s.v} className="bg-[#0b1020] px-3 py-7 text-center sm:py-10">
+                  <p className="bg-gradient-to-b from-white to-white/60 bg-clip-text text-[26px] font-light tracking-tight text-transparent sm:text-[44px]">
+                    {s.k}
+                  </p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:text-[11px]">
+                    {s.v}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            {/* Preview placeholder */}
-            <div className="mt-6 sm:mt-8">
-              {(() => {
-                const f = features.find((x) => x.label === activeFeature) || features[0];
-                const Icon = f.icon;
-                return (
-                  <div
-                    className={`relative flex min-h-[560px] w-full items-center justify-center overflow-hidden rounded-[24px] border border-slate-200/70 bg-gradient-to-br ${f.gradient} shadow-[0_20px_60px_-30px_rgba(15,23,42,0.18)] sm:min-h-[720px] lg:min-h-[820px]`}
-                  >
-                    <img
-                      src={f.image}
-                      alt={f.imageAlt}
-                      className="h-[540px] w-auto max-w-full object-contain p-1 sm:h-[700px] sm:p-2 lg:h-[800px]"
-                      loading="lazy"
-                    />
-                    <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-2 text-xs font-bold text-slate-700 shadow-sm backdrop-blur-sm sm:left-5 sm:top-5 sm:text-sm">
-                      <Icon className="h-4 w-4" style={{ color: BLUE }} />
-                      <span>{f.label}</span>
-                    </div>
+            {/* Three pillars */}
+            <div className="grid gap-5 sm:grid-cols-3 sm:gap-6">
+              {[
+                { n: '01', t: 'Crafted', d: 'Hand-tuned typography, restrained motion, surfaces that breathe. Nothing shouts.' },
+                { n: '02', t: 'Calm', d: 'No streaks pushing guilt, no banners screaming for clicks. Only what matters today.' },
+                { n: '03', t: 'Capable', d: 'Notes, tasks, habits, sketches — woven into one quiet, dependable workflow.' },
+              ].map((p) => (
+                <div
+                  key={p.n}
+                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-7 backdrop-blur-sm transition-all hover:border-[#8ab4ff]/40 sm:p-8"
+                >
+                  <div className="absolute right-5 top-5 text-[11px] font-medium tracking-[0.2em] text-white/30">
+                    {p.n}
                   </div>
-                );
-              })()}
+                  <h3 className="mb-3 text-xl font-light tracking-tight text-white sm:text-2xl">{p.t}</h3>
+                  <div className="mb-4 h-px w-10 bg-gradient-to-r from-[#8ab4ff] to-transparent" />
+                  <p className="text-[14px] leading-relaxed text-white/60">{p.d}</p>
+                </div>
+              ))}
             </div>
+
+            {/* Closing pull-quote */}
+            <figure className="mx-auto mt-20 max-w-3xl text-center sm:mt-28">
+              <div className="mx-auto mb-6 h-px w-16 bg-white/20" />
+              <blockquote className="text-[20px] font-extralight italic leading-snug text-white/85 sm:text-[28px]">
+                “The best tool is the one you forget is there —{' '}
+                <span className="text-[#8ab4ff]">until you need it.</span>”
+              </blockquote>
+              <figcaption className="mt-5 text-[11px] uppercase tracking-[0.28em] text-white/40">
+                — The Flowist principle
+              </figcaption>
+            </figure>
           </div>
         </section>
 
