@@ -1321,12 +1321,11 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                 setStep(0);
               }
             }}
-            className="w-full max-w-[340px] py-3.5 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-3 cursor-pointer"
+            className="w-full max-w-[340px] py-3.5 rounded-full text-[16px] font-semibold flex items-center justify-center gap-3 cursor-pointer"
             style={{
               backgroundColor: '#ffffff',
-              border: '2px solid #e8e8e8',
+              border: '1px solid #d9d9e3',
               color: '#1a1a1a',
-              boxShadow: '0 6px 0 0 #e4e8ea',
             }}
             whileTap={{ scale: 0.97 }}
           >
