@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
+import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, RefreshCw, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
