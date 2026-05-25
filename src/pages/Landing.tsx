@@ -538,7 +538,39 @@ export default function Landing() {
             </div>
           </div>
         </section>
+        {/* Sync across all platforms */}
+        <section className="relative overflow-hidden" style={{ backgroundColor: BLUE }}>
+          <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
+          <div className="relative mx-auto max-w-5xl px-5 py-16 text-center sm:px-6 sm:py-24">
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-[40px]">
+              Sync across all platforms
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
+              Whether it's your phone, computer, or tablet, Flowist offers real-time sync and a seamless experience.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={handleGetStarted}
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/70 px-10 text-base font-semibold text-white transition-all hover:bg-white hover:text-[#3c78f0]"
+              >
+                Download
+              </button>
+            </div>
+            <div className="mt-12 sm:mt-16">
+              <img
+                src={landingSyncDevicesImg}
+                alt="Flowist running on laptop, tablet and phones"
+                loading="lazy"
+                width={1536}
+                height={1024}
+                className="mx-auto h-auto w-full max-w-4xl object-contain"
+              />
+            </div>
+          </div>
+        </section>
       </main>
+
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16">
