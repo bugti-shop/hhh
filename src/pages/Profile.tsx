@@ -428,7 +428,7 @@ export default function Profile() {
               <button
                 onClick={handleSignIn}
                 disabled={isSigningIn}
-                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-card border border-border rounded-xl shadow-sm hover:shadow-md transition-all disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border border-[#d9d9e3] rounded-full shadow-sm hover:shadow-md transition-all disabled:opacity-50"
               >
                 {isSigningIn ? (
                   <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
