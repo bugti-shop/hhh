@@ -357,7 +357,7 @@ export default function Landing() {
                   </a>
                 </div>
               </div>
-              <p className="mt-4 text-xs text-slate-500">Try it free · Works offline · Cancel anytime</p>
+              
             </div>
 
             {/* Hero side decoration (replaces inline cards) */}
@@ -370,41 +370,51 @@ export default function Landing() {
 
         {/* Trust bar removed per request */}
 
-        {/* Luxurious philosophy section (replaces phone-screenshot sections) */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-[#0b1020] py-24 sm:py-32">
-          {/* Ambient glow */}
-          <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/25 blur-[120px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/15 blur-[100px]" />
+        {/* Luxurious philosophy section — light, matches landing nature */}
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-white py-24 sm:py-32">
+          {/* Soft ambient accents */}
+          <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.35]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgba(60,120,240,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(60,120,240,0.06) 1px, transparent 1px)',
+              backgroundSize: '56px 56px',
+              maskImage:
+                'radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, transparent 75%)',
+            }}
+          />
 
           <div className="relative mx-auto max-w-5xl px-5 sm:px-6">
             <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-20">
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-[#8ab4ff]">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em]" style={{ color: BLUE }}>
                 The Flowist Philosophy
               </p>
-              <h2 className="text-[30px] font-extralight leading-[1.1] tracking-tight text-white sm:text-[52px]">
+              <h2 className="text-[30px] font-extralight leading-[1.1] tracking-tight text-slate-900 sm:text-[52px]">
                 Built for the people who refuse{' '}
-                <span className="italic font-light bg-gradient-to-r from-[#8ab4ff] via-white to-[#8ab4ff] bg-clip-text text-transparent">
+                <span className="italic font-light bg-gradient-to-r from-[#3c78f0] via-slate-900 to-[#3c78f0] bg-clip-text text-transparent">
                   to settle.
                 </span>
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-white/60 sm:text-base">
+              <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 A quiet workspace, engineered with the precision of a Swiss timepiece — every interaction
                 weighted, every pixel intentional. Productivity, finally, with taste.
               </p>
             </div>
 
             {/* Stat row */}
-            <div className="mb-16 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-sm sm:mb-24">
+            <div className="mb-16 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-[0_20px_60px_-30px_rgba(60,120,240,0.25)] sm:mb-24">
               {[
                 { k: '0ms', v: 'Offline launch' },
                 { k: '100k+', v: 'Tasks per device' },
                 { k: '24/7', v: 'Yours, forever' },
               ].map((s) => (
-                <div key={s.v} className="bg-[#0b1020] px-3 py-7 text-center sm:py-10">
-                  <p className="bg-gradient-to-b from-white to-white/60 bg-clip-text text-[26px] font-light tracking-tight text-transparent sm:text-[44px]">
+                <div key={s.v} className="bg-white px-3 py-7 text-center sm:py-10">
+                  <p className="bg-gradient-to-b from-slate-900 to-[#3c78f0] bg-clip-text text-[26px] font-light tracking-tight text-transparent sm:text-[44px]">
                     {s.k}
                   </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/45 sm:text-[11px]">
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-slate-500 sm:text-[11px]">
                     {s.v}
                   </p>
                 </div>
@@ -420,26 +430,26 @@ export default function Landing() {
               ].map((p) => (
                 <div
                   key={p.n}
-                  className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.02] p-7 backdrop-blur-sm transition-all hover:border-[#8ab4ff]/40 sm:p-8"
+                  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#3c78f0]/40 hover:shadow-[0_20px_50px_-25px_rgba(60,120,240,0.35)] sm:p-8"
                 >
-                  <div className="absolute right-5 top-5 text-[11px] font-medium tracking-[0.2em] text-white/30">
+                  <div className="absolute right-5 top-5 text-[11px] font-medium tracking-[0.2em] text-slate-300">
                     {p.n}
                   </div>
-                  <h3 className="mb-3 text-xl font-light tracking-tight text-white sm:text-2xl">{p.t}</h3>
-                  <div className="mb-4 h-px w-10 bg-gradient-to-r from-[#8ab4ff] to-transparent" />
-                  <p className="text-[14px] leading-relaxed text-white/60">{p.d}</p>
+                  <h3 className="mb-3 text-xl font-light tracking-tight text-slate-900 sm:text-2xl">{p.t}</h3>
+                  <div className="mb-4 h-px w-10 bg-gradient-to-r from-[#3c78f0] to-transparent" />
+                  <p className="text-[14px] leading-relaxed text-slate-600">{p.d}</p>
                 </div>
               ))}
             </div>
 
             {/* Closing pull-quote */}
             <figure className="mx-auto mt-20 max-w-3xl text-center sm:mt-28">
-              <div className="mx-auto mb-6 h-px w-16 bg-white/20" />
-              <blockquote className="text-[20px] font-extralight italic leading-snug text-white/85 sm:text-[28px]">
+              <div className="mx-auto mb-6 h-px w-16 bg-slate-300" />
+              <blockquote className="text-[20px] font-extralight italic leading-snug text-slate-800 sm:text-[28px]">
                 “The best tool is the one you forget is there —{' '}
-                <span className="text-[#8ab4ff]">until you need it.</span>”
+                <span style={{ color: BLUE }}>until you need it.</span>”
               </blockquote>
-              <figcaption className="mt-5 text-[11px] uppercase tracking-[0.28em] text-white/40">
+              <figcaption className="mt-5 text-[11px] uppercase tracking-[0.28em] text-slate-400">
                 — The Flowist principle
               </figcaption>
             </figure>
