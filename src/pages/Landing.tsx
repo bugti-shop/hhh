@@ -379,10 +379,10 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Feature cards — TickTick-style: label, big title, description, image */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] py-16 sm:py-24">
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] pt-6 pb-12 sm:pt-10 sm:pb-16">
           {/* Soft ambient accents */}
-          <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.35]"
             style={{
@@ -394,15 +394,16 @@ export default function Landing() {
             }}
           />
 
-          <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
-            <div className="flex flex-col gap-6 sm:gap-8">
+          <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+            <div className="flex flex-col gap-4 sm:gap-5">
               {[
                 {
                   label: 'To-Do List',
                   title: 'Organize everything in your life',
                   desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
                   img: landingTodoImg,
-                  alt: 'Floating to-do list illustration',
+                  img2: landingTodoImg2,
+                  alt: 'To-do list app screen',
                 },
                 {
                   label: 'Calendar Views',
@@ -423,7 +424,8 @@ export default function Landing() {
                   title: 'Develop and maintain good habits',
                   desc: 'A rich habit library, flexible tracking options, and insightful statistics help you build good habits effortlessly and lead a fulfilling life.',
                   img: landingHabitsImg,
-                  alt: 'Habit streak chart with flame icons',
+                  img2: landingHabitsImg2,
+                  alt: 'Habit streak chart',
                 },
                 {
                   label: 'Countdown',
@@ -435,32 +437,45 @@ export default function Landing() {
               ].map((c) => (
                 <article
                   key={c.label}
-                  className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.08)] sm:p-10"
+                  className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-[0_6px_24px_-12px_rgba(15,23,42,0.08)] sm:p-7"
                 >
-                  <p className="text-[15px] font-semibold sm:text-base" style={{ color: BLUE }}>
+                  <p className="text-[13px] font-semibold sm:text-sm" style={{ color: BLUE }}>
                     {c.label}
                   </p>
-                  <h3 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
+                  <h3 className="mt-2 text-[20px] font-extrabold leading-[1.2] tracking-tight text-slate-900 sm:text-[26px]">
                     {c.title}
                   </h3>
-                  <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+                  <p className="mt-3 text-[13px] leading-relaxed text-slate-600 sm:text-[15px]">
                     {c.desc}
                   </p>
-                  <div className="mt-6 overflow-hidden rounded-2xl sm:mt-8">
+                  <div className="mt-5 overflow-hidden rounded-xl sm:mt-6">
                     <img
                       src={c.img}
                       alt={c.alt}
                       loading="lazy"
                       width={1024}
-                      height={768}
+                      height={1024}
                       className="h-auto w-full object-cover"
                     />
                   </div>
+                  {c.img2 && (
+                    <div className="mt-3 overflow-hidden rounded-xl sm:mt-4">
+                      <img
+                        src={c.img2}
+                        alt={`${c.alt} additional`}
+                        loading="lazy"
+                        width={1024}
+                        height={1024}
+                        className="h-auto w-full object-cover"
+                      />
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
           </div>
         </section>
+
 
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
