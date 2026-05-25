@@ -17,6 +17,11 @@ import codeEditorImage from '@/assets/flowist-code-editor.png';
 import taskNlpImage from '@/assets/flowist-task-nlp.png';
 import calendarViewImage from '@/assets/flowist-calendar-view.png';
 import flatLayoutImage from '@/assets/flowist-flat-layout.png';
+import landingTodoImg from '@/assets/landing-todo.jpg';
+import landingCalendarImg from '@/assets/landing-calendar.jpg';
+import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
+import landingHabitsImg from '@/assets/landing-habits.jpg';
+import landingCountdownImg from '@/assets/landing-countdown.jpg';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
