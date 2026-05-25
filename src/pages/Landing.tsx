@@ -465,7 +465,7 @@ export default function Landing() {
 
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
-        <section className="bg-gradient-to-b from-slate-100 to-white pt-0 pb-12 sm:pb-16">
+        <section className="bg-gradient-to-b from-slate-100 to-white pt-8 pb-12 sm:pt-16 sm:pb-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <div className="mb-10 text-center sm:mb-14">
               <h2 className="text-[28px] font-extrabold leading-tight tracking-tight sm:text-[40px]" style={{ color: BLUE }}>
@@ -480,7 +480,7 @@ export default function Landing() {
               {suiteFeatures.map(({ title, desc, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
+                  className="flex h-full flex-col rounded-[20px] bg-white p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
                 >
                   <Icon className="mb-3 h-5 w-5 text-slate-900 sm:h-6 sm:w-6" strokeWidth={1.75} />
                   <h3 className="mb-2 truncate whitespace-nowrap text-[15px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
