@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
+import { Menu, Check, Calendar, StickyNote, Sparkles, Repeat, RefreshCw, ArrowRight, ChevronDown, X, Pencil, AlignLeft, Code2, Brain, LayoutGrid, Flag, Layers, BellRing, Filter as FilterIcon, BarChart3, Lock, Moon, Clock } from 'lucide-react';
 import { AppLogo } from '@/components/AppLogo';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { setSetting } from '@/utils/settingsStorage';
@@ -163,7 +163,7 @@ export default function Landing() {
 
   const suiteFeatures = [
     { title: 'Reminder', desc: 'Notifications keep ringing until you complete the task — nothing slips by.', icon: BellRing },
-    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: Repeat },
+    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: RefreshCw },
     { title: 'NLP', desc: 'Type naturally and Flowist auto-detects dates, times and reminder cues.', icon: Brain },
     { title: 'Filter', desc: 'Build smart filters like “high-priority this week” to focus on what matters.', icon: FilterIcon },
     { title: 'Progress', desc: 'Track focus time, streaks and habit logs to see your real momentum daily.', icon: BarChart3 },
@@ -465,7 +465,7 @@ export default function Landing() {
 
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
-        <section className="bg-gradient-to-b from-slate-100 to-white pt-0 pb-12 sm:pb-16">
+        <section className="bg-gradient-to-b from-slate-100 to-white pt-8 pb-12 sm:pt-16 sm:pb-16">
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <div className="mb-10 text-center sm:mb-14">
               <h2 className="text-[28px] font-extrabold leading-tight tracking-tight sm:text-[40px]" style={{ color: BLUE }}>
@@ -480,7 +480,7 @@ export default function Landing() {
               {suiteFeatures.map(({ title, desc, icon: Icon }) => (
                 <div
                   key={title}
-                  className="flex h-full flex-col rounded-[20px] bg-[#fafafa] p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
+                  className="flex h-full flex-col rounded-[20px] bg-white p-5 shadow-[0_2px_8px_-4px_rgba(15,23,42,0.08)] sm:p-6"
                 >
                   <Icon className="mb-3 h-5 w-5 text-slate-900 sm:h-6 sm:w-6" strokeWidth={1.75} />
                   <h3 className="mb-2 truncate whitespace-nowrap text-[15px] font-extrabold tracking-tight text-slate-900 sm:text-[17px]">
@@ -528,14 +528,14 @@ export default function Landing() {
         <section className="relative overflow-hidden" style={{ backgroundColor: BLUE }}>
           <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto max-w-5xl px-5 py-16 text-center sm:px-6 sm:py-24">
+          <div className="relative mx-auto max-w-6xl px-4 py-10 text-center sm:px-6 sm:py-14">
             <h2 className="whitespace-nowrap text-[22px] font-extrabold tracking-tight text-white sm:text-[40px]">
               Sync across all platforms
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
+            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
               Whether it's your phone, computer, or tablet, Flowist offers real-time sync and a seamless experience.
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-6 flex justify-center">
               <button
                 onClick={handleGetStarted}
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/70 px-10 text-base font-semibold text-white transition-all hover:bg-white hover:text-[#3c78f0]"
@@ -543,14 +543,14 @@ export default function Landing() {
                 Download
               </button>
             </div>
-            <div className="mt-12 sm:mt-16">
+            <div className="mt-6 sm:mt-8 -mx-4 sm:-mx-6">
               <img
                 src={landingSyncDevicesImg}
                 alt="Flowist running on laptop, tablet and phones"
                 loading="lazy"
                 width={1536}
                 height={1024}
-                className="mx-auto h-auto w-full max-w-none object-contain sm:max-w-6xl"
+                className="mx-auto h-auto w-full max-w-none object-contain"
               />
             </div>
           </div>
