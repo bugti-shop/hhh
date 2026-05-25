@@ -379,7 +379,7 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Feature cards — TickTick-style: label, big title, description, image */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-slate-100 via-[#eef2fb] to-slate-100 pt-6 pb-12 sm:pt-10 sm:pb-16">
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-slate-100 via-[#eef2fb] to-slate-100 pt-6 pb-0 sm:pt-10 sm:pb-0">
           {/* Soft ambient accents */}
           <div className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#3c78f0]/15 blur-[120px]" />
           <div className="pointer-events-none absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-[#8ab4ff]/15 blur-[100px]" />
