@@ -529,7 +529,7 @@ export default function Landing() {
           <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="relative mx-auto max-w-5xl px-5 py-16 text-center sm:px-6 sm:py-24">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-[40px]">
+            <h2 className="whitespace-nowrap text-[22px] font-extrabold tracking-tight text-white sm:text-[40px]">
               Sync across all platforms
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
