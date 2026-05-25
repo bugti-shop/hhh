@@ -18,10 +18,13 @@ import taskNlpImage from '@/assets/flowist-task-nlp.png';
 import calendarViewImage from '@/assets/flowist-calendar-view.png';
 import flatLayoutImage from '@/assets/flowist-flat-layout.png';
 import landingTodoImg from '@/assets/landing-todo.jpg';
+import landingTodoImg2 from '@/assets/landing-todo-2.jpg';
 import landingCalendarImg from '@/assets/landing-calendar.jpg';
 import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
 import landingHabitsImg from '@/assets/landing-habits.jpg';
+import landingHabitsImg2 from '@/assets/landing-habits-2.jpg';
 import landingCountdownImg from '@/assets/landing-countdown.jpg';
+import landingSyncDevicesImg from '@/assets/landing-sync-devices.jpg';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -376,10 +379,10 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Feature cards — TickTick-style: label, big title, description, image */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] py-16 sm:py-24">
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] pt-6 pb-12 sm:pt-10 sm:pb-16">
           {/* Soft ambient accents */}
-          <div className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[360px] w-[360px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.35]"
             style={{
@@ -391,15 +394,16 @@ export default function Landing() {
             }}
           />
 
-          <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
-            <div className="flex flex-col gap-6 sm:gap-8">
+          <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+            <div className="flex flex-col gap-4 sm:gap-5">
               {[
                 {
                   label: 'To-Do List',
                   title: 'Organize everything in your life',
                   desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
                   img: landingTodoImg,
-                  alt: 'Floating to-do list illustration',
+                  img2: landingTodoImg2,
+                  alt: 'To-do list app screen',
                 },
                 {
                   label: 'Calendar Views',
@@ -420,7 +424,8 @@ export default function Landing() {
                   title: 'Develop and maintain good habits',
                   desc: 'A rich habit library, flexible tracking options, and insightful statistics help you build good habits effortlessly and lead a fulfilling life.',
                   img: landingHabitsImg,
-                  alt: 'Habit streak chart with flame icons',
+                  img2: landingHabitsImg2,
+                  alt: 'Habit streak chart',
                 },
                 {
                   label: 'Countdown',
@@ -432,32 +437,45 @@ export default function Landing() {
               ].map((c) => (
                 <article
                   key={c.label}
-                  className="rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.08)] sm:p-10"
+                  className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-[0_6px_24px_-12px_rgba(15,23,42,0.08)] sm:p-7"
                 >
-                  <p className="text-[15px] font-semibold sm:text-base" style={{ color: BLUE }}>
+                  <p className="text-[13px] font-semibold sm:text-sm" style={{ color: BLUE }}>
                     {c.label}
                   </p>
-                  <h3 className="mt-3 text-[26px] font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-[34px]">
+                  <h3 className="mt-2 text-[20px] font-extrabold leading-[1.2] tracking-tight text-slate-900 sm:text-[26px]">
                     {c.title}
                   </h3>
-                  <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+                  <p className="mt-3 text-[13px] leading-relaxed text-slate-600 sm:text-[15px]">
                     {c.desc}
                   </p>
-                  <div className="mt-6 overflow-hidden rounded-2xl sm:mt-8">
+                  <div className="mt-5 overflow-hidden rounded-xl sm:mt-6">
                     <img
                       src={c.img}
                       alt={c.alt}
                       loading="lazy"
                       width={1024}
-                      height={768}
+                      height={1024}
                       className="h-auto w-full object-cover"
                     />
                   </div>
+                  {c.img2 && (
+                    <div className="mt-3 overflow-hidden rounded-xl sm:mt-4">
+                      <img
+                        src={c.img2}
+                        alt={`${c.alt} additional`}
+                        loading="lazy"
+                        width={1024}
+                        height={1024}
+                        className="h-auto w-full object-cover"
+                      />
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
           </div>
         </section>
+
 
 
         {/* Comprehensive suite of features (TickTick-style 8-card grid) */}
@@ -520,7 +538,39 @@ export default function Landing() {
             </div>
           </div>
         </section>
+        {/* Sync across all platforms */}
+        <section className="relative overflow-hidden" style={{ backgroundColor: BLUE }}>
+          <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
+          <div className="relative mx-auto max-w-5xl px-5 py-16 text-center sm:px-6 sm:py-24">
+            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-[40px]">
+              Sync across all platforms
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
+              Whether it's your phone, computer, or tablet, Flowist offers real-time sync and a seamless experience.
+            </p>
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={handleGetStarted}
+                className="inline-flex h-12 items-center justify-center rounded-full border border-white/70 px-10 text-base font-semibold text-white transition-all hover:bg-white hover:text-[#3c78f0]"
+              >
+                Download
+              </button>
+            </div>
+            <div className="mt-12 sm:mt-16">
+              <img
+                src={landingSyncDevicesImg}
+                alt="Flowist running on laptop, tablet and phones"
+                loading="lazy"
+                width={1536}
+                height={1024}
+                className="mx-auto h-auto w-full max-w-4xl object-contain"
+              />
+            </div>
+          </div>
+        </section>
       </main>
+
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16">
