@@ -163,7 +163,7 @@ export default function Landing() {
 
   const suiteFeatures = [
     { title: 'Reminder', desc: 'Notifications keep ringing until you complete the task — nothing slips by.', icon: BellRing },
-    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: Repeat },
+    { title: 'Repeat', desc: 'Flexible recurring rules — daily, weekly, monthly or fully custom schedules.', icon: RefreshCw },
     { title: 'NLP', desc: 'Type naturally and Flowist auto-detects dates, times and reminder cues.', icon: Brain },
     { title: 'Filter', desc: 'Build smart filters like “high-priority this week” to focus on what matters.', icon: FilterIcon },
     { title: 'Progress', desc: 'Track focus time, streaks and habit logs to see your real momentum daily.', icon: BarChart3 },
