@@ -24,7 +24,7 @@ import landingPomodoroImg from '@/assets/landing-pomodoro.jpg';
 import landingHabitsImg from '@/assets/landing-habits.jpg';
 import landingHabitsImg2 from '@/assets/landing-habits-2.jpg';
 import landingCountdownImg from '@/assets/landing-countdown.jpg';
-import landingSyncDevicesImg from '@/assets/landing-sync-devices.jpg';
+import landingSyncDevicesImg from '@/assets/landing-sync-devices.png';
 
 const BLUE = '#3c78f0';
 const BLUE_DARK = '#2b5dbf';
@@ -379,22 +379,22 @@ export default function Landing() {
         {/* Trust bar removed per request */}
 
         {/* Feature cards — TickTick-style: label, big title, description, image */}
-        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-[#f5f8ff] via-white to-[#f5f8ff] pt-6 pb-12 sm:pt-10 sm:pb-16">
+        <section id="features" className="relative overflow-hidden scroll-mt-20 bg-gradient-to-b from-slate-100 via-[#eef2fb] to-slate-100 pt-6 pb-12 sm:pt-10 sm:pb-16">
           {/* Soft ambient accents */}
-          <div className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#3c78f0]/10 blur-[120px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-[#8ab4ff]/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[#3c78f0]/15 blur-[120px]" />
+          <div className="pointer-events-none absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-[#8ab4ff]/15 blur-[100px]" />
           <div
-            className="pointer-events-none absolute inset-0 opacity-[0.35]"
+            className="pointer-events-none absolute inset-0 opacity-[0.5]"
             style={{
               backgroundImage:
-                'linear-gradient(to right, rgba(60,120,240,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(60,120,240,0.06) 1px, transparent 1px)',
+                'linear-gradient(to right, rgba(60,120,240,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(60,120,240,0.08) 1px, transparent 1px)',
               backgroundSize: '56px 56px',
               maskImage:
-                'radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, transparent 75%)',
+                'radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, transparent 75%)',
             }}
           />
 
-          <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+          <div className="relative mx-auto max-w-xl px-4 sm:px-6">
             <div className="flex flex-col gap-4 sm:gap-5">
               {[
                 {
@@ -402,7 +402,6 @@ export default function Landing() {
                   title: 'Organize everything in your life',
                   desc: "Whether it's work projects, personal tasks, or study plans, Flowist helps you organize and confidently tackle everything in your life.",
                   img: landingTodoImg,
-                  img2: landingTodoImg2,
                   alt: 'To-do list app screen',
                 },
                 {
@@ -423,8 +422,7 @@ export default function Landing() {
                   label: 'Habit Tracker',
                   title: 'Develop and maintain good habits',
                   desc: 'A rich habit library, flexible tracking options, and insightful statistics help you build good habits effortlessly and lead a fulfilling life.',
-                  img: landingHabitsImg,
-                  img2: landingHabitsImg2,
+                  img: landingHabitsImg2,
                   alt: 'Habit streak chart',
                 },
                 {
@@ -437,39 +435,27 @@ export default function Landing() {
               ].map((c) => (
                 <article
                   key={c.label}
-                  className="rounded-[22px] border border-slate-200/80 bg-white p-5 shadow-[0_6px_24px_-12px_rgba(15,23,42,0.08)] sm:p-7"
+                  className="rounded-[18px] border border-slate-200 bg-white p-4 shadow-[0_10px_30px_-15px_rgba(15,23,42,0.18)] sm:p-5"
                 >
-                  <p className="text-[13px] font-semibold sm:text-sm" style={{ color: BLUE }}>
+                  <p className="text-[12px] font-semibold sm:text-[13px]" style={{ color: BLUE }}>
                     {c.label}
                   </p>
-                  <h3 className="mt-2 text-[20px] font-extrabold leading-[1.2] tracking-tight text-slate-900 sm:text-[26px]">
+                  <h3 className="mt-1.5 text-[17px] font-extrabold leading-[1.2] tracking-tight text-slate-900 sm:text-[20px]">
                     {c.title}
                   </h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-slate-600 sm:text-[15px]">
+                  <p className="mt-2 text-[12.5px] leading-relaxed text-slate-600 sm:text-[13.5px]">
                     {c.desc}
                   </p>
-                  <div className="mt-5 overflow-hidden rounded-xl sm:mt-6">
+                  <div className="mt-4 aspect-[4/3] overflow-hidden rounded-lg bg-slate-50">
                     <img
                       src={c.img}
                       alt={c.alt}
                       loading="lazy"
                       width={1024}
-                      height={1024}
-                      className="h-auto w-full object-cover"
+                      height={768}
+                      className="h-full w-full object-cover"
                     />
                   </div>
-                  {c.img2 && (
-                    <div className="mt-3 overflow-hidden rounded-xl sm:mt-4">
-                      <img
-                        src={c.img2}
-                        alt={`${c.alt} additional`}
-                        loading="lazy"
-                        width={1024}
-                        height={1024}
-                        className="h-auto w-full object-cover"
-                      />
-                    </div>
-                  )}
                 </article>
               ))}
             </div>
@@ -543,7 +529,7 @@ export default function Landing() {
           <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="relative mx-auto max-w-5xl px-5 py-16 text-center sm:px-6 sm:py-24">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-[40px]">
+            <h2 className="whitespace-nowrap text-[22px] font-extrabold tracking-tight text-white sm:text-[40px]">
               Sync across all platforms
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
