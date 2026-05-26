@@ -42,13 +42,14 @@ const PRODUCT_IDS: { weekly: string; monthly: string; yearly: string } = IS_IOS
       yearly: 'npd_yr:npd-yearly-plan',
     };
 
+export type ProductType = 'weekly' | 'monthly' | 'yearly';
+
 // Free trial offer IDs (base plan:offer)
 const TRIAL_OFFER_IDS: Partial<Record<ProductType, string>> = {
   monthly: 'npd-monthly-offer',
   yearly: 'npd-yearly-trial',
 };
 
-export type ProductType = keyof typeof PRODUCT_IDS;
 export type SubscriptionTier = 'free' | 'premium';
 export type SubscriptionPlanType = 'none' | 'weekly' | 'monthly' | 'yearly';
 
