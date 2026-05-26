@@ -30,7 +30,7 @@ const ENTITLEMENT_ID = 'npd Pro';
 
 // Product identifiers — platform-aware (iOS uses App Store IDs; Android uses Play base:offer IDs)
 const IS_IOS = Capacitor.getPlatform() === 'ios';
-const PRODUCT_IDS = IS_IOS
+const PRODUCT_IDS: { weekly: string; monthly: string; yearly: string } = IS_IOS
   ? {
       weekly: 'com.flowist.app.weekly',
       monthly: 'com.flowist.app.monthly',
@@ -40,7 +40,7 @@ const PRODUCT_IDS = IS_IOS
       weekly: 'nnppd_weekly:nnnpd-weekly',
       monthly: 'npd_mo:npd-mo',
       yearly: 'npd_yr:npd-yearly-plan',
-    } as const;
+    };
 
 // Free trial offer IDs (base plan:offer)
 const TRIAL_OFFER_IDS: Partial<Record<ProductType, string>> = {
