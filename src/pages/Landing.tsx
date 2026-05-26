@@ -528,14 +528,14 @@ export default function Landing() {
         <section className="relative overflow-hidden" style={{ backgroundColor: BLUE }}>
           <div className="pointer-events-none absolute -top-24 -left-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-[420px] w-[420px] rounded-full bg-white/10 blur-3xl" />
-          <div className="relative mx-auto max-w-6xl px-4 py-10 text-center sm:px-6 sm:py-14">
+          <div className="relative mx-auto max-w-6xl px-4 pt-6 pb-4 text-center sm:px-6 sm:pt-10 sm:pb-8">
             <h2 className="whitespace-nowrap text-[22px] font-extrabold tracking-tight text-white sm:text-[40px]">
               Sync across all platforms
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-white/85 sm:text-base">
               Whether it's your phone, computer, or tablet, Flowist offers real-time sync and a seamless experience.
             </p>
-            <div className="mt-6 flex justify-center">
+            <div className="mt-5 flex justify-center">
               <button
                 onClick={handleGetStarted}
                 className="inline-flex h-12 items-center justify-center rounded-full border border-white/70 px-10 text-base font-semibold text-white transition-all hover:bg-white hover:text-[#3c78f0]"
@@ -543,14 +543,14 @@ export default function Landing() {
                 Download
               </button>
             </div>
-            <div className="mt-6 sm:mt-8 -mx-4 sm:-mx-6">
+            <div className="mt-4 sm:mt-6 -mx-8 sm:-mx-6 overflow-hidden">
               <img
                 src={landingSyncDevicesImg}
                 alt="Flowist running on laptop, tablet and phones"
                 loading="lazy"
                 width={1536}
                 height={1024}
-                className="mx-auto h-auto w-full max-w-none object-contain"
+                className="mx-auto h-auto w-[130%] sm:w-full max-w-none object-contain"
               />
             </div>
           </div>
@@ -581,7 +581,7 @@ export default function Landing() {
               </a>
             </div>
           </div>
-          <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} Flowist Inc.</p>
+          <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} GMJP LLC.</p>
 
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">

@@ -28,12 +28,21 @@ const REVENUECAT_API_KEY = 'goog_WLSvWlyHHLzNAgIfhCzAYsGaZyh';
 // Entitlement identifier
 const ENTITLEMENT_ID = 'npd Pro';
 
-// Product identifiers
-const PRODUCT_IDS = {
-  weekly: 'nnppd_weekly:nnnpd-weekly',
-  monthly: 'npd_mo:npd-mo',
-  yearly: 'npd_yr:npd-yearly-plan',
-} as const;
+// Product identifiers — platform-aware (iOS uses App Store IDs; Android uses Play base:offer IDs)
+const IS_IOS = Capacitor.getPlatform() === 'ios';
+const PRODUCT_IDS: { weekly: string; monthly: string; yearly: string } = IS_IOS
+  ? {
+      weekly: 'com.flowist.app.weekly',
+      monthly: 'com.flowist.app.monthly',
+      yearly: 'com.flowist.app.yearly',
+    }
+  : {
+      weekly: 'nnppd_weekly:nnnpd-weekly',
+      monthly: 'npd_mo:npd-mo',
+      yearly: 'npd_yr:npd-yearly-plan',
+    };
+
+export type ProductType = 'weekly' | 'monthly' | 'yearly';
 
 // Free trial offer IDs (base plan:offer)
 const TRIAL_OFFER_IDS: Partial<Record<ProductType, string>> = {
@@ -41,7 +50,6 @@ const TRIAL_OFFER_IDS: Partial<Record<ProductType, string>> = {
   yearly: 'npd-yearly-trial',
 };
 
-export type ProductType = keyof typeof PRODUCT_IDS;
 export type SubscriptionTier = 'free' | 'premium';
 export type SubscriptionPlanType = 'none' | 'weekly' | 'monthly' | 'yearly';
 
