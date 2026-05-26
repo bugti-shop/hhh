@@ -581,7 +581,7 @@ export default function Landing() {
               </a>
             </div>
           </div>
-          <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} Flowist Inc.</p>
+          <p className="mb-10 text-sm text-slate-500">© {new Date().getFullYear()} GMJP LLC.</p>
 
           {/* Link grid */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
