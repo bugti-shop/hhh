@@ -1342,24 +1342,28 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.475 }}
-            onClick={async () => {
-              await triggerHaptic();
-              try {
-                const { lovable } = await import('@/integrations/lovable/index');
-                const result = await lovable.auth.signInWithOAuth('apple', {
-                  redirect_uri: window.location.origin,
-                });
-                if (result.error) {
-                  console.error('Apple sign-in failed:', result.error);
+            onClick={() => {
+              // Fire haptic without awaiting so the browser keeps user-activation
+              // and the OAuth popup/redirect opens on the first click.
+              triggerHaptic();
+              (async () => {
+                try {
+                  const { lovable } = await import('@/integrations/lovable/index');
+                  const result = await lovable.auth.signInWithOAuth('apple', {
+                    redirect_uri: window.location.origin,
+                  });
+                  if (result.error) {
+                    console.error('Apple sign-in failed:', result.error);
+                    setStep(0);
+                    return;
+                  }
+                  if (result.redirected) return;
                   setStep(0);
-                  return;
+                } catch (err) {
+                  console.error('Apple sign-in failed:', err);
+                  setStep(0);
                 }
-                if (result.redirected) return;
-                setStep(0);
-              } catch (err) {
-                console.error('Apple sign-in failed:', err);
-                setStep(0);
-              }
+              })();
             }}
             className="w-full max-w-[340px] mt-3 py-3.5 rounded-full text-[16px] font-semibold flex items-center justify-center gap-3 cursor-pointer"
             style={{
