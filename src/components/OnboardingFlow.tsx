@@ -1137,6 +1137,22 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           paddingBottom: 'var(--safe-bottom, 0px)',
         }}
       >
+        {/* Back to landing */}
+        <button
+          onClick={() => {
+            try {
+              sessionStorage.removeItem('flowist_landing_acknowledged');
+              localStorage.removeItem('flowist_landing_acknowledged');
+            } catch {}
+            setSetting('onboarding_completed', false);
+            window.dispatchEvent(new Event('flowistShowLanding'));
+          }}
+          aria-label="Back to landing"
+          className="absolute left-4 z-10 flex h-9 w-9 items-center justify-center rounded-full active:scale-95 transition-transform"
+          style={{ top: 'calc(var(--safe-top, 0px) + 12px)' }}
+        >
+          <ArrowLeft className="h-5 w-5 text-[#1a1a1a]" />
+        </button>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
