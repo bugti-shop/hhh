@@ -1270,6 +1270,15 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
           paddingBottom: 'var(--safe-bottom, 0px)',
         }}
       >
+        {/* Back to language selection */}
+        <button
+          onClick={() => setStep(-3)}
+          aria-label="Back"
+          className="absolute left-4 z-10 flex h-9 w-9 items-center justify-center rounded-full active:scale-95 transition-transform"
+          style={{ top: 'calc(var(--safe-top, 0px) + 12px)' }}
+        >
+          <ArrowLeft className="h-5 w-5 text-[#1a1a1a]" />
+        </button>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
