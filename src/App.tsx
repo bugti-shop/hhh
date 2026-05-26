@@ -320,10 +320,18 @@ const AppContent = () => {
     // Listen for landing dismissal (user clicked Get Started)
     const handleLandingDismissed = () => setShowLanding(false);
     window.addEventListener('flowistLandingDismissed', handleLandingDismissed);
-    
+
+    // Listen for explicit "show landing" request (e.g. back from onboarding language step)
+    const handleShowLanding = () => {
+      setShowOnboarding(false);
+      setShowLanding(true);
+    };
+    window.addEventListener('flowistShowLanding', handleShowLanding);
+
     return () => {
       window.removeEventListener('flowistOnboardingReset', handleReset);
       window.removeEventListener('flowistLandingDismissed', handleLandingDismissed);
+      window.removeEventListener('flowistShowLanding', handleShowLanding);
     };
   }, [isNative]);
   
