@@ -19,7 +19,8 @@
  */
 
 import { Capacitor } from '@capacitor/core';
-import { CapacitorCalendar, CalendarPermissionScope } from '@ebarooni/capacitor-calendar';
+import { CapacitorCalendar as _CapacitorCalendar } from '@ebarooni/capacitor-calendar';
+const CapacitorCalendar: any = _CapacitorCalendar;
 import { TodoItem, CalendarEvent as AppCalendarEvent } from '@/types/note';
 import { getSetting, setSetting } from './settingsStorage';
 
