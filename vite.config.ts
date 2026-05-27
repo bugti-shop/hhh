@@ -85,6 +85,7 @@ export default defineConfig(({ mode }) => ({
     },
     cssMinify: true,
     rollupOptions: {
+      external: ['@capgo/capacitor-social-login'],
       output: {
         manualChunks(id) {
           if (id.includes('@revenuecat')) return 'vendor-revenuecat';

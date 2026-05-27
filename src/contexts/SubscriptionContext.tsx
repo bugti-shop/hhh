@@ -1195,7 +1195,7 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
       isMounted = false;
       const handleToRemove = currentListenerHandle ?? listenerHandle;
       if (handleToRemove) {
-        Purchases.removeCustomerInfoUpdateListener({ listenerToRemove: handleToRemove }).catch(console.error);
+        (Purchases.removeCustomerInfoUpdateListener as any)(handleToRemove).catch(console.error);
       }
     };
   }, []);
