@@ -65,8 +65,8 @@ export const checkCalendarPermissions = async (): Promise<boolean> => {
   if (!isNative()) return false;
   try {
     const cal = CapacitorCalendar;
-    const read = await Promise.resolve(cal.checkPermission({ scope: CalendarPermissionScope.READ_CALENDAR }));
-    const write = await Promise.resolve(cal.checkPermission({ scope: CalendarPermissionScope.WRITE_CALENDAR }));
+    const read = await Promise.resolve(cal.checkPermission({ scope: 'readCalendar' }));
+    const write = await Promise.resolve(cal.checkPermission({ scope: 'writeCalendar' }));
     return read?.result === 'granted' && write?.result === 'granted';
   } catch {
     return false;
