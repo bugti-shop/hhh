@@ -1,259 +1,349 @@
-# iOS Setup Guide for Npd
+# iOS Setup Guide for Flowist
 
-This guide covers the required iOS setup for Google Sign-In, push notifications, voice recording, and location-based reminders.
+Complete setup guide for building Flowist on **Xcode 14.2 / macOS 12** with Capacitor 5.
 
-## Prerequisites
+- **Bundle ID:** `com.flowist.app`
+- **App Name:** Flowist
+- **Google iOS Web Client ID:** `425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i.apps.googleusercontent.com`
+- **Apple Sign In Services ID:** `com.flowist.app.signin`
 
-1. macOS with Xcode installed
-2. Apple Developer Account (for push notifications)
-3. Project exported to GitHub and cloned locally
-4. Run `npm install` to install dependencies
-5. Run `npx cap add ios` to add iOS platform
-6. Run `npx cap sync` to sync the project
+---
 
-## Google Sign-In Setup (Required for Cloud Sync)
+## 1. First-Time Setup on Your Mac
 
-### Step 1: Create iOS OAuth Client ID in Google Cloud Console
+After pulling the repo:
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Select your project (same as Android)
-3. Navigate to **APIs & Services → Credentials**
-4. Click **Create Credentials → OAuth client ID**
-5. Select **iOS** as application type
-6. Enter your Bundle ID: `app.lovable.c4920824037c4205bb9ed6cc0d5a0385`
-7. Click **Create**
-8. Copy the **Client ID** (e.g., `52777395492-xxxxx.apps.googleusercontent.com`)
-9. Note the **Reversed Client ID** (e.g., `com.googleusercontent.apps.52777395492-xxxxx`)
+```bash
+# Clean install
+rm -rf node_modules ios/App/Pods ios/App/Podfile.lock package-lock.json bun.lockb
+npm install
 
-### Step 2: Add iOS Client ID to the App
+# Build web bundle
+npm run build
 
-Open `src/contexts/GoogleAuthContext.tsx` and add your iOS Client ID:
+# Add iOS platform (only first time)
+npx cap add ios
 
-```typescript
-const GOOGLE_IOS_CLIENT_ID = 'YOUR_IOS_CLIENT_ID.apps.googleusercontent.com';
+# Sync native code & plugins
+npx cap sync ios
+
+# Install CocoaPods
+cd ios/App
+pod install
+cd ../..
+
+# Open in Xcode
+npx cap open ios
 ```
 
-### Step 3: Update Info.plist with URL Scheme
+After every code change:
+```bash
+npm run build && npx cap sync ios
+```
 
-Add these entries to your `ios/App/App/Info.plist` file inside the `<dict>` tag:
+---
+
+## 2. Xcode Project Configuration
+
+### 2.1 Signing & Capabilities
+
+In Xcode → select **App** target → **Signing & Capabilities** tab:
+
+1. **Team:** Select your Apple Developer team
+2. **Bundle Identifier:** `com.flowist.app`
+3. Click **+ Capability** and add:
+   - ✅ **Sign in with Apple**
+   - ✅ **Push Notifications**
+   - ✅ **Background Modes** → enable:
+     - Remote notifications
+     - Background fetch
+     - Location updates
+     - Background processing
+   - ✅ **In-App Purchase** (for RevenueCat)
+   - ✅ **Associated Domains** (optional, for universal links)
+
+### 2.2 Deployment Target
+
+Set **iOS Deployment Target** to **13.0** (minimum for Sign in with Apple).
+
+---
+
+## 3. Complete `Info.plist`
+
+Open `ios/App/App/Info.plist` and add these keys inside the root `<dict>`:
 
 ```xml
-<!-- Google Sign-In URL Scheme -->
+<!-- ============ Google Sign-In ============ -->
+<key>GIDClientID</key>
+<string>425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i.apps.googleusercontent.com</string>
+
 <key>CFBundleURLTypes</key>
 <array>
     <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-            <!-- Use your Reversed Client ID -->
-            <string>com.googleusercontent.apps.YOUR_CLIENT_ID_HERE</string>
+            <!-- REVERSED Google Client ID -->
+            <string>com.googleusercontent.apps.425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i</string>
+            <!-- App's own scheme for OAuth callbacks -->
+            <string>com.flowist.app</string>
         </array>
     </dict>
 </array>
 
-<!-- Required for Google Sign-In -->
-<key>GIDClientID</key>
-<string>YOUR_IOS_CLIENT_ID.apps.googleusercontent.com</string>
-```
+<!-- Allow OAuth browsers to open -->
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>https</string>
+    <string>http</string>
+</array>
 
-### Step 4: Enable Required APIs in Google Cloud Console
-
-Ensure these APIs are enabled:
-- Google Drive API
-- Google Calendar API
-- Google People API
-
-## Info.plist Permissions
-
-After running `npx cap add ios`, add the following permissions to `ios/App/App/Info.plist`:
-
-### Required Permission Descriptions
-
-Add these entries inside the `<dict>` tag:
-
-```xml
-<!-- Voice Recording Permission -->
+<!-- ============ Permissions ============ -->
 <key>NSMicrophoneUsageDescription</key>
-<string>Npd needs access to your microphone to record voice notes.</string>
+<string>Flowist needs access to your microphone to record voice notes.</string>
 
-<!-- Calendar Permissions (for system calendar sync) -->
+<key>NSCameraUsageDescription</key>
+<string>Flowist needs access to your camera to attach photos to your notes and tasks.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Flowist needs access to your photo library to attach images to notes and tasks.</string>
+
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>Flowist needs permission to save exported notes and sketches to your photo library.</string>
+
 <key>NSCalendarsFullAccessUsageDescription</key>
-<string>Npd needs access to your calendar to sync your tasks and events with your device calendar.</string>
+<string>Flowist needs access to your calendar to sync your tasks and events.</string>
 
 <key>NSCalendarsWriteOnlyAccessUsageDescription</key>
-<string>Npd needs access to add tasks and events to your device calendar.</string>
+<string>Flowist needs access to add tasks and events to your calendar.</string>
 
-<!-- Location Permissions for Location-Based Reminders -->
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>Npd needs your location to remind you of tasks when you arrive at or leave specific places.</string>
+<string>Flowist uses your location to remind you of tasks when you arrive at or leave places.</string>
 
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>Npd needs background location access to send you reminders when you arrive at or leave your saved locations, even when the app is closed.</string>
+<string>Flowist uses background location to deliver location-based reminders even when the app is closed.</string>
 
 <key>NSLocationAlwaysUsageDescription</key>
-<string>Npd needs background location access to send you reminders when you arrive at or leave your saved locations.</string>
+<string>Flowist uses background location to deliver location-based reminders.</string>
 
-<!-- Background Modes -->
+<key>NSFaceIDUsageDescription</key>
+<string>Flowist uses Face ID to unlock your private notes and protected content.</string>
+
+<key>NSContactsUsageDescription</key>
+<string>Flowist may access contacts to share tasks and notes with people you choose.</string>
+
+<key>NSUserTrackingUsageDescription</key>
+<string>Flowist does not track you across apps. This permission is only used for analytics if you opt in.</string>
+
+<!-- ============ Background Modes ============ -->
 <key>UIBackgroundModes</key>
 <array>
     <string>remote-notification</string>
     <string>location</string>
     <string>fetch</string>
     <string>processing</string>
+    <string>audio</string>
 </array>
-```
 
-### Full Info.plist Location Section Example
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
+<!-- ============ App Transport Security ============ -->
+<key>NSAppTransportSecurity</key>
 <dict>
-    <!-- ... other entries ... -->
-    
-    <!-- Voice Recording -->
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Npd needs access to your microphone to record voice notes.</string>
-    
-    <!-- Location Permissions -->
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Npd needs your location to remind you of tasks when you arrive at or leave specific places.</string>
-    
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Npd needs background location access to send you reminders when you arrive at or leave your saved locations, even when the app is closed.</string>
-    
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Npd needs background location access to send you reminders when you arrive at or leave your saved locations.</string>
-    
-    <!-- Background Modes -->
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>remote-notification</string>
-        <string>location</string>
-        <string>fetch</string>
-        <string>processing</string>
-    </array>
-    
-    <!-- ... other entries ... -->
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
 </dict>
-</plist>
+
+<!-- ============ Status bar ============ -->
+<key>UIStatusBarStyle</key>
+<string>UIStatusBarStyleDefault</string>
+<key>UIViewControllerBasedStatusBarAppearance</key>
+<true/>
 ```
 
-## Location-Based Reminders Setup
+---
 
-### Understanding iOS Location Permissions
+## 4. Sign in with Apple — Full Setup
 
-iOS has a progressive permission model for location:
+### 4.1 Apple Developer Console
 
-| Permission Level | When Granted | Use Case |
-|-----------------|--------------|----------|
-| When In Use | App is in foreground | Basic location features |
-| Always | App in foreground OR background | Geofencing, background reminders |
+1. Go to **https://developer.apple.com/account/resources/identifiers**
+2. **Your App ID** (`com.flowist.app`):
+   - Edit → enable **Sign In with Apple** capability → Save
+3. **Create Services ID** for web/OAuth callback:
+   - **+ → Services IDs** → Identifier: `com.flowist.app.signin`
+   - Description: `Flowist Sign In`
+   - Enable **Sign In with Apple** → Configure:
+     - Primary App ID: `com.flowist.app`
+     - **Domains:**
+       - `mdrppadworepxgdlhybu.supabase.co`
+       - `flowist.me`
+       - `flowistapp.lovable.app`
+     - **Return URLs:**
+       - `https://mdrppadworepxgdlhybu.supabase.co/auth/v1/callback`
+4. **Create a Key:**
+   - **Keys → + → Sign In with Apple** → enable, choose primary App ID
+   - Download the `.p8` file (one-time only!) and note the **Key ID** + **Team ID**
 
-### Background Location Capability in Xcode
+### 4.2 Configure in Lovable Cloud (Backend)
 
-1. Open the project in Xcode: `npx cap open ios`
-2. Select your target (App)
-3. Go to "Signing & Capabilities"
-4. Click "+ Capability"
-5. Add "Background Modes"
-6. Check the following:
-   - ✅ Location updates
-   - ✅ Background fetch
-   - ✅ Remote notifications
+In your backend dashboard → **Users → Authentication Settings → Sign In Methods → Apple**:
 
-### Permission Flow
+- Select **Use your own credentials**
+- Fill: Team ID, Key ID, Services ID (`com.flowist.app.signin`), paste `.p8` contents
+- Click **Generate Secret** → save
 
-The app will request permissions in this order:
-1. First, "When In Use" location permission
-2. Then, if the user grants it, "Always" permission for background tracking
+### 4.3 Native Code (already wired)
 
-**Important:** Apple requires apps to first get "When In Use" permission before requesting "Always" permission.
+The app uses `lovable.auth.signInWithOAuth("apple", ...)` which works out of the box.
+On iOS, Capacitor opens the system Safari view for OAuth — no extra Swift code needed.
 
-### App Store Review Guidelines
+---
 
-When submitting to the App Store, you must:
-1. Justify why your app needs background location
-2. Include the location usage in your app's privacy policy
-3. Add a note in App Store Connect explaining the background location use
+## 5. Sign in with Google — Full Setup
 
-## Push Notifications Setup
+### 5.1 Google Cloud Console
 
-### Apple Push Notification Service (APNs) Setup
+1. Go to **https://console.cloud.google.com/apis/credentials**
+2. Create an **iOS OAuth Client** (if not yet created):
+   - Application type: **iOS**
+   - Bundle ID: `com.flowist.app`
+3. Your **Web Client ID** is already set:
+   `425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i.apps.googleusercontent.com`
+4. **Authorized redirect URIs** (Web client):
+   - `https://mdrppadworepxgdlhybu.supabase.co/auth/v1/callback`
+   - `https://flowist.me`
+   - `https://flowistapp.lovable.app`
 
-1. Log in to [Apple Developer Portal](https://developer.apple.com/)
-2. Go to Certificates, Identifiers & Profiles
-3. Create an App ID with Push Notifications capability
-4. Create an APNs Key or Certificate
-5. Configure your server with the APNs credentials
+### 5.2 capacitor.config.ts (already configured)
 
-### Enable Push Notifications in Xcode
+```ts
+plugins: {
+  SocialLogin: {
+    google: {
+      webClientId: '425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i.apps.googleusercontent.com',
+    },
+  },
+}
+```
 
-1. Open the project in Xcode: `npx cap open ios`
-2. Select your target
-3. Go to "Signing & Capabilities"
-4. Click "+ Capability"
-5. Add "Push Notifications"
-6. Add "Background Modes" and check "Remote notifications"
+> Note: On Capacitor 5 the native `SocialLogin` plugin is removed in our setup.
+> Google sign-in on iOS falls back to the in-app Safari OAuth flow handled by
+> `lovable.auth.signInWithOAuth("google", ...)` — which works without any extra Swift code.
 
-## Voice Recording Setup
+### 5.3 URL Scheme
 
-iOS requires permission description for microphone access. This is handled via the `NSMicrophoneUsageDescription` key in Info.plist.
+Already included in the `Info.plist` block above:
+```
+com.googleusercontent.apps.425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i
+```
 
-The app will automatically prompt the user for microphone permission when they first try to record.
+---
 
-## Local Notifications Setup
+## 6. AppDelegate.swift — Handle OAuth Callbacks
 
-Local notifications work out of the box with the Capacitor Local Notifications plugin. The user will be prompted for permission when scheduling the first notification.
+Open `ios/App/App/AppDelegate.swift` and ensure it handles incoming URLs:
 
-## Building the App
+```swift
+import UIKit
+import Capacitor
 
-1. Sync your project: `npx cap sync ios`
-2. Open in Xcode: `npx cap open ios`
-3. Select your development team in Signing & Capabilities
-4. Build and run from Xcode
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-## Troubleshooting
+    var window: UIWindow?
 
-### Location reminders not triggering in background
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        return true
+    }
 
-1. **Check Location Permission**: Go to Settings > Npd > Location
-   - Ensure "Always" is selected (not "While Using")
-   
-2. **Check Background App Refresh**: Go to Settings > General > Background App Refresh
-   - Ensure Npd is enabled
-   
-3. **Low Power Mode**: Location updates may be limited in Low Power Mode
-   - Disable Low Power Mode for testing
+    // Handle OAuth callbacks (Google / Apple / Supabase)
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        return ApplicationDelegateProxy.shared.application(app, open: url, options: options)
+    }
 
-4. **Verify Capability**: In Xcode, confirm "Location updates" is checked in Background Modes
+    // Universal links
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        return ApplicationDelegateProxy.shared.application(application,
+                                                            continue: userActivity,
+                                                            restorationHandler: restorationHandler)
+    }
 
-### "Always" location permission not appearing
+    func applicationWillResignActive(_ application: UIApplication) {}
+    func applicationDidEnterBackground(_ application: UIApplication) {}
+    func applicationWillEnterForeground(_ application: UIApplication) {}
+    func applicationDidBecomeActive(_ application: UIApplication) {}
+    func applicationWillTerminate(_ application: UIApplication) {}
+}
+```
 
-iOS only shows the "Always" option after you've granted "When In Use" permission and the app has demonstrated location use. The upgrade prompt may appear later.
+---
 
-Alternatively, users can go to Settings > Npd > Location and manually select "Always".
+## 7. RevenueCat (In-App Purchases)
 
-### Push notifications not working
+### Product IDs (already in code):
+- `com.flowist.app.weekly` — $1.99
+- `com.flowist.app.monthly` — $3.99
+- `com.flowist.app.yearly` — $39.99
 
-- Ensure Push Notifications capability is enabled in Xcode
-- Verify APNs certificate/key is configured correctly
-- Check that the device is registered (simulators don't support push)
+### App Store Connect
+1. **My Apps → Flowist → Subscriptions** → create a subscription group `flowist_premium`
+2. Add the 3 auto-renewable subscriptions above
+3. Fill in pricing, localized descriptions, review screenshot
 
-### Voice recording not working
+### RevenueCat Dashboard
+1. Add iOS app → Bundle ID `com.flowist.app`
+2. Upload your **App Store Connect API key** (.p8)
+3. Create entitlement `premium` and attach all 3 products
+4. Copy the **iOS API Key** and set it as the env var `VITE_REVENUECAT_IOS_API_KEY`
 
-- Ensure the NSMicrophoneUsageDescription is set in Info.plist
-- Grant microphone permission when prompted
+---
 
-### Local notifications not appearing
+## 8. Push Notifications
 
-- Ensure the app has notification permissions
-- Check notification settings in iOS Settings app
+1. Apple Developer → **Keys → +** → enable Apple Push Notifications service (APNs)
+2. Download `.p8` and note Key ID + Team ID
+3. Upload to your push provider (e.g., RevenueCat / OneSignal / your backend)
 
-### App rejected for background location
+---
 
-If Apple rejects your app for background location:
-1. Ensure your usage description clearly explains why background location is needed
-2. Add visible UI indicating when background location is active
-3. Consider using region monitoring (geofencing) instead of continuous location updates
-4. Update your privacy policy to mention location data usage
+## 9. Build & Run
+
+```bash
+npm run build && npx cap sync ios
+npx cap open ios
+```
+
+In Xcode:
+1. Select a device or simulator (iOS 13+)
+2. Press ⌘R
+
+---
+
+## 10. Common Issues
+
+| Issue | Fix |
+|------|-----|
+| `pod install` fails | Ensure CocoaPods ≥ 1.11: `sudo gem install cocoapods` |
+| Sign in with Apple shows "Invalid client" | Re-check Services ID = `com.flowist.app.signin` and JWT secret in backend |
+| Google sign-in opens but redirects fail | Check Reversed Client ID in `CFBundleURLSchemes` matches Web Client ID exactly |
+| Location reminders don't fire in background | Settings → Flowist → Location → **Always** |
+| Build error "Xcode 16 required" | Confirm `@capacitor/*` packages are `^5.7.8` (Capacitor 5 supports Xcode 14) |
+| Push notifications silent on simulator | APNs only works on physical devices |
+
+---
+
+## 11. Quick Reference
+
+```
+Bundle ID:           com.flowist.app
+Apple Services ID:   com.flowist.app.signin
+Google Web Client:   425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i.apps.googleusercontent.com
+Reversed Google:     com.googleusercontent.apps.425291387152-hg7uajqc20bd8t3qfb760gngbl2pd20i
+Supabase Callback:   https://mdrppadworepxgdlhybu.supabase.co/auth/v1/callback
+Min iOS:             13.0
+Capacitor:           5.7.8
+Xcode tested:        14.2 (macOS 12)
+```
