@@ -601,21 +601,10 @@ const DeferredSyncInit = () => {
   }, []);
 
   if (!ready) return null;
-  return (
-    <Suspense fallback={null}>
-      <DeferredSyncHooks />
-    </Suspense>
-  );
+   
 };
 
-const DeferredSyncHooks = lazy(async () => {
-  const calSync = await import('@/hooks/useSystemCalendarSync');
-  const SyncComponent = React.forwardRef<HTMLDivElement>(function SyncComponent(_props, _ref) {
-    calSync.useSystemCalendarSync();
-    return null;
-  });
-  return { default: SyncComponent as unknown as React.ComponentType };
-});
+ 
 
 const App = () => (
   <ErrorBoundary>
