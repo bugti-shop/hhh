@@ -21,7 +21,6 @@
         "@capacitor/share": "^5.0.7",
         "@capacitor/splash-screen": "^5.0.7",
         "@capacitor/status-bar": "^5.0.7",
-        "@ebarooni/capacitor-calendar": "^5.5.0",
         "@hello-pangea/dnd": "^18.0.1",
         "@hookform/resolvers": "^3.10.0",
         "@lovable.dev/cloud-auth-js": "^1.1.2",
@@ -342,8 +341,6 @@
     "@capacitor/splash-screen": ["@capacitor/splash-screen@5.0.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@capacitor/splash-screen/-/splash-screen-5.0.8.tgz", { "peerDependencies": { "@capacitor/core": "^5.0.0" } }, "sha512-mDRJS9QFxL5UMN74gRr6cBhOtkZjWwdttPCjBJNgcMDJIGi9IAKRJuDGTsqSUbp6zWrPF4AW29Mu6qhXtHpHWg=="],
 
     "@capacitor/status-bar": ["@capacitor/status-bar@5.0.8", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@capacitor/status-bar/-/status-bar-5.0.8.tgz", { "peerDependencies": { "@capacitor/core": "^5.0.0" } }, "sha512-ES/4ik3/6SV6RVXVVoMm5i7zanwZ+CBtNX6glhBHDHS0nR2m3Dmdxuk/BaFEZWT5bDn4xzg0LlnMsS8mlbUf+A=="],
-
-    "@ebarooni/capacitor-calendar": ["@ebarooni/capacitor-calendar@5.5.0", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@ebarooni/capacitor-calendar/-/capacitor-calendar-5.5.0.tgz", { "peerDependencies": { "@capacitor/core": "^5.0.0" } }, "sha512-EKl/mLm9206TqMyAX9InD96c/olHU+abCh6I33WYFwIUGr+dU5kEJnLIl1o0jHnOyCvJ7iEJcfJuu6LdwLlMGA=="],
 
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.25.0", "", { "os": "aix", "cpu": "ppc64" }, "sha512-O7vun9Sf8DFjH2UtqK8Ku3LkquL9SZL8OLY1T5NZkA34+wG3OQF7cl4Ql8vdNzM6fzBbYfLaiRLIOZ+2FOCgBQ=="],
 
