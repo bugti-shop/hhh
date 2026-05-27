@@ -17,7 +17,7 @@ interface NotesCalendarViewProps {
   highlightedDates?: Date[];
   taskDates?: Date[];
   eventDates?: Date[];
-  systemCalendarDates?: Date[];
+   
   showWeekNumbers?: boolean;
   emptyStateMessage?: string;
   emptyStateSubMessage?: string;
@@ -52,7 +52,7 @@ export const NotesCalendarView = ({
   highlightedDates,
   taskDates = [],
   eventDates = [],
-  systemCalendarDates = [],
+   
   emptyStateMessage,
   emptyStateSubMessage,
   showEmptyState = false,
@@ -121,7 +121,7 @@ export const NotesCalendarView = ({
   const hasNote = (date: Date) => noteDates.some((nDate) => isSameDay(nDate, date));
   const hasTask = (date: Date) => taskDates.some((tDate) => isSameDay(tDate, date));
   const hasEvent = (date: Date) => eventDates.some((eDate) => isSameDay(eDate, date));
-  const hasSystemCalendarEvent = (date: Date) => systemCalendarDates.some((sDate) => isSameDay(sDate, date));
+   
 
   const handlePrevMonth = () => {
     setDisplayMonth(prev => subMonths(prev, 1));
@@ -243,10 +243,10 @@ export const NotesCalendarView = ({
           const hasNoteOnDay = hasNote(day);
           const hasTaskOnDay = hasTask(day);
           const hasEventOnDay = hasEvent(day);
-          const hasSystemEventOnDay = hasSystemCalendarEvent(day);
+           
           const isToday = isSameDay(day, today);
           const isSelected = selectedDate && isSameDay(day, selectedDate) && !isToday;
-          const hasAnyIndicator = hasNoteOnDay || hasTaskOnDay || hasEventOnDay || hasSystemEventOnDay;
+          const hasAnyIndicator = hasNoteOnDay || hasTaskOnDay || hasEventOnDay;
 
           return (
             <button
