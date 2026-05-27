@@ -187,7 +187,7 @@ let nativeInitialized = false;
 
 const ensureNativeInit = async () => {
   if (nativeInitialized) return;
-  const { SocialLogin } = await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as any);
+  const { SocialLogin } = (await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as string)) as any;
   await SocialLogin.initialize({
     google: { webClientId: CLIENT_ID },
   });
@@ -204,7 +204,7 @@ export const cancelNativeAutoPrompt = async (): Promise<void> => {
   if (nativeAutoPromptCancelled || !isNative()) return;
   nativeAutoPromptCancelled = true;
   try {
-    const { SocialLogin } = await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as any);
+    const { SocialLogin } = (await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as string)) as any;
     // Logout from the native SDK to cancel any pending One Tap / auto-sign-in UI.
     // Our session is stored in settingsStorage, not in the native SDK, so this is safe.
     await SocialLogin.logout({ provider: 'google' });
@@ -269,7 +269,7 @@ const extractNativeProfile = async (r: any, accessToken: string) => {
 
 const nativeSignIn = async (): Promise<GoogleUser> => {
   await ensureNativeInit();
-  const { SocialLogin } = await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as any);
+  const { SocialLogin } = (await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as string)) as any;
 
   const result = await SocialLogin.login({
     provider: 'google',
@@ -326,7 +326,7 @@ const nativeSignIn = async (): Promise<GoogleUser> => {
 
 const nativeSignOut = async () => {
   try {
-    const { SocialLogin } = await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as any);
+    const { SocialLogin } = (await import(/* @vite-ignore */ '@capgo/capacitor-social-login' as string)) as any;
     await SocialLogin.logout({ provider: 'google' });
   } catch {}
 };
