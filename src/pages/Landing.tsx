@@ -543,14 +543,14 @@ export default function Landing() {
                 Download
               </button>
             </div>
-            <div className="mt-4 sm:mt-6 -mx-8 sm:-mx-6 overflow-hidden">
+            <div className="mt-4 sm:mt-6 flex justify-center overflow-hidden">
               <img
                 src={landingSyncDevicesImg}
                 alt="Flowist running on laptop, tablet and phones"
                 loading="lazy"
                 width={1536}
                 height={1024}
-                className="mx-auto h-auto w-[130%] sm:w-full max-w-none object-contain"
+                className="block h-auto w-[130%] sm:w-full max-w-none object-contain"
               />
             </div>
           </div>
