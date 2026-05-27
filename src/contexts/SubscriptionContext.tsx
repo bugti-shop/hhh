@@ -20,7 +20,8 @@ import {
   PAYWALL_RESULT,
   PurchasesCallbackId
 } from '@revenuecat/purchases-capacitor';
-import { RevenueCatUI } from '@revenuecat/purchases-capacitor-ui';
+// RevenueCatUI removed for Capacitor v5 compatibility (no v5 of purchases-capacitor-ui exists).
+// The app uses its own PremiumPaywall component instead.
 
 // RevenueCat API Key - This is a public key safe to include in the app
 const REVENUECAT_API_KEY = 'goog_WLSvWlyHHLzNAgIfhCzAYsGaZyh';
@@ -698,11 +699,9 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
     }
     try {
       setRcLoading(true);
-      const { result } = await RevenueCatUI.presentPaywall();
-      if (result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED) {
-        await checkEntitlement();
-      }
-      return result;
+      // Native RevenueCat paywall UI not available on Capacitor v5; fall back to custom paywall.
+      console.warn('RevenueCat: Native paywall UI unavailable on Capacitor v5, use PremiumPaywall instead.');
+      return PAYWALL_RESULT.NOT_PRESENTED;
     } catch (err) {
       console.error('RevenueCat: Paywall error', err);
       return PAYWALL_RESULT.ERROR;
@@ -717,13 +716,9 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
     }
     try {
       setRcLoading(true);
-      const { result } = await RevenueCatUI.presentPaywallIfNeeded({
-        requiredEntitlementIdentifier: ENTITLEMENT_ID,
-      });
-      if (result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED) {
-        await checkEntitlement();
-      }
-      return result;
+      // Native RevenueCat paywall UI not available on Capacitor v5.
+      console.warn('RevenueCat: presentPaywallIfNeeded unavailable on Capacitor v5.');
+      return PAYWALL_RESULT.NOT_PRESENTED;
     } catch (err) {
       console.error('RevenueCat: Paywall error', err);
       return PAYWALL_RESULT.ERROR;
@@ -734,13 +729,9 @@ export const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
 
   const presentCustomerCenter = useCallback(async (): Promise<void> => {
     if (!Capacitor.isNativePlatform()) return;
-    try {
-      await RevenueCatUI.presentCustomerCenter();
-      await checkEntitlement();
-    } catch (err) {
-      console.error('RevenueCat: Customer Center error', err);
-    }
-  }, [checkEntitlement]);
+    // RevenueCat Customer Center UI unavailable on Capacitor v5.
+    console.warn('RevenueCat: Customer Center unavailable on Capacitor v5.');
+  }, []);
 
   const logout = useCallback(async (): Promise<void> => {
     if (!Capacitor.isNativePlatform()) return;
