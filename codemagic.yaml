@@ -10,12 +10,13 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
+          npm install @capacitor/cli @capacitor/core
       - name: Build web app
         script: |
           npm run build
       - name: Sync Capacitor
         script: |
-          npx cap sync ios
+          npx cap sync ios --no-interactive
       - name: Install CocoaPods
         script: |
           cd ios/App && pod install
