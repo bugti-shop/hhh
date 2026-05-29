@@ -4,7 +4,7 @@ workflows:
     name: iOS Build
     max_build_duration: 60
     environment:
-      node: 18
+      node: v18
       xcode: latest
       cocoapods: default
     scripts:
@@ -20,14 +20,6 @@ workflows:
       - name: Install CocoaPods
         script: |
           cd ios/App && pod install
-      - name: Build iOS
-        script: |
-          xcodebuild \
-            -workspace ios/App/App.xcworkspace \
-            -scheme App \
-            -configuration Release \
-            -sdk iphonesimulator \
-            -derivedDataPath build
     artifacts:
       - build/**/*.app
       - build/**/*.ipa
