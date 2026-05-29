@@ -185,42 +185,47 @@ const refreshAccessTokenViaRefreshToken = async (
 
 let nativeInitialized = false;
 
+const loadNativeGoogle = async (): Promise<any> => {
+  // Use indirect specifier so Vite's web build doesn't try to resolve this native-only plugin.
+  const mod: any = await import(/* @vite-ignore */ ('@codetrix-studio/' + 'capacitor-google-auth') as string);
+  return mod.GoogleAuth || mod.default?.GoogleAuth || mod;
+};
+
 const ensureNativeInit = async () => {
   if (nativeInitialized) return;
-  const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
-  await SocialLogin.initialize({
-    google: { webClientId: CLIENT_ID },
+  const GoogleAuth = await loadNativeGoogle();
+  await GoogleAuth.initialize({
+    clientId: CLIENT_ID,
+    scopes: NATIVE_SCOPES,
+    grantOfflineAccess: true,
   });
   nativeInitialized = true;
 };
 
 /**
  * Cancel any auto-sign-in prompt the native SDK may show on app start.
- * Called once on startup to suppress the account picker from appearing automatically.
- * This does NOT clear our stored session — just dismisses native One Tap / auto-prompt.
  */
 let nativeAutoPromptCancelled = false;
 export const cancelNativeAutoPrompt = async (): Promise<void> => {
   if (nativeAutoPromptCancelled || !isNative()) return;
   nativeAutoPromptCancelled = true;
   try {
-    const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
-    // Logout from the native SDK to cancel any pending One Tap / auto-sign-in UI.
-    // Our session is stored in settingsStorage, not in the native SDK, so this is safe.
-    await SocialLogin.logout({ provider: 'google' });
+    const GoogleAuth = await loadNativeGoogle();
+    await GoogleAuth.signOut();
     console.log('[Auth] Cancelled native auto-sign-in prompt');
   } catch (e) {
     // Ignore — may fail if not initialized yet, which is fine
   }
 };
 
+
 const getNativeAccessToken = (result: any): string => {
   const r = result?.result ?? result;
   return (
+    r?.authentication?.accessToken ||
     r?.accessToken?.token ||
     r?.accessToken ||
-    result?.accessToken?.token ||
-    result?.accessToken ||
+    result?.authentication?.accessToken ||
     ''
   );
 };
@@ -228,9 +233,9 @@ const getNativeAccessToken = (result: any): string => {
 const getNativeIdToken = (result: any): string => {
   const r = result?.result ?? result;
   return (
+    r?.authentication?.idToken ||
     r?.idToken ||
     result?.idToken ||
-    r?.credential?.idToken ||
     ''
   );
 };
@@ -241,15 +246,14 @@ const getNativeServerAuthCode = (result: any): string => {
     r?.serverAuthCode ||
     result?.serverAuthCode ||
     r?.authorizationCode ||
-    result?.authorizationCode ||
     ''
   );
 };
 
 const extractNativeProfile = async (r: any, accessToken: string) => {
-  let email = r.profile?.email || r.email || '';
-  let name = r.profile?.name || r.name || '';
-  let picture = r.profile?.imageUrl || r.profile?.picture || '';
+  let email = r?.email || r?.profile?.email || '';
+  let name = r?.name || r?.profile?.name || '';
+  let picture = r?.imageUrl || r?.profile?.imageUrl || r?.profile?.picture || '';
 
   if (!email && accessToken) {
     try {
@@ -269,14 +273,11 @@ const extractNativeProfile = async (r: any, accessToken: string) => {
 
 const nativeSignIn = async (): Promise<GoogleUser> => {
   await ensureNativeInit();
-  const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
+  const GoogleAuth = await loadNativeGoogle();
 
-  const result = await SocialLogin.login({
-    provider: 'google',
-    options: NATIVE_LOGIN_OPTIONS,
-  });
+  const result = await GoogleAuth.signIn();
+  const r = result?.result ?? result;
 
-  const r = result.result as any;
   const accessToken = getNativeAccessToken(result);
   const idToken = getNativeIdToken(result);
   const serverAuthCode = getNativeServerAuthCode(result);
@@ -316,7 +317,6 @@ const nativeSignIn = async (): Promise<GoogleUser> => {
   const user = makeUser(profile, accessToken, supabaseUid, { refreshToken, serverAuthCode });
   await setSetting('googleUser', user);
 
-  // Persist refresh token to Supabase for cross-device recovery
   if (refreshToken) {
     persistRefreshTokenBestEffort(refreshToken, profile.email).catch(() => {});
   }
@@ -326,10 +326,12 @@ const nativeSignIn = async (): Promise<GoogleUser> => {
 
 const nativeSignOut = async () => {
   try {
-    const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
-    await SocialLogin.logout({ provider: 'google' });
+    const GoogleAuth = await loadNativeGoogle();
+    await GoogleAuth.signOut();
   } catch {}
 };
+
+
 
 let nativeRefreshCooldownUntil = 0;
 const REFRESH_RETRY_COOLDOWN_MS = 2 * 60 * 1000;

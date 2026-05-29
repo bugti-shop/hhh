@@ -1373,6 +1373,12 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
               triggerHaptic();
               (async () => {
                 try {
+                  const { isNativeApple, signInWithAppleNative } = await import('@/utils/nativeAppleAuth');
+                  if (isNativeApple()) {
+                    await signInWithAppleNative();
+                    setStep(0);
+                    return;
+                  }
                   const { lovable } = await import('@/integrations/lovable/index');
                   const result = await lovable.auth.signInWithOAuth('apple', {
                     redirect_uri: window.location.origin,
@@ -1389,6 +1395,7 @@ export const OnboardingFlow = ({ onComplete }: OnboardingFlowProps) => {
                   setStep(0);
                 }
               })();
+
             }}
             className="w-full max-w-[340px] mt-3 py-3.5 rounded-full text-[16px] font-semibold flex items-center justify-center gap-3 cursor-pointer"
             style={{
