@@ -449,6 +449,11 @@ export default function Profile() {
               <button
                 onClick={async () => {
                   try {
+                    const { isNativeApple, signInWithAppleNative } = await import('@/utils/nativeAppleAuth');
+                    if (isNativeApple()) {
+                      await signInWithAppleNative();
+                      return;
+                    }
                     const { lovable } = await import('@/integrations/lovable/index');
                     const result = await lovable.auth.signInWithOAuth('apple', {
                       redirect_uri: window.location.origin,
@@ -460,6 +465,7 @@ export default function Profile() {
                     toast({ title: 'Sign-in failed', description: err?.message || 'Unknown error', variant: 'destructive' });
                   }
                 }}
+
                 className="mt-3 w-full flex items-center justify-center gap-3 px-6 py-3 bg-white border border-[#d9d9e3] rounded-full shadow-sm hover:shadow-md transition-all"
               >
                 <svg className="h-7 w-7" viewBox="0 0 24 24" fill="#000000">
