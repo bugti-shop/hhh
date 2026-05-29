@@ -185,34 +185,39 @@ const refreshAccessTokenViaRefreshToken = async (
 
 let nativeInitialized = false;
 
+const loadNativeGoogle = async (): Promise<any> => {
+  // Use indirect specifier so Vite's web build doesn't try to resolve this native-only plugin.
+  const mod: any = await import(/* @vite-ignore */ ('@codetrix-studio/' + 'capacitor-google-auth') as string);
+  return mod.GoogleAuth || mod.default?.GoogleAuth || mod;
+};
+
 const ensureNativeInit = async () => {
   if (nativeInitialized) return;
-  const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
-  await SocialLogin.initialize({
-    google: { webClientId: CLIENT_ID },
+  const GoogleAuth = await loadNativeGoogle();
+  await GoogleAuth.initialize({
+    clientId: CLIENT_ID,
+    scopes: NATIVE_SCOPES,
+    grantOfflineAccess: true,
   });
   nativeInitialized = true;
 };
 
 /**
  * Cancel any auto-sign-in prompt the native SDK may show on app start.
- * Called once on startup to suppress the account picker from appearing automatically.
- * This does NOT clear our stored session — just dismisses native One Tap / auto-prompt.
  */
 let nativeAutoPromptCancelled = false;
 export const cancelNativeAutoPrompt = async (): Promise<void> => {
   if (nativeAutoPromptCancelled || !isNative()) return;
   nativeAutoPromptCancelled = true;
   try {
-    const { SocialLogin } = (await import(/* @vite-ignore */ ('@capgo/' + 'capacitor-social-login') as string)) as any;
-    // Logout from the native SDK to cancel any pending One Tap / auto-sign-in UI.
-    // Our session is stored in settingsStorage, not in the native SDK, so this is safe.
-    await SocialLogin.logout({ provider: 'google' });
+    const GoogleAuth = await loadNativeGoogle();
+    await GoogleAuth.signOut();
     console.log('[Auth] Cancelled native auto-sign-in prompt');
   } catch (e) {
     // Ignore — may fail if not initialized yet, which is fine
   }
 };
+
 
 const getNativeAccessToken = (result: any): string => {
   const r = result?.result ?? result;
