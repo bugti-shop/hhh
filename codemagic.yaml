@@ -15,6 +15,7 @@ workflows:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         BUNDLE_ID: "com.flowist.app"
         PROVISIONING_PROFILE_NAME: "Flowist_Distribution"
+        APPLE_TEAM_ID: "D5Z8APCSZ2"
       node: v20.17.0
       xcode: 26.0
       cocoapods: default
@@ -50,9 +51,28 @@ workflows:
           sed -i '' 's/subscriptionPeriodUnit: SubscriptionPeriod.Unit)/subscriptionPeriodUnit: RevenueCat.SubscriptionPeriod.Unit)/g' "$FILE"
           echo "Patch applied!"
 
+      - name: Add PrivacyInfo to Xcode project
+        script: |
+          cd ios/App
+          PROJ="App.xcodeproj/project.pbxproj"
+          if grep -q "PrivacyInfo.xcprivacy" "$PROJ"; then
+            echo "PrivacyInfo already in project"
+          else
+            UUID1=$(uuidgen | tr -d '-' | head -c 24)
+            UUID2=$(uuidgen | tr -d '-' | head -c 24)
+            sed -i '' "/\/\* Begin PBXBuildFile section \*\//a\\
+          $UUID1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = $UUID2 /* PrivacyInfo.xcprivacy */; };
+          " "$PROJ"
+            sed -i '' "/\/\* Begin PBXFileReference section \*\//a\\
+          $UUID2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = \"<group>\"; };
+          " "$PROJ"
+            echo "PrivacyInfo.xcprivacy added to project"
+          fi
+
       - name: Set Bundle ID and Build Number
         script: |
           /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString 1.0.3" ios/App/App/Info.plist
           BUILD_NUMBER=$(($(date +%s) / 100))
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" ios/App/App/Info.plist
           echo "Build number: $BUILD_NUMBER"
@@ -74,7 +94,7 @@ workflows:
 
       - name: Build & Archive
         script: |
-          xcodebuild -workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" -scheme "App" -configuration Release -archivePath "$CM_BUILD_DIR/build/App.xcarchive" -destination "generic/platform=iOS" CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_NAME" clean archive
+          xcodebuild -workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" -scheme "App" -configuration Release -archivePath "$CM_BUILD_DIR/build/App.xcarchive" -destination "generic/platform=iOS" CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_NAME" DEVELOPMENT_TEAM="$APPLE_TEAM_ID" clean archive
 
       - name: Export IPA
         script: |
