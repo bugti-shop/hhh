@@ -91,7 +91,7 @@ const TodoCalendar = () => {
   const [isMoveToFolderOpen, setIsMoveToFolderOpen] = useState(false);
   const [isPrioritySheetOpen, setIsPrioritySheetOpen] = useState(false);
   const [showCompleted, setShowCompleted] = useState(true);
-  const [isLocationMapOpen, setIsLocationMapOpen] = useState(false);
+   
   
   // Calendar background
   const [calendarBackground, setCalendarBackground] = useState<string>('none');
@@ -498,8 +498,7 @@ const TodoCalendar = () => {
 
   const sortedSections = useMemo(() => [...sections].sort((a, b) => a.order - b.order), [sections]);
 
-  const hasLocationTasks = useMemo(() => items.some(task => task.locationReminder?.enabled), [items]);
-
+   
   const hasItemsForDate = tasksForSelectedDate.length > 0 || eventsForSelectedDate.length > 0;
 
   // Render section header for view modes
