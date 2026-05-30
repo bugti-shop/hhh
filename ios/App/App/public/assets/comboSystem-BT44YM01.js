@@ -1,0 +1,1 @@
+const o=3e5;let t=null,e=0;const i=()=>{const i=Date.now();e=t&&i-t<=o?Math.min(e+1,5):1,t=i;const n=e>=2?e:1;return{combo:e,multiplier:n,bonusXp:n>=2?5*(n-1):0,isNewCombo:e>=2}},n=()=>{const i=Date.now();return!t||i-t>o?{combo:0,multiplier:1,isActive:!1}:{combo:e,multiplier:e>=2?e:1,isActive:e>=2}};export{n as getCurrentCombo,i as recordComboCompletion};

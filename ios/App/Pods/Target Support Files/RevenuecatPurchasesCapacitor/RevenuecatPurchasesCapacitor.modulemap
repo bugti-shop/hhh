@@ -1,0 +1,6 @@
+framework module RevenuecatPurchasesCapacitor {
+  umbrella header "RevenuecatPurchasesCapacitor-umbrella.h"
+
+  export *
+  module * { export * }
+}

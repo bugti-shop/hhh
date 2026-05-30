@@ -1,0 +1,1 @@
+import{H as t,ai as i}from"./index-D-AdfYQ2.js";const e="userActivityLog";let a=null;const n=async(n,s,o)=>{const y={id:`activity-${Date.now()}-${Math.random().toString(36).substring(2,9)}`,type:n,action:s,details:o?.details,entityId:o?.entityId,entityType:o?.entityType,timestamp:new Date};null===a&&(a=await t(e,[])),a=[y,...a].slice(0,1e3),await i(e,a)};export{n as l};
