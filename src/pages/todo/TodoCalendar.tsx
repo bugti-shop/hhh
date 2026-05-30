@@ -18,7 +18,7 @@ import { MoveToFolderSheet } from '@/components/MoveToFolderSheet';
 import { PrioritySelectSheet } from '@/components/PrioritySelectSheet';
 import { SmartListsDropdown, SmartListType, getSmartListFilter } from '@/components/SmartListsDropdown';
 import { lazy, Suspense } from 'react';
-const LocationRemindersMap = lazy(() => import('@/components/LocationRemindersMap').then(m => ({ default: m.LocationRemindersMap })));
+ 
 import { CalendarBackgroundSheet } from '@/components/CalendarBackgroundSheet';
 import { SubtaskDetailSheet } from '@/components/SubtaskDetailSheet';
 import { usePriorities } from '@/hooks/usePriorities';
