@@ -39,8 +39,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { lazy, Suspense } from 'react';
-const LocationReminderSheet = lazy(() => import('./LocationReminderSheet').then(m => ({ default: m.LocationReminderSheet })));
-const LocationMapPreview = lazy(() => import('./LocationMapPreview').then(m => ({ default: m.LocationMapPreview })));
+ 
 import { TaskInputSheet } from './TaskInputSheet';
 import { TaskDateTimePage, RepeatSettings } from './TaskDateTimePage';
 import { TaskTimeTracker } from './TaskTimeTracker';
@@ -557,15 +556,7 @@ export const SubtaskDetailSheet = ({
             </div>
           </div>
 
-          {/* Location Reminder Preview */}
-          {subtask.locationReminder?.enabled && subtask.locationReminder.address && (
-            <Suspense fallback={null}>
-              <LocationMapPreview 
-                location={subtask.locationReminder.address} 
-                onClose={handleRemoveLocationReminder}
-              />
-            </Suspense>
-          )}
+           
         </div>
 
         {/* Safe area padding for bottom */}
@@ -585,18 +576,7 @@ export const SubtaskDetailSheet = ({
         />
       </div>
 
-      {/* Location Reminder Sheet */}
-      {showLocationReminder && (
-        <Suspense fallback={null}>
-          <LocationReminderSheet
-            isOpen={showLocationReminder}
-            onClose={() => setShowLocationReminder(false)}
-            locationReminder={subtask.locationReminder}
-            onSave={handleSaveLocationReminder}
-            onRemove={handleRemoveLocationReminder}
-          />
-        </Suspense>
-      )}
+       
 
       {/* Nested subtask input sheet */}
       <TaskInputSheet
