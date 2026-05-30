@@ -1280,15 +1280,7 @@ const TodoCalendar = () => {
         onSelect={handleSetPriority}
       />
 
-      {isLocationMapOpen && (
-        <Suspense fallback={null}>
-          <LocationRemindersMap
-            open={isLocationMapOpen}
-            onOpenChange={setIsLocationMapOpen}
-            tasks={items.filter(t => t.locationReminder?.enabled)}
-          />
-        </Suspense>
-      )}
+       
 
       {/* Delete Event Confirmation */}
       <AlertDialog open={!!eventToDelete} onOpenChange={(open) => !open && setEventToDelete(null)}>
