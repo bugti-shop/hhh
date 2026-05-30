@@ -138,10 +138,7 @@ interface TodaySheetsProps {
   // Image
   selectedImage: string | null;
   onCloseImage: () => void;
-  // Location map
-  isLocationMapOpen: boolean;
-  onCloseLocationMap: (open: boolean) => void;
-  onLocationTaskClick: (task: TodoItem) => void;
+ 
   // Bulk sheets
   isBulkDateSheetOpen: boolean;
   onCloseBulkDate: () => void;
@@ -239,8 +236,7 @@ export const TodaySheets = (props: TodaySheetsProps) => {
         onHideDetailsOptionsChange={props.onHideDetailsOptionsChange}
       />
       <ResolvedImageDialog imageRef={props.selectedImage} onClose={props.onCloseImage} />
-      {props.isLocationMapOpen && (
-        <Suspense fallback={null}>
+       
            
       <BulkDateSheet isOpen={props.isBulkDateSheetOpen} onClose={props.onCloseBulkDate} selectedCount={props.selectedCount} onSetDate={props.onBulkSetDate} />
       <BulkReminderSheet isOpen={props.isBulkReminderSheetOpen} onClose={props.onCloseBulkReminder} selectedCount={props.selectedCount} onSetReminder={props.onBulkSetReminder} />
