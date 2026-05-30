@@ -320,18 +320,7 @@ export const useTodayState = () => {
     if (collapsedSectionsLoaded) setSetting('todoCollapsedSections', Array.from(collapsedViewSections));
   }, [collapsedViewSections, collapsedSectionsLoaded]);
 
-  // Geofencing
-  useEffect(() => {
-    let stopWatching: (() => void) | undefined;
-    const initGeofencing = async () => {
-      const { hasLocationReminders, startGeofenceWatching } = await import('@/utils/geofencing');
-      if (hasLocationReminders(items)) {
-        stopWatching = startGeofenceWatching(() => items);
-      }
-    };
-    initGeofencing().catch(console.warn);
-    return () => { stopWatching?.(); };
-  }, [items]);
+   
 
   // Web Worker for heavy filtering/sorting
   const worker = useTaskWorker();
