@@ -42,7 +42,7 @@ workflows:
 
       - name: Install CocoaPods
         script: |
-          cd ios/App && pod install
+          cd ios/App && pod install --repo-update
 
       - name: Patch PurchasesHybridCommon
         script: |
