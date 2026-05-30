@@ -25,7 +25,7 @@ import { TaskOptionsSheet, HideDetailsOptions } from '@/components/TaskOptionsSh
 import { AutoScheduleSheet } from '@/components/AutoScheduleSheet';
 import { ResolvedImageDialog } from '@/components/ResolvedImageDialog';
 import { lazy, Suspense } from 'react';
-const LocationRemindersMap = lazy(() => import('@/components/LocationRemindersMap').then(m => ({ default: m.LocationRemindersMap })));
+ 
 import { BulkDateSheet } from '@/components/BulkDateSheet';
 import { BulkReminderSheet } from '@/components/BulkReminderSheet';
 import { BulkRepeatSheet } from '@/components/BulkRepeatSheet';
@@ -241,14 +241,7 @@ export const TodaySheets = (props: TodaySheetsProps) => {
       <ResolvedImageDialog imageRef={props.selectedImage} onClose={props.onCloseImage} />
       {props.isLocationMapOpen && (
         <Suspense fallback={null}>
-          <LocationRemindersMap
-            open={props.isLocationMapOpen}
-            onOpenChange={props.onCloseLocationMap}
-            tasks={props.items}
-            onTaskClick={props.onLocationTaskClick}
-          />
-        </Suspense>
-      )}
+           
       <BulkDateSheet isOpen={props.isBulkDateSheetOpen} onClose={props.onCloseBulkDate} selectedCount={props.selectedCount} onSetDate={props.onBulkSetDate} />
       <BulkReminderSheet isOpen={props.isBulkReminderSheetOpen} onClose={props.onCloseBulkReminder} selectedCount={props.selectedCount} onSetReminder={props.onBulkSetReminder} />
       <BulkRepeatSheet isOpen={props.isBulkRepeatSheetOpen} onClose={props.onCloseBulkRepeat} selectedCount={props.selectedCount} onSetRepeat={props.onBulkSetRepeat} />
