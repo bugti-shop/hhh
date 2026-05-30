@@ -53,7 +53,7 @@
         "@radix-ui/react-toggle": "^1.1.9",
         "@radix-ui/react-toggle-group": "^1.1.10",
         "@radix-ui/react-tooltip": "^1.2.7",
-        "@revenuecat/purchases-capacitor": "^13.1.4",
+        "@revenuecat/purchases-capacitor": "^7.7.1",
         "@supabase/supabase-js": "^2.101.1",
         "@tanstack/react-query": "^5.83.0",
         "@tanstack/react-virtual": "^3.13.23",
@@ -626,9 +626,9 @@
 
     "@remix-run/router": ["@remix-run/router@1.23.0", "", {}, "sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA=="],
 
-    "@revenuecat/purchases-capacitor": ["@revenuecat/purchases-capacitor@13.1.4", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@revenuecat/purchases-capacitor/-/purchases-capacitor-13.1.4.tgz", { "dependencies": { "@revenuecat/purchases-typescript-internal-esm": "18.9.1" }, "peerDependencies": { "@capacitor/core": ">=8.0.0" } }, "sha512-yP3uux6Gmt2T0SIKi7RORjshfRNpHVUdH2pWSK/I1OUyFo1sixQLfu27XqA2610Ea7K80mGdGqArTU1jlwJJeQ=="],
+    "@revenuecat/purchases-capacitor": ["@revenuecat/purchases-capacitor@7.7.1", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@revenuecat/purchases-capacitor/-/purchases-capacitor-7.7.1.tgz", { "dependencies": { "@revenuecat/purchases-typescript-internal-esm": "11.1.1" }, "peerDependencies": { "@capacitor/core": "^5.0.0" } }, "sha512-dfTVmlfRnJw4M1Qq/9Q6fSGbKL22nFAAqhj+MnIvVV2RXLeTpRVb/Fm6VYWROwrbGB7qolsResQZy8qXLgPn/g=="],
 
-    "@revenuecat/purchases-typescript-internal-esm": ["@revenuecat/purchases-typescript-internal-esm@18.9.1", "https://europe-west1-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@revenuecat/purchases-typescript-internal-esm/-/purchases-typescript-internal-esm-18.9.1.tgz", {}, "sha512-wy4AgGV0vaFJS/4jXXtyMMl5Xxgmzp7nrSfFoGlhLhmQ3hmMUNGhByhsfKWdrZbxUN2WhddJRhXdxO29oi9x5Q=="],
+    "@revenuecat/purchases-typescript-internal-esm": ["@revenuecat/purchases-typescript-internal-esm@11.1.1", "https://europe-west4-npm.pkg.dev/lovable-core-prod/sandbox-npm-cache/@revenuecat/purchases-typescript-internal-esm/-/purchases-typescript-internal-esm-11.1.1.tgz", {}, "sha512-If0SFXSPBwBlEJ3bx23FY/+qo1GmQDQlMNIxGGYesC/BdBD+fEzb4O8qmtLTAhZI+B5jZBtx8rrIWDQuSJihHg=="],
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.0-beta.27", "", {}, "sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA=="],
 

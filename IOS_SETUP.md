@@ -1,47 +1,6 @@
 # iOS Setup Guide for Flowist
 
-> ## ⚠️ CRITICAL UPDATE (April 2026 — Apple SDK Mandate)
->
-> Apple now **rejects** any IPA built with an SDK older than **iOS 26 (Xcode 26)**.
-> Error: `SDK version issue. This app was built with the iOS 16.2 SDK. All iOS and
-> iPadOS apps must be built with the iOS 26 SDK or later.`
->
-> **This project is now configured for Xcode 26 builds via Codemagic CI** (see
-> `codemagic.yaml` at repo root). Your local Mac with Xcode 14.2 / macOS 12 can
-> still run the **simulator for testing**, but it **cannot produce an
-> App-Store-eligible archive**.
->
-> Native stack has been upgraded:
-> - `@capacitor/*` **v5 → v7**
-> - `@revenuecat/purchases-capacitor` **7.x → 13.x**  (fixes `SubscriptionPeriod is ambiguous` build error)
-> - `@capacitor-community/apple-sign-in` **5 → 7**
-> - `@codetrix-studio/capacitor-google-auth` **3.3.6 → 3.4.0-rc.4**
->
-> ### To release to App Store:
-> 1. Push this repo to GitHub.
-> 2. Connect the repo to [Codemagic](https://codemagic.io).
-> 3. Add the **App Store Connect API integration** in Codemagic team settings
->    (Teams → Integrations → App Store Connect → upload `.p8` key + Key ID + Issuer ID).
-> 4. In Codemagic → your app → Settings → Code signing identities → add an iOS
->    Distribution certificate (Codemagic can auto-create it).
-> 5. Trigger the `ios-release` workflow. The IPA is built with Xcode 26 and
->    auto-uploaded to TestFlight.
->
-> ### Local testing on Xcode 14.2 (simulator only):
-> After every `git pull`, run:
-> ```bash
-> rm -rf node_modules ios/App/Pods ios/App/Podfile.lock
-> npm install
-> npm run build
-> npx cap sync ios
-> cd ios/App && pod install
-> ```
-> Then run from Xcode. You'll see CocoaPods warnings about deployment target —
-> ignore them; this build is for simulator testing only, not for archive.
-
----
-
-## Project Identifiers
+Complete setup guide for building Flowist on **Xcode 14.2 / macOS 12** with Capacitor 5 — from first `pod install` all the way to **App Store release**.
 
 - **Bundle ID:** `com.flowist.app`
 - **App Name:** Flowist
@@ -50,7 +9,6 @@
 - **OAuth Return URL:** `https://flowist.me/~oauth/callback`
 
 ---
-
 
 ## 1. First-Time Setup on Your Mac
 
