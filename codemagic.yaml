@@ -1,221 +1,98 @@
 workflows:
-
   ios-app-store:
-
     name: Flowist
-
     max_build_duration: 120
-
     instance_type: mac_mini_m2
 
-
-
     integrations:
-
       app_store_connect: Codemagic
 
-
-
     environment:
-
       ios_signing:
-
         distribution_type: app_store
-
         bundle_identifier: com.flowist.app
-
       vars:
-
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
-
         BUNDLE_ID: "com.flowist.app"
-
         PROVISIONING_PROFILE_NAME: "Flowist_Distribution"
-
-      node: v18.17.0
-
+      node: v20.17.0
       xcode: 26.0
-
       cocoapods: default
 
-
-
     triggering:
-
       events:
-
         - push
-
       branch_patterns:
-
         - pattern: main
-
           include: true
 
-
-
     scripts:
-
       - name: Install Node dependencies
-
         script: |
-
           npm install
 
-
-
       - name: Build web assets
-
         script: |
-
           npm run build
 
-
-
       - name: Capacitor sync
-
         script: |
-
           npx cap sync ios
 
-
-
       - name: Install CocoaPods
-
         script: |
-
           cd ios/App && pod install
 
-
-
       - name: Patch PurchasesHybridCommon
-
         script: |
-
           FILE="ios/App/Pods/PurchasesHybridCommon/ios/PurchasesHybridCommon/PurchasesHybridCommon/StoreProduct+HybridAdditions.swift"
-
           sed -i '' 's/subscriptionPeriod: SubscriptionPeriod)/subscriptionPeriod: RevenueCat.SubscriptionPeriod)/g' "$FILE"
-
           sed -i '' 's/subscriptionPeriodUnit: SubscriptionPeriod.Unit)/subscriptionPeriodUnit: RevenueCat.SubscriptionPeriod.Unit)/g' "$FILE"
-
           echo "Patch applied!"
 
-
-
       - name: Set Bundle ID and Build Number
-
         script: |
-
           /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" ios/App/App/Info.plist
-
           BUILD_NUMBER=$(($(date +%s) / 100))
-
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" ios/App/App/Info.plist
-
           echo "Build number: $BUILD_NUMBER"
 
-
-
       - name: Set CODE_SIGN_ENTITLEMENTS in Xcode project
-
         script: |
-
           cd ios/App
-
           PROJ="App.xcodeproj/project.pbxproj"
-
           if grep -q "CODE_SIGN_ENTITLEMENTS" "$PROJ"; then
-
             sed -i '' 's|CODE_SIGN_ENTITLEMENTS = .*;|CODE_SIGN_ENTITLEMENTS = App/App.entitlements;|g' "$PROJ"
-
           else
-
             sed -i '' '/PRODUCT_BUNDLE_IDENTIFIER/a\
-
                     CODE_SIGN_ENTITLEMENTS = App\/App.entitlements;' "$PROJ"
-
           fi
 
-
-
       - name: Use Codemagic provisioning profiles
-
         script: |
-
           xcode-project use-profiles
 
-
-
       - name: Build & Archive
-
         script: |
-
-          xcodebuild \
-
-            -workspace "$XCODE_WORKSPACE" \
-
-            -scheme "App" \
-
-            -configuration Release \
-
-            -archivePath build/App.xcarchive \
-
-            -destination "generic/platform=iOS" \
-
-            CODE_SIGN_STYLE=Manual \
-
-            PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_NAME" \
-
-            clean archive
-
-
+          xcodebuild -workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" -scheme "App" -configuration Release -archivePath "$CM_BUILD_DIR/build/App.xcarchive" -destination "generic/platform=iOS" CODE_SIGN_STYLE=Manual PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_NAME" clean archive
 
       - name: Export IPA
-
         script: |
-
-          xcodebuild \
-
-            -exportArchive \
-
-            -archivePath build/App.xcarchive \
-
-            -exportPath build/ios \
-
-            -exportOptionsPlist ios/App/ExportOptions.plist
-
-
+          xcodebuild -exportArchive -archivePath "$CM_BUILD_DIR/build/App.xcarchive" -exportPath "$CM_BUILD_DIR/build/ios" -exportOptionsPlist "$CM_BUILD_DIR/ios/App/ExportOptions.plist"
 
     artifacts:
-
       - build/ios/*.ipa
-
       - /tmp/xcodebuild_logs/*.log
-
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
 
-
-
     publishing:
-
       app_store_connect:
-
         auth: integration
-
         submit_to_testflight: false
-
         submit_to_app_store: true
-
-
-
       email:
-
         recipients:
-
           - bugtishop@gmail.com
-
         notify:
-
           success: true
-
           failure: true
