@@ -4,6 +4,8 @@
 <dict>
     <key>method</key>
     <string>app-store</string>
+    <key>teamID</key>
+    <string>D5Z8APCSZ2</string>
     <key>provisioningProfiles</key>
     <dict>
         <key>com.flowist.app</key>
