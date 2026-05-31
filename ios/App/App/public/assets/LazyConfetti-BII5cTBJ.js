@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/react-confetti-Bt3d7whH.js","assets/vendor-motion-CcteKFjC.js"])))=>i.map(i=>d[i]);
-import{_ as o}from"./vendor-revenuecat-C9jZhFnr.js";import{j as r,r as s}from"./vendor-motion-CcteKFjC.js";const e=s.lazy(()=>o(()=>import("./react-confetti-Bt3d7whH.js"),__vite__mapDeps([0,1]))),t=o=>r.jsx(s.Suspense,{fallback:null,children:r.jsx(e,{...o})});export{t as L};

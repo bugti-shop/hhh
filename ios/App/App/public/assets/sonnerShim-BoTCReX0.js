@@ -1,1 +1,0 @@
-import{aq as s}from"./index-D-AdfYQ2.js";const i=s=>s&&"object"==typeof s&&"action"in s,e=Object.assign((e,r)=>{if(i(r))return s(e,r)},{success:(e,r)=>{if(i(r))return s.success(e,r)},error:(s,i)=>{},info:(s,i)=>{},warning:(s,i)=>{},loading:(e,r)=>{if(i(r))return s.loading(e,r)},promise:s.promise,dismiss:s.dismiss,custom:(s,i)=>{},message:(s,i)=>{}});export{e as t};
