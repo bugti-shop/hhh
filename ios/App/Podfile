@@ -23,10 +23,10 @@ def capacitor_pods
   pod 'CapacitorNativeBiometric', :path => '../../node_modules/capacitor-native-biometric'
   pod 'RevenuecatPurchasesCapacitor', :path => '../../node_modules/@revenuecat/purchases-capacitor'
 
-  # CodetrixStudio ko hata ke directly GoogleSignIn new version use karo
-  pod 'GoogleSignIn', '>= 7.0.0'
-  pod 'GTMAppAuth', '>= 4.1.0'
-  pod 'GTMSessionFetcher', '>= 3.3.0'
+  # GoogleSignIn 7.1+ includes privacy manifest — fixes ITMS-91061
+  pod 'GoogleSignIn', '~> 7.1'
+  pod 'GTMAppAuth', '~> 4.1'
+  pod 'GTMSessionFetcher', '~> 3.3'
 end
 
 target 'App' do
